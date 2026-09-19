@@ -11,46 +11,47 @@ Daniel Bruni, Hallie Pailes, Kevinn Tran, Jacob Kelly, and Giovan Ramirez-Rodart
      features  : Initial development branch, all individual features created here and pushed upward
 
 ## File Structure
-
+```text
 frontend/
 ├── src/
 │   ├── app/                         # App Router: paths directly determine website URLs
-│   │   ├── layout.tsx               # Shared layout wrapper (global Navbar, Footer, etc.)
-│   │   ├── page.tsx                 # Landing Page → www.tamufindr.com
-│   │   ├── globals.css              # Global styling variables
+│   │   ├── layout.tsx               # Defines the layout that is shared between pages (global navbar, footer, etc.)
+│   │   ├── page.tsx                 # Landing Page - www.tamufindr.com
+│   │   ├── globals.css              # Global styling
 │   │   │
 │   │   ├── auth/
 │   │   │   ├── login/
-│   │   │   │   └── page.tsx         # Login Page → www.tamufindr.com/auth/login
+│   │   │   │   └── page.tsx         # Login Page - www.tamufindr.com/auth/login
 │   │   │   └── register/
-│   │   │       └── page.tsx         # Register Page → www.tamufindr.com/auth/register
+│   │   │       └── page.tsx         # Register Page - www.tamufindr.com/auth/register
 │   │   │
 │   │   ├── admin/
-│   │   │   └── page.tsx             # Admin Panel → www.tamufindr.com/admin
+│   │   │   └── page.tsx             # Admin Page - www.tamufindr.com/admin
 │   │   │
 │   │   ├── home/
-│   │   │   └── page.tsx             # Main Home Feed → www.tamufindr.com/home
+│   │   │   └── page.tsx             # Home Page - www.tamufindr.com/home
 │   │   │
 │   │   ├── report/
-│   │   │   ├── page.tsx             # Main Report Entry → www.tamufindr.com/report
+│   │   │   ├── page.tsx             # Report Page - www.tamufindr.com/report
 │   │   │   ├── lost/
-│   │   │   │   └── page.tsx         # Report Lost Item → www.tamufindr.com/report/lost
+│   │   │   │   └── page.tsx         # Report Lost Item - www.tamufindr.com/report/lost
 │   │   │   └── found/
-│   │   │       └── page.tsx         # Report Found Item → www.tamufindr.com/report/found
+│   │   │       └── page.tsx         # Report Found Item - www.tamufindr.com/report/found
 │   │   │
 │   │   ├── activity/
-│   │   │   └── page.tsx             # Activity log/history → www.tamufindr.com/activity
+│   │   │   └── page.tsx             # Activity log/history - www.tamufindr.com/activity
 │   │   │
 │   │   └── help/
-│   │       └── page.tsx             # Help & Support Center → www.tamufindr.com/help
+│   │       └── page.tsx             # Help - www.tamufindr.com/help
 │   │
-│   └── components/                  # Reusable UI elements (custom buttons, cards, inputs)
+│   └── components/                  # Reusable UI elements (buttons, etc.)
 │
 ├── public/                          # Static assets (images, logos, icons, fonts)
 │
-├── package.json                     # Project scripts and local frontend dependencies
+├── package.json                     # Defines project scripts and local frontend dependencies to enable us to run the project
+│
 └── tsconfig.json                    # Configuration for TypeScript compiler and strictness
-
+```
 
 ## Getting Started
 
