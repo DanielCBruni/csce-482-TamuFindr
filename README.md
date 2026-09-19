@@ -10,6 +10,48 @@ Daniel Bruni, Hallie Pailes, Kevinn Tran, Jacob Kelly, and Giovan Ramirez-Rodart
        /\
      features  : Initial development branch, all individual features created here and pushed upward
 
+## File Structure
+
+frontend/
+├── src/
+│   ├── app/                         # App Router: paths directly determine website URLs
+│   │   ├── layout.tsx               # Shared layout wrapper (global Navbar, Footer, etc.)
+│   │   ├── page.tsx                 # Landing Page → www.tamufindr.com
+│   │   ├── globals.css              # Global styling variables
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── login/
+│   │   │   │   └── page.tsx         # Login Page → www.tamufindr.com/auth/login
+│   │   │   └── register/
+│   │   │       └── page.tsx         # Register Page → www.tamufindr.com/auth/register
+│   │   │
+│   │   ├── admin/
+│   │   │   └── page.tsx             # Admin Panel → www.tamufindr.com/admin
+│   │   │
+│   │   ├── home/
+│   │   │   └── page.tsx             # Main Home Feed → www.tamufindr.com/home
+│   │   │
+│   │   ├── report/
+│   │   │   ├── page.tsx             # Main Report Entry → www.tamufindr.com/report
+│   │   │   ├── lost/
+│   │   │   │   └── page.tsx         # Report Lost Item → www.tamufindr.com/report/lost
+│   │   │   └── found/
+│   │   │       └── page.tsx         # Report Found Item → www.tamufindr.com/report/found
+│   │   │
+│   │   ├── activity/
+│   │   │   └── page.tsx             # Activity log/history → www.tamufindr.com/activity
+│   │   │
+│   │   └── help/
+│   │       └── page.tsx             # Help & Support Center → www.tamufindr.com/help
+│   │
+│   └── components/                  # Reusable UI elements (custom buttons, cards, inputs)
+│
+├── public/                          # Static assets (images, logos, icons, fonts)
+│
+├── package.json                     # Project scripts and local frontend dependencies
+└── tsconfig.json                    # Configuration for TypeScript compiler and strictness
+
+
 ## Getting Started
 
 First, run the development server:
