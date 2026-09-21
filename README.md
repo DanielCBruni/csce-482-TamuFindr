@@ -15,6 +15,24 @@ Daniel Bruni, Hallie Pailes, Kevinn Tran, Jacob Kelly, and Giovan Ramirez-Rodart
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Database setup
+
+TAMU Findr uses Prisma with PostgreSQL. Install PostgreSQL locally, create a database named `tamufindr`, and copy the environment template:
+
+```bash
+cp .env.example .env
+```
+
+Update `DATABASE_URL` in `.env` if your local PostgreSQL username, password, host, port, or database name differs. Then create the database tables and generate the typed client:
+
+```bash
+npm run db:migrate -- --name init
+npm run db:generate
+npm run db:seed
+```
+
+The seed command adds the initial categories and campus locations and can be run repeatedly without creating duplicates. Prisma schema changes should be formatted and checked with `npm run db:format` and `npm run db:validate` before creating a migration.
+
 ## Getting Started
 
 First, run the development server:

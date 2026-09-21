@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum ItemType {
+  LOST
+  FOUND
+}
+
+enum ItemStatus {
+  OPEN
+  MATCHED
+  RESOLVED
+  CANCELLED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  firstName    String
+  lastName     String
+  phoneNumber  String?
+  role         UserRole @default(USER)
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  submittedItems Item[] @relation("ItemSubmitter")
+  servicedItems  Item[] @relation("ItemServicer")
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  items Item[]
+}
+
+model Location {
+  id           String  @id @default(cuid())
+  name         String  @unique
+  abbreviation String? @unique
+
+  foundItems   Item[] @relation("FoundLocation")
+  storageItems Item[] @relation("StorageLocation")
+}
+
+model Item {
+  id                   String     @id @default(cuid())
+  userId               String
+  categoryId           String
+  type                 ItemType
+  status               ItemStatus @default(OPEN)
+  title                String
+  description          String
+  foundLocationId      String?
+  foundLocationExtra   String?
+  storageLocationId    String?
+  storageLocationExtra String?
+  incidentDate         DateTime
+  servicedById         String?
+  resolvedDate         DateTime?
+  resolutionNotes      String?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  submitter       User        @relation("ItemSubmitter", fields: [userId], references: [id], onDelete: Restrict)
+  category        Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  foundLocation   Location?   @relation("FoundLocation", fields: [foundLocationId], references: [id], onDelete: SetNull)
+  storageLocation Location?   @relation("StorageLocation", fields: [storageLocationId], references: [id], onDelete: SetNull)
+  servicedBy      User?       @relation("ItemServicer", fields: [servicedById], references: [id], onDelete: SetNull)
+  images          ItemImage[]
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([status, type])
+  @@index([incidentDate])
+  @@index([foundLocationId])
+  @@index([storageLocationId])
+}
+
+model ItemImage {
+  id         String   @id @default(cuid())
+  itemId     String
+  imageKey   String
+  isPrimary  Boolean  @default(false)
+  uploadedAt DateTime @default(now())
+
+  item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([itemId])
+}
