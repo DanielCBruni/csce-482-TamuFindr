@@ -1,23 +1,18 @@
-import "dotenv/config";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../src/generated/prisma/client";
+import 'dotenv/config';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '../src/generated/prisma/client';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 });
 const prisma = new PrismaClient({ adapter });
 
-const categories = [
-  "Electronics",
-  "Keys",
-  "Wallets",
-  "Water Bottles",
-];
+const categories = ['Electronics', 'Keys', 'Wallets', 'Water Bottles'];
 
 const locations = [
-  { name: "Zachary", abbreviation: "ZACH" },
-  { name: "Peterson", abbreviation: "PETR" },
-  { name: "Mays", abbreviation: "MAYS" },
+  { name: 'Zachary', abbreviation: 'ZACH' },
+  { name: 'Peterson', abbreviation: 'PETR' },
+  { name: 'Mays', abbreviation: 'MAYS' },
 ];
 
 async function main() {

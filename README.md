@@ -1,17 +1,16 @@
 # CSCE 482 - Tamu Lost And Found Project
 
 # Contributors:
+
 Daniel Bruni, Hallie Pailes, Kevinn Tran, Jacob Kelly, and Giovan Ramirez-Rodarte
 
 # Branch architecture:
+
       main     : Live branch, contains deployed code
        /\
      testing   : Integration branch, finished features get pushed here for testing/connecting, pushed up when all code is functional and clean
        /\
        wip     : Initial development branch, all individual features created here and pushed upward
-
-
-
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
