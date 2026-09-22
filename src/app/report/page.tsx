@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import ItemFormModal from '@/components/item_form_modal/item_form_modal';

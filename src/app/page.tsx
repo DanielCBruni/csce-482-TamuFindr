@@ -4,18 +4,14 @@ export default function Landing() {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
       <div className="w-full text-left mb-8">
-        <p className="mb-2 font-semibold uppercase tracking-wider text-accent">
-          Welcome
-        </p>
-        <h1 className="text-5xl font-bold text-primary md:text-6xl pb-6">
-          Howdy!
-        </h1>
+        <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Welcome</p>
+        <h1 className="text-5xl font-bold text-primary md:text-6xl pb-6">Howdy!</h1>
         <h2 className="text-2xl font-bold text-primary md:text-3xl pt-3">
           Lost something on campus?
         </h2>
         <p className="max-w-2xl text-m leading-8 text-slate-600 pt-0.5">
           {
-            "We pool lost-and-found catalogs from all TAMU buildings—including Zachry, Evans Library, and the MSC—into a single, easy-to-use search."
+            'We pool lost-and-found catalogs from all TAMU buildings—including Zachry, Evans Library, and the MSC—into a single, easy-to-use search.'
           }
         </p>
       </div>
@@ -59,9 +55,7 @@ export default function Landing() {
                 </div>
               </div>
 
-              {index < 3 && (
-                <div className="hidden text-xl font-bold text-primary md:block">→</div>
-              )}
+              {index < 3 && <div className="hidden text-xl font-bold text-primary md:block">→</div>}
             </div>
           ))}
         </div>
