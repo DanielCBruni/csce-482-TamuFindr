@@ -8,7 +8,9 @@ export default function ReportPage() {
           What would you like to report?
         </h1>
         <p className="text-base text-slate-600 max-w-xl mx-auto">
-          Select an option below to submit a lost item report or turn in something you've found on campus.
+          {
+            "Select an option below to submit a lost item report or turn in something you've found on campus."
+          }
         </p>
       </div>
 
@@ -20,12 +22,7 @@ export default function ReportPage() {
         >
           <div className="h-16 w-16 rounded-full bg-amber-50 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-105 transition-transform duration-200">
             {/* Search Icon */}
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -49,12 +46,7 @@ export default function ReportPage() {
         >
           <div className="h-16 w-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-105 transition-transform duration-200">
             {/* Hand / Shield Check Icon */}
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
