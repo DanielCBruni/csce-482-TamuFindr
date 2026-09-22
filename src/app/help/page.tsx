@@ -5,6 +5,21 @@ export const metadata: Metadata = {
   description: 'Learn how TAMUfindr works and find answers to frequently asked questions.',
 };
 
+const helpfulLinks = [
+  {
+    href: 'https://www.tamu.edu/contact/index.html',
+    text: 'Visit the TAMU Contact Information Page',
+  },
+  {
+    href: 'https://mscprograms.tamu.edu/msc-lost-and-found/',
+    text: 'Visit the MSC Lost and Found',
+  },
+  {
+    href: 'https://upd.tamu.edu/',
+    text: 'Visit the Texas A&M University Police Department',
+  },
+];
+
 const faqs = [
   {
     question: 'Does TAMUfindr have possession of my item?',
@@ -18,6 +33,16 @@ const faqs = [
   {
     question: 'How do I claim an item?',
     answer: 'Open the item listing and follow the provided claim instructions.',
+  },
+  {
+    question: 'What information should I include in a listing?',
+    answer:
+      'Include a clear description of the item, the approximate location, and the date it was lost or found. Avoid sharing sensitive information that could be used to falsely claim the item.',
+  },
+  {
+    question: 'What should I do after my item has been returned?',
+    answer:
+      'Mark the listing as resolved so other users know the item is no longer missing or available to claim.',
   },
 ];
 
@@ -58,7 +83,9 @@ export default function HelpPage() {
         <h1 className="text-4xl font-bold text-primary md:text-5xl">How TAMUfindr Works</h1>
 
         <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-          TAMUfindr helps students report, locate, and recover lost items around campus.
+          TAMUfindr helps students report, locate, and recover lost items around campus. Individuals
+          can create listings for lost or found items, and the platform provides a way to facilitate
+          the return of lost property.
         </p>
       </header>
 
@@ -75,15 +102,20 @@ export default function HelpPage() {
           Helpful Links
         </h2>
 
-        <a
-          href="https://www.tamu.edu/contact/index.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold text-accent underline decoration-secondary underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-        >
-          Visit the TAMU Contact Information Page
-          <span className="sr-only"> (opens in a new tab)</span>
-        </a>
+        <div className="flex flex-col items-start gap-3">
+          {helpfulLinks.map(({ href, text }) => (
+            <a
+              key={href}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-accent underline decoration-secondary underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            >
+              {text}
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          ))}
+        </div>
       </section>
 
       <section aria-labelledby="contact-heading" className="mt-10">
