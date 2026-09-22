@@ -46,7 +46,11 @@ export default function Header() {
 
       {/* Right side - Log out */}
       <div className="absolute right-7">
-        <Button buttonName="Log out" className="text-sm font-bold bg-primary text-white" style={{ backgroundColor: 'var(--color-primary)', color: 'var(--color-white)' }}/>
+        <Button
+          buttonName="Log out"
+          className="text-sm font-bold bg-primary text-white"
+          style={{ backgroundColor: 'var(--color-primary)', color: 'var(--color-white)' }}
+        />
       </div>
     </header>
   );

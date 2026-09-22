@@ -1,6 +1,33 @@
-import Link from 'next/link';
+'use client';
+
+import { useState } from 'react';
+import ItemFormModal from '@/components/item_form_modal/item_form_modal';
+import type { ItemFormData } from '@/types/item';
+import type { Category } from '@/types/category';
+import type { Location } from '@/types/location';
+import Button from '@/components/button/button';
+
+const categories: Category[] = [
+  { id: '1', name: 'Electronics' },
+  { id: '2', name: 'Clothing' },
+  { id: '3', name: 'Accessories' },
+];
+
+const locations: Location[] = [
+  { id: '1', name: 'Library' },
+  { id: '2', name: 'Cafeteria' },
+  { id: '3', name: 'Gym' },
+];
 
 export default function ReportPage() {
+  const [itemModal, setItemModal] = useState<'lost' | 'found' | null>(null);
+
+  function handleItemSubmit(item: ItemFormData) {
+    console.log(item);
+
+    setItemModal(null);
+  }
+
   return (
     <main className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center p-6 bg-slate-50">
       <div className="max-w-3xl w-full text-center space-y-3 mb-10">
@@ -16,8 +43,9 @@ export default function ReportPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl w-full">
         {/* Report Lost Item CTA */}
-        <Link
-          href="/report/lost"
+        <button
+          type="button"
+          onClick={() => setItemModal('lost')}
           className="group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all duration-200 text-center"
         >
           <div className="h-16 w-16 rounded-full bg-amber-50 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-105 transition-transform duration-200">
@@ -37,11 +65,11 @@ export default function ReportPage() {
           <p className="mt-2 text-sm text-slate-500">
             Submit details about something you misplaced so we can help match it when found.
           </p>
-        </Link>
-
+        </button>
         {/* Report Found Item CTA */}
-        <Link
-          href="/report/found"
+        <button
+          type="button"
+          onClick={() => setItemModal('found')}
           className="group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all duration-200 text-center"
         >
           <div className="h-16 w-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-105 transition-transform duration-200">
@@ -61,8 +89,17 @@ export default function ReportPage() {
           <p className="mt-2 text-sm text-slate-500">
             Log an item you discovered to assist in returning it safely to its owner.
           </p>
-        </Link>
+        </button>
       </div>
+
+      <ItemFormModal
+        mode={itemModal ?? 'lost'}
+        categories={categories}
+        locations={locations}
+        open={itemModal !== null}
+        onClose={() => setItemModal(null)}
+        onSubmit={handleItemSubmit}
+      />
     </main>
   );
 }
