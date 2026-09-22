@@ -1,0 +1,243 @@
+.modal {
+  box-sizing: border-box;
+  width: min(960px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background: white;
+  color: #18202f;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0 24px 80px #10182833;
+}
+.modal::backdrop {
+  background: #10182880;
+  backdrop-filter: blur(3px);
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px;
+  border-bottom: 1px solid #eef0f3;
+}
+.header h2 {
+  margin: 6px 0 0;
+  font:
+    bold 30px Georgia,
+    serif;
+}
+.eyebrow {
+  margin: 0;
+  color: #727989;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.close {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  background: #f9fafb;
+  color: #525d6d;
+  cursor: pointer;
+  font-size: 26px;
+}
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 28px;
+  padding: 28px;
+}
+.imageCard {
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #f3f4f6;
+}
+.imageCard img {
+  width: 100%;
+  height: 100%;
+  max-height: 460px;
+  object-fit: contain;
+  display: block;
+}
+.placeholder {
+  min-height: 320px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #727989;
+  gap: 12px;
+}
+.placeholder span {
+  font-size: 48px;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.status {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.match {
+  color: #2344bd;
+  background: #dceaff;
+}
+.open {
+  color: #525d6d;
+  background: #f3f4f6;
+}
+.review {
+  color: #984500;
+  background: #fff3c4;
+}
+.details h3 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+.meta {
+  margin: 0;
+  color: #727989;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.details h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.description {
+  margin: 0;
+  color: #525d6d;
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid #eef0f3;
+}
+.info dt {
+  color: #727989;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.info dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.notice {
+  grid-column: 1 / -1;
+  padding: 18px 20px;
+  border: 1px solid #bfd9ff;
+  border-radius: 14px;
+  background: #eff6ff;
+  font-size: 15px;
+}
+.notice p {
+  margin: 6px 0 0;
+  color: #727989;
+  line-height: 1.6;
+}
+.reviewNotice {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 28px;
+  border-top: 1px solid #eef0f3;
+}
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.primary {
+  background: #1d5cff;
+  color: white;
+  border: 1px solid #1d5cff;
+}
+.secondary {
+  background: white;
+  color: #525d6d;
+  border: 1px solid #d6d9df;
+}
+.primary:hover {
+  background: #174bd1;
+}
+.secondary:hover,
+.close:hover {
+  background: #f3f4f6;
+}
+.modal button:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .body {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 22px;
+  }
+  .imageCard,
+  .placeholder {
+    min-height: 200px;
+  }
+  .imageCard img {
+    height: 220px;
+  }
+  .header {
+    padding: 20px;
+  }
+  .actions {
+    padding: 20px;
+  }
+  .actions button {
+    flex: 1;
+  }
+  .details h3 {
+    font-size: 24px;
+  }
+}
