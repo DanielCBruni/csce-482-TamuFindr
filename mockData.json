@@ -9,7 +9,7 @@
       "location": "Memorial Student Center",
       "item": "Hydroflask 32oz",
       "description": "Black 32 oz insulated water bottle with a carrying handle",
-      "itemType": "water bottle"
+      "itemType": "Water Bottle"
     },
     {
       "id": "LR-8847",
@@ -20,7 +20,7 @@
       "location": "Evans Library",
       "item": "TAMU Lanyard",
       "description": "Texas A&M University lanyard with a silver keychain attached",
-      "itemType": "accessories"
+      "itemType": "Accessories"
     },
     {
       "id": "FR-8643",
@@ -31,12 +31,12 @@
       "location": "Memorial Student Center",
       "item": "Aggie Ring",
       "description": "Plain gold Aggie Ring with small diamond",
-      "itemType": "jewelry"
+      "itemType": "Jewelry"
     },
     {
       "id": "FR-9662",
       "type": "FOUND",
-      "status": "closed",
+      "status": "resolved",
       "date": "09-17-2026",
       "user": "user1",
       "location": "Student Rec Center",
