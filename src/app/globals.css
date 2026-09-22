@@ -1,4 +1,8 @@
-:root {
+@import "tailwindcss";
+
+/* TODO: Global theme, fonts, etc */
+
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
   --primary_color: #500000;
@@ -49,4 +53,4 @@ a {
   html {
     color-scheme: dark;
   }
-}
+} */

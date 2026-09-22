@@ -1,8 +1,76 @@
+import Link from 'next/link';
+
 export default function ReportPage() {
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>Report</h1>
-      <p>Howdy.</p>
-    </div>
+    <main className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center p-6 bg-slate-50">
+      <div className="max-w-3xl w-full text-center space-y-3 mb-10">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          What would you like to report?
+        </h1>
+        <p className="text-base text-slate-600 max-w-xl mx-auto">
+          Select an option below to submit a lost item report or turn in something you've found on campus.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl w-full">
+        {/* Report Lost Item CTA */}
+        <Link
+          href="/report/lost"
+          className="group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all duration-200 text-center"
+        >
+          <div className="h-16 w-16 rounded-full bg-amber-50 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-105 transition-transform duration-200">
+            {/* Search Icon */}
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">
+            I Lost an Item
+          </h2>
+          <p className="mt-2 text-sm text-slate-500">
+            Submit details about something you misplaced so we can help match it when found.
+          </p>
+        </Link>
+
+        {/* Report Found Item CTA */}
+        <Link
+          href="/report/found"
+          className="group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all duration-200 text-center"
+        >
+          <div className="h-16 w-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-105 transition-transform duration-200">
+            {/* Hand / Shield Check Icon */}
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors">
+            I Found an Item
+          </h2>
+          <p className="mt-2 text-sm text-slate-500">
+            Log an item you discovered to assist in returning it safely to its owner.
+          </p>
+        </Link>
+      </div>
+    </main>
   );
 }
