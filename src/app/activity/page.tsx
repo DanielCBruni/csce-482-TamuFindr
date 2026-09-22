@@ -143,11 +143,6 @@ const pageStyles = {
     borderColor: '#bfd9f2',
     color: '#2b598d',
   },
-  reviewStyle: {
-    background: '#fff5da',
-    borderColor: '#efd28d',
-    color: '#9d6b13',
-  },
   accessPage: {
     minHeight: '100vh',
     display: 'flex',
@@ -214,7 +209,6 @@ export default function ActivityPage() {
 
   const lostItems = activityItems.filter((item) => item.category === 'Lost item');
   const foundItems = activityItems.filter((item) => item.category === 'Found item');
-  const claims = activityItems.filter((item) => item.category === 'My claim');
 
   return (
     <main style={pageStyles.shell}>
@@ -298,30 +292,6 @@ export default function ActivityPage() {
                     ...(item.status === 'open' ? pageStyles.statusPill : pageStyles.statusPill),
                   }}
                 >
-                  {item.statusLabel}
-                </span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section style={pageStyles.section}>
-          <h2 style={pageStyles.sectionLabel}>My Claims</h2>
-          <div style={pageStyles.rowList}>
-            {claims.map((item) => (
-              <button
-                key={item.itemId}
-                type="button"
-                style={pageStyles.rowButton}
-                onClick={() => setSelectedItem(item)}
-              >
-                <div>
-                  <h3 style={pageStyles.rowTitle}>{item.title}</h3>
-                  <p style={pageStyles.rowMeta}>
-                    {item.reportedDate} · {item.itemId}
-                  </p>
-                </div>
-                <span style={{ ...pageStyles.statusPill, ...pageStyles.reviewStyle }}>
                   {item.statusLabel}
                 </span>
               </button>
