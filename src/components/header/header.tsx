@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Button from '../button/button';
 
 export default function Header() {
   const pathname = usePathname();
@@ -15,14 +16,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 relative flex items-center justify-center min-h-[65px] px-7 py-[18px] bg-[#fdfdfd] border-b border-[#dfe7f0] box-border w-full">
       {/* Left side - branding */}
-      <div className="absolute left-7 flex flex-col justify-center">
+      <Link href="/" className="absolute left-7 flex flex-col justify-center hover:opacity-80">
         <div className="text-[0.65rem] tracking-[0.12em] text-primary-muted font-bold whitespace-nowrap leading-tight">
           TEXAS A&M UNIVERSITY
         </div>
         <div className="text-xl font-extrabold text-primary tracking-tight leading-tight">
           TAMUfindr
         </div>
-      </div>
+      </Link>
 
       {/* Middle - navbar */}
       <nav
@@ -43,9 +44,9 @@ export default function Header() {
         </Link>
       </nav>
 
-      {/* Right side - Log in */}
-      <div className="absolute right-7 text-l font-extrabold text-primary cursor-pointer hover:opacity-80 whitespace-nowrap">
-        Log in
+      {/* Right side - Log out */}
+      <div className="absolute right-7">
+        <Button buttonName="Log out" className="text-sm font-bold bg-primary text-white" style={{ backgroundColor: 'var(--color-primary)', color: 'var(--color-white)' }}/>
       </div>
     </header>
   );
