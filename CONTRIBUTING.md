@@ -18,9 +18,9 @@ npm run dev
 
 This project uses:
 
-* **TypeScript** for type safety
-* **ESLint** for code quality
-* **Prettier** for consistent formatting
+- **TypeScript** for type safety
+- **ESLint** for code quality
+- **Prettier** for consistent formatting
 
 Before submitting changes, run:
 
@@ -68,10 +68,10 @@ Update item card styling
 
 Before opening a pull request:
 
-* Make sure the project builds and runs locally.
-* Run ESLint and Prettier checks.
-* Test the functionality you changed.
-* Remove unused code, debug logs, and temporary files.
-* Keep the pull request focused on one feature or issue.
+- Make sure the project builds and runs locally.
+- Run ESLint and Prettier checks.
+- Test the functionality you changed.
+- Remove unused code, debug logs, and temporary files.
+- Keep the pull request focused on one feature or issue.
 
 Include a short description of what changed and anything reviewers should test.

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ItemModal, { type ItemModalData } from '@/components/item_modal/item_modal';
 import { sampleItems } from '@/components/item_modal/sample_items';
 
@@ -263,11 +263,21 @@ export default function ActivityPage() {
         </div>
 
         <nav style={pageStyles.nav} aria-label="Main navigation">
-          <a href="#" style={pageStyles.navLink}>Browse</a>
-          <a href="#" style={pageStyles.navLink}>Report</a>
-          <a href="#" style={pageStyles.activeNav}>My Items</a>
-          <a href="#" style={pageStyles.navLink}>Help</a>
-          <a href="#" style={pageStyles.navLink}>Staff</a>
+          <a href="#" style={pageStyles.navLink}>
+            Browse
+          </a>
+          <a href="#" style={pageStyles.navLink}>
+            Report
+          </a>
+          <a href="#" style={pageStyles.activeNav}>
+            My Items
+          </a>
+          <a href="#" style={pageStyles.navLink}>
+            Help
+          </a>
+          <a href="#" style={pageStyles.navLink}>
+            Staff
+          </a>
         </nav>
 
         <div style={pageStyles.signIn}>👤 Sign in with NetID</div>
@@ -280,7 +290,9 @@ export default function ActivityPage() {
           <div style={pageStyles.alertMain}>
             <div style={pageStyles.alertIcon}>◔</div>
             <div>
-              <p style={pageStyles.alertText}>Possible match found for &quot;AirPods Pro Case&quot;</p>
+              <p style={pageStyles.alertText}>
+                Possible match found for &quot;AirPods Pro Case&quot;
+              </p>
               <p style={pageStyles.alertSubText}>
                 A suggested match does not confirm ownership. Review the item and submit a claim if
                 it looks right.
@@ -315,7 +327,9 @@ export default function ActivityPage() {
                 <span
                   style={{
                     ...pageStyles.statusPill,
-                    ...(item.status === 'possible-match' ? pageStyles.providedStyle : pageStyles.statusPill),
+                    ...(item.status === 'possible-match'
+                      ? pageStyles.providedStyle
+                      : pageStyles.statusPill),
                   }}
                 >
                   {item.statusLabel}

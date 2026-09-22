@@ -68,14 +68,14 @@ The seed is safe to run more than once. It uses `upsert` and will not duplicate 
 
 ### Useful commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run db:format` | Format `prisma/schema.prisma` |
-| `npm run db:validate` | Validate the Prisma schema |
-| `npm run db:generate` | Generate the typed client in `src/generated/prisma` |
-| `npx prisma migrate status` | Check whether local migrations are applied |
-| `npm run db:seed` | Seed reference categories and locations |
-| `npm run db:migrate` | Create/apply a development migration |
+| Command                     | Purpose                                             |
+| --------------------------- | --------------------------------------------------- |
+| `npm run db:format`         | Format `prisma/schema.prisma`                       |
+| `npm run db:validate`       | Validate the Prisma schema                          |
+| `npm run db:generate`       | Generate the typed client in `src/generated/prisma` |
+| `npx prisma migrate status` | Check whether local migrations are applied          |
+| `npm run db:seed`           | Seed reference categories and locations             |
+| `npm run db:migrate`        | Create/apply a development migration                |
 
 ### Changing the schema
 
