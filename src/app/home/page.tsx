@@ -45,7 +45,7 @@ export default function HomePage() {
         </div>
 
         <section className="mt-16 w-full text-left">
-          <h2 className="mb-4 text-2xl font-bold text-secondary">Your activity</h2>
+          <h2 className="mb-4 text-2xl font-bold text-secondary">Your Activity</h2>
           <ActivityTable />
         </section>
       </div>
