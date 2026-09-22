@@ -1,0 +1,28 @@
+/*
+This file is a temporary mock data file for local testing.
+Please do not use this file for production purposes.
+
+Data format is as follows:
+{
+  "id": "LR" for lost, "FR" for found - followed by a unique number, ex. "LR-8821",
+
+  "type": "LOST" or "FOUND",
+
+  "status": "open", "possible-match", "resolved", or "cancelled",
+  
+  "date": "MM-DD-YYYY",
+
+  "user": "user1", will eventually be replaced by unique user hash,
+
+  "location": String for location, ex. "Memorial Student Center" or "Evans Library",
+
+  "item": Item name / title, ex. "Black Hydroflask 32oz",
+
+  "description": String for description entered by user,
+
+  "itemType": String for type entered by user, ex. "Electronics" or "Clothing",
+}
+
+See mockdata.json for the harcoded example data. This file is to be used only as a reference/instruction for understanding the format.
+
+*/
