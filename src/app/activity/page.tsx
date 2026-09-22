@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import ItemModal, { type ItemModalData } from '@/components/item_modal/item_modal';
-import { sampleItems } from '@/components/item_modal/sample_items';
+import mockData from '../../../mockData.json';
 
 const pageStyles = {
   shell: {
@@ -10,72 +10,6 @@ const pageStyles = {
     background: '#f5f6f8',
     color: '#16253b',
     fontFamily: 'Arial, Helvetica, sans-serif',
-  },
-  topBar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '20px',
-    padding: '18px 28px',
-    background: '#fdfdfd',
-    borderBottom: '1px solid #dfe7f0',
-    boxSizing: 'border-box' as const,
-  },
-  brandWrap: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    minWidth: '180px',
-  },
-  brandSmall: {
-    fontSize: '0.72rem',
-    letterSpacing: '0.14em',
-    color: '#58657a',
-    textTransform: 'uppercase',
-    fontWeight: 700,
-  },
-  brand: {
-    fontSize: '2.2rem',
-    lineHeight: 1,
-    fontWeight: 800,
-    letterSpacing: '-0.08em',
-    fontFamily: 'Georgia, serif',
-    color: '#111827',
-    margin: 0,
-  },
-  brandDot: {
-    color: '#d93d3d',
-  },
-  nav: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '22px',
-    flexWrap: 'wrap' as const,
-    fontSize: '1.05rem',
-    fontWeight: 600,
-    color: '#2d3d4d',
-  },
-  navLink: {
-    textDecoration: 'none',
-    color: '#2d3d4d',
-  },
-  activeNav: {
-    color: '#d93d3d',
-    borderBottom: '3px solid #d93d3d',
-    paddingBottom: '4px',
-    textDecoration: 'none',
-  },
-  signIn: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '8px',
-    background: '#f3f4f6',
-    border: '1px solid #dfe7f0',
-    borderRadius: '12px',
-    padding: '10px 18px',
-    fontWeight: 700,
-    color: '#273548',
   },
   content: {
     maxWidth: '1180px',
@@ -246,67 +180,70 @@ const pageStyles = {
   },
 };
 
-const alertItem = sampleItems[0];
+const statusLabels: Record<ItemModalData['status'], string> = {
+  open: 'Open',
+  resolved: 'Resolved',
+  'possible-match': 'Possible Match',
+  'claim-under-review': 'Claim Under Review',
+  reported: 'Reported',
+};
+
+const activityItems: ItemModalData[] = mockData.item.map((item) => {
+  const status = Object.prototype.hasOwnProperty.call(statusLabels, item.status)
+    ? (item.status as ItemModalData['status'])
+    : 'reported';
+
+  return {
+    title: item.item,
+    category: item.type === 'LOST' ? 'Lost item' : 'Found item',
+    status,
+    statusLabel: statusLabels[status],
+    reportedDate: `Reported ${item.date}`,
+    reportedBy: item.user,
+    location: item.location,
+    itemId: item.id,
+    description: item.description,
+    itemType: item.itemType,
+  };
+});
+
+const alertItem = activityItems.find((item) => item.status === 'possible-match');
 
 export default function ActivityPage() {
   const [selectedItem, setSelectedItem] = useState<ItemModalData | null>(null);
 
-  const lostItems = sampleItems.filter((item) => item.category === 'Lost item');
-  const foundItems = sampleItems.filter((item) => item.category === 'Found item');
-  const claims = sampleItems.filter((item) => item.category === 'My claim');
+  const lostItems = activityItems.filter((item) => item.category === 'Lost item');
+  const foundItems = activityItems.filter((item) => item.category === 'Found item');
+  const claims = activityItems.filter((item) => item.category === 'My claim');
 
   return (
     <main style={pageStyles.shell}>
-      <header style={pageStyles.topBar}>
-        <div style={pageStyles.brandWrap}>
-          <div style={pageStyles.brandSmall}>Texas A&M University</div>
-        </div>
-
-        <nav style={pageStyles.nav} aria-label="Main navigation">
-          <a href="#" style={pageStyles.navLink}>
-            Browse
-          </a>
-          <a href="#" style={pageStyles.navLink}>
-            Report
-          </a>
-          <a href="#" style={pageStyles.activeNav}>
-            My Items
-          </a>
-          <a href="#" style={pageStyles.navLink}>
-            Help
-          </a>
-          <a href="#" style={pageStyles.navLink}>
-            Staff
-          </a>
-        </nav>
-
-        <div style={pageStyles.signIn}>👤 Sign in with NetID</div>
-      </header>
-
       <div style={pageStyles.content}>
         <h1 style={pageStyles.pageTitle}>My Activity</h1>
 
-        <aside style={pageStyles.alertCard}>
-          <div style={pageStyles.alertMain}>
-            <div style={pageStyles.alertIcon}>◔</div>
-            <div>
-              <p style={pageStyles.alertText}>
-                Possible match found for &quot;AirPods Pro Case&quot;
-              </p>
-              <p style={pageStyles.alertSubText}>
-                A suggested match does not confirm ownership. Review the item and submit a claim if
-                it looks right.
-              </p>
+        {alertItem && (
+          <aside style={pageStyles.alertCard}>
+            <div style={pageStyles.alertMain}>
+              <div style={pageStyles.alertIcon}>◔</div>
+              <div>
+                <p style={pageStyles.alertText}>
+                  Possible match found for &quot;{alertItem.title}&quot;
+                </p>
+                <p style={pageStyles.alertSubText}>
+                  A suggested match does not confirm ownership. Review the item and submit a claim
+                  if it looks right.
+                </p>
+              </div>
             </div>
-          </div>
-          <button
-            type="button"
-            style={pageStyles.reviewButton}
-            onClick={() => setSelectedItem(alertItem)}
-          >
-            Review Item
-          </button>
-        </aside>
+            <button
+              type="button"
+              style={pageStyles.reviewButton}
+              onClick={() => setSelectedItem(alertItem)}
+            >
+              Review Item
+            </button>
+          </aside>
+        )}
 
         <section style={pageStyles.section}>
           <h2 style={pageStyles.sectionLabel}>Lost Reports</h2>
