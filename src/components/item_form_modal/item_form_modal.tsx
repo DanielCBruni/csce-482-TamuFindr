@@ -46,7 +46,7 @@ export default function ItemFormModal({
     onClose();
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const item: ItemFormData = {
