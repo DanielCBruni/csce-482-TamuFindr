@@ -30,7 +30,8 @@ export default function HomePage() {
               backgroundColor: 'var(--color-secondary)',
               color: 'var(--color-primary-dark)',
               padding: '28px 24px',
-            }}/>
+            }}
+          />
           <Button
             buttonName="Found an item"
             onClick={() => router.push('/report')}
@@ -41,11 +42,12 @@ export default function HomePage() {
               backgroundColor: 'var(--color-secondary)',
               color: 'var(--color-primary-dark)',
               padding: '28px 24px',
-            }}/>
+            }}
+          />
         </div>
 
         <section className="mt-16 w-full text-left">
-          <h2 className="mb-4 text-2xl font-bold text-secondary">Your activity</h2>
+          <h2 className="mb-4 text-2xl font-bold text-secondary">Your Activity</h2>
           <ActivityTable />
         </section>
       </div>
