@@ -49,7 +49,7 @@ model Location {
   name         String  @unique
   abbreviation String? @unique
 
-  foundItems   Item[] @relation("FoundLocation")
+  items        Item[] @relation("ItemLocation")
   storageItems Item[] @relation("StorageLocation")
 }
 
@@ -61,8 +61,8 @@ model Item {
   status               ItemStatus @default(OPEN)
   title                String
   description          String
-  foundLocationId      String?
-  foundLocationExtra   String?
+  locationId           String
+  locationExtra        String?
   storageLocationId    String?
   storageLocationExtra String?
   incidentDate         DateTime
@@ -74,7 +74,7 @@ model Item {
 
   submitter       User        @relation("ItemSubmitter", fields: [userId], references: [id], onDelete: Restrict)
   category        Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  foundLocation   Location?   @relation("FoundLocation", fields: [foundLocationId], references: [id], onDelete: SetNull)
+  location        Location   @relation("ItemLocation", fields: [locationId], references: [id], onDelete: Restrict)
   storageLocation Location?   @relation("StorageLocation", fields: [storageLocationId], references: [id], onDelete: SetNull)
   servicedBy      User?       @relation("ItemServicer", fields: [servicedById], references: [id], onDelete: SetNull)
   images          ItemImage[]
@@ -83,7 +83,7 @@ model Item {
   @@index([categoryId])
   @@index([status, type])
   @@index([incidentDate])
-  @@index([foundLocationId])
+  @@index([locationId])
   @@index([storageLocationId])
 }
 
