@@ -113,7 +113,7 @@ pnpm db:migrate -- --name describe_your_change
 pnpm db:generate
 ```
 
-### After Pulling a Teammate's Database Changes
+### After Pulling Database Changes
 
 ```bash
 pnpm db:migrate
