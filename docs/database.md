@@ -2,19 +2,21 @@
 
 TAMUfindr uses PostgreSQL with Prisma.
 
+During development:
+
+- PostgreSQL runs in Docker.
+- The Next.js application runs locally.
+- Prisma commands run locally and connect to the Docker PostgreSQL database through `DATABASE_URL`.
+
 ## Initial Setup
 
-The database must be migrated, the Prisma client generated, and reference data seeded before development.
-
-### Docker
+Start the PostgreSQL container:
 
 ```bash
-pnpm docker:db:migrate
-pnpm docker:db:generate
-pnpm docker:db:seed
+pnpm docker:db
 ```
 
-### Manual
+Then prepare the database:
 
 ```bash
 pnpm db:migrate
@@ -22,17 +24,30 @@ pnpm db:generate
 pnpm db:seed
 ```
 
-## Changing the Database Schema
+Start the application normally:
 
-When changing the database structure:
+```bash
+pnpm dev
+```
+
+## Database Development Workflow
+
+Most database development happens by editing:
+
+```text
+prisma/schema.prisma
+```
+
+### Changing the Prisma Schema
+
+When you change the database structure:
 
 1. Edit `prisma/schema.prisma`.
-2. Format and validate the schema.
-3. Create a migration.
-4. Generate the updated Prisma client.
-5. Commit the schema and migration.
-
-### Manual Development
+2. Format the schema.
+3. Validate the schema.
+4. Create and apply a migration.
+5. Generate the updated Prisma client.
+6. Commit both the schema and generated migration files.
 
 ```bash
 pnpm db:format
@@ -41,22 +56,11 @@ pnpm db:migrate -- --name describe_your_change
 pnpm db:generate
 ```
 
-Example:
+For example:
 
 ```bash
 pnpm db:migrate -- --name add_item_status
 ```
-
-### Docker Development
-
-Use the equivalent Docker database commands:
-
-```bash
-pnpm docker:db:migrate
-pnpm docker:db:generate
-```
-
-When creating a migration, provide a descriptive migration name if supported by the project script.
 
 ## Useful Commands
 
@@ -69,36 +73,55 @@ When creating a migration, provide a descriptive migration name if supported by 
 | `pnpm db:seed` | Seed development data |
 | `pnpm prisma migrate status` | Check migration status |
 
-## Troubleshooting
+## Pulling Database Changes
 
-### Cannot reach PostgreSQL
-
-```text
-Can't reach database server at localhost:5432
-```
-
-Make sure PostgreSQL is running and verify the host and port in `DATABASE_URL`.
-
-### Database does not exist
-
-Create the database:
+If another developer changes the database schema and commits a migration, after pulling their changes run:
 
 ```bash
-createdb tamufindr
+pnpm db:migrate
+pnpm db:generate
 ```
 
-### Database user does not have access
+If their changes also modify required seed data, run:
 
-Check the username, password, host, port, and database name in `DATABASE_URL`.
+```bash
+pnpm db:seed
+```
 
-Prisma uses the database credentials specified by `DATABASE_URL`, not your operating system username.
+## Typical Workflows
 
-### Prisma Migrate cannot create the shadow database
+### Starting Development
 
-`prisma migrate dev` uses a temporary shadow database to determine schema changes.
+If the database container is not already running:
 
-The PostgreSQL user specified in `DATABASE_URL` must have permission to create databases, or the project must be configured with a separate shadow database.
+```bash
+pnpm docker:db
+```
 
-### Seed connects using the wrong database
+Then start Next.js:
 
-Make sure the seed script loads environment variables and `.env` contains the expected `DATABASE_URL`.
+```bash
+pnpm dev
+```
+
+### After Changing `schema.prisma`
+
+```bash
+pnpm db:format
+pnpm db:validate
+pnpm db:migrate -- --name describe_your_change
+pnpm db:generate
+```
+
+### After Pulling a Teammate's Database Changes
+
+```bash
+pnpm db:migrate
+pnpm db:generate
+```
+
+### After Changing Seed Data
+
+```bash
+pnpm db:seed
+```

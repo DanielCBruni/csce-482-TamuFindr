@@ -2,66 +2,34 @@
 
 ## Local Development
 
-**Prerequisites**
+TAMUfindr runs the PostgreSQL database in Docker while the Next.js application runs locally.
 
-Clone the repository and create your local environment file:
+### Prerequisites
+
+Install:
+
+- [pnpm](https://pnpm.io/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+### Setup
+
+Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/DanielCBruni/csce-482-TamuFindr.git
 cd csce-482-TamuFindr
+
+pnpm install
 cp .env.example .env
 ```
 
-### Docker (recommended)
-
-Install:
-
-* Docker Desktop
-* pnpm
-
-Start the development environment:
+Start the PostgreSQL database:
 
 ```bash
-pnpm docker:dev
+pnpm docker:db
 ```
 
-Setup the database:
-
-```bash
-pnpm docker:db:migrate
-pnpm docker:db:generate
-pnpm docker:db:seed
-```
-
-Open:
-
-```
-http://localhost:3000
-```
-
-### Manual Setup
-
-Install:
-
-* Node.js
-* pnpm
-* PostgreSQL
-
-Insall dependencies:
-
-```bash
-pnpm install
-```
-
-Create a local PostgreSQL database named `tamufindr` and configure DATABASE_URL in .env.
-
-Example:
-
-```env
-DATABASE_URL="postgresql://<user>:<password>@localhost:5432/tamufindr?schema=public"
-```
-
-Setup the database:
+Set up the database and Prisma client:
 
 ```bash
 pnpm db:migrate
@@ -69,20 +37,16 @@ pnpm db:generate
 pnpm db:seed
 ```
 
-Start the application:
+Start the Next.js development server:
 
 ```bash
 pnpm dev
 ```
 
-Open:
+The database will continue running in Docker while the Next.js application runs locally.
 
-```
-http://localhost:3000
-```
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow and [docs/database.md](docs/database.md) for database development instructions.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
-
-## Contributors:
+## Contributors
 
 Daniel Bruni, Hallie Pailes, Kevinn Tran, Jacob Kelly, and Giovan Ramirez-Rodarte
