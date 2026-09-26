@@ -1,18 +1,30 @@
 # Contributing
 
-## Getting Started
+## Development Workflow
 
-Install dependencies:
+Tamufindr uses the following branch flow:
 
-```bash
-npm install
+```txt
+  wip     : Active development integration
+   |
+   v
+testing   : Integration and final testing before release
+   |
+   v
+ main     : Live branch. Deployed, stable code
 ```
 
-Start the development server:
+Create feature and fix branches from `wip`.
 
-```bash
-npm run dev
+Examples:
+
+```txt
+feature/lost-item-form
+feature/search
+fix/form-validation
 ```
+
+Keep branches focused on one feature or fix.
 
 ## Code Standards
 
@@ -22,56 +34,31 @@ This project uses:
 - **ESLint** for code quality
 - **Prettier** for consistent formatting
 
-Before submitting changes, run:
-
-```bash
-npm run check
-```
+Use 2-space indentation and follow the existing project structure and naming conventions.
 
 To automatically format your code:
 
 ```bash
-npm run format
+pnpm format
 ```
 
-Use 2-space indentation and follow the existing project structure and naming conventions.
+Before submitting changes:
+
+```bash
+pnpm check
+pnpm build
+```
 
 Install the **Prettier - Code formatter** VS Code extention. Save changes to automatically format your code.
-
-## Branches
-
-Create a separate branch for your work.
-
-Examples:
-
-```text
-feature/lost-item-form
-feature/search
-fix/form-validation
-```
-
-Keep branches focused on one feature or fix.
 
 ## Commits
 
 Use short, descriptive commit messages.
 
-Examples:
-
-```text
-Add lost item submission form
-Fix search filter validation
-Update item card styling
-```
-
 ## Pull Requests
 
 Before opening a pull request:
 
-- Make sure the project builds and runs locally.
-- Run ESLint and Prettier checks.
-- Test the functionality you changed.
-- Remove unused code, debug logs, and temporary files.
-- Keep the pull request focused on one feature or issue.
-
-Include a short description of what changed and anything reviewers should test.
+* Make sure the application builds and runs locally.
+* Run pnpm check.
+* Run pnpm build.

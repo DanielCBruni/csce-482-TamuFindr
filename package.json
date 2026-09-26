@@ -15,7 +15,9 @@
     "db:validate": "prisma validate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "prisma db seed",
+    "docker:db": "docker compose up -d db",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
