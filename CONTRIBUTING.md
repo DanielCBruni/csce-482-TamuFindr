@@ -1,18 +1,12 @@
 # Contributing
 
-## Getting Started
+## Branch architecture:
 
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start the development server:
-
-```bash
-npm run dev
-```
+    main     : Live branch, contains deployed code
+    /\
+    testing   : Integration branch, finished features get pushed here for testing/connecting, pushed up when all code is functional and clean
+    /\
+    wip     : Initial development branch, all individual features created here and pushed upward
 
 ## Code Standards
 
@@ -22,16 +16,17 @@ This project uses:
 - **ESLint** for code quality
 - **Prettier** for consistent formatting
 
-Before submitting changes, run:
-
-```bash
-npm run check
-```
-
 To automatically format your code:
 
 ```bash
-npm run format
+pnpm format
+```
+
+Before submitting changes, run:
+
+```bash
+pnpm check
+pnpm build
 ```
 
 Use 2-space indentation and follow the existing project structure and naming conventions.
@@ -73,5 +68,3 @@ Before opening a pull request:
 - Test the functionality you changed.
 - Remove unused code, debug logs, and temporary files.
 - Keep the pull request focused on one feature or issue.
-
-Include a short description of what changed and anything reviewers should test.
