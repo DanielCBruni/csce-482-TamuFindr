@@ -47,7 +47,7 @@ export default function ReportClientView({ categories, locations }: Props) {
           What would you like to report?
         </h1>
         <p className="text-base text-slate-600 max-w-xl mx-auto">
-          Select an option below to submit a lost item report or turn in something you've found on campus.
+          Select an option below to submit a lost item report or turn in something you&apos;ve found on campus.
         </p>
       </div>
 

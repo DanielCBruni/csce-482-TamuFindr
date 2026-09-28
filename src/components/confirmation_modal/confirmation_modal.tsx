@@ -53,7 +53,7 @@ export default function ConfirmationModal({
 
                 {/* Dynamic Message Content */}
                 <p className="mt-2 text-sm text-slate-600">
-                    Your report for <span className="font-semibold text-slate-800">"{itemTitle}"</span> has
+                    Your report for <span className="font-semibold text-slate-800">&quot{itemTitle}&quot</span> has
                     been successfully created.
                 </p>
 
