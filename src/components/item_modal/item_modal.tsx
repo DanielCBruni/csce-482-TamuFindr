@@ -8,7 +8,7 @@ export type ItemModalMode = 'home' | 'activity';
 export interface ItemModalData {
   title: string;
   category: string;
-  status: 'possible-match' | 'open' | 'claim-under-review' | 'reported' | 'resolved';
+  status: 'possible-match' | 'open' | 'claim-under-review' | 'reported' | 'resolved' | 'cancelled';
   statusLabel: string;
   reportedDate: string;
   reportedBy?: string;
@@ -37,6 +37,7 @@ const statusStyles = {
   'claim-under-review': styles.review,
   reported: styles.open,
   resolved: styles.open,
+  cancelled: styles.open,
 };
 
 export function ItemStatus({ item }: { item: ItemModalData }) {
