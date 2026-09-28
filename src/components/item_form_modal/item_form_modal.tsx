@@ -45,10 +45,9 @@ export default function ItemFormModal({
     setError(null);
   }
 
-  function handleClose() {
+  // Pure dismiss handler (Cancel button, backdrop click)
+  function handleDismiss() {
     resetForm();
-    const submittedTitle = title;
-    onSuccess(submittedTitle);
     onClose();
   }
 
@@ -112,7 +111,10 @@ export default function ItemFormModal({
       return;
     }
 
-    handleClose();
+    const submittedTitle = title;
+    resetForm();
+    onClose();
+    onSuccess(submittedTitle);
   }
 
   const isLost = mode === 'lost';
@@ -120,7 +122,7 @@ export default function ItemFormModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-      onClick={handleClose}
+      onClick={handleDismiss}
     >
       <div
         className="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg"
@@ -223,7 +225,7 @@ export default function ItemFormModal({
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
-            <Button buttonName="Cancel" type="button" onClick={onClose} />
+            <Button buttonName="Cancel" type="button" onClick={handleDismiss} />
             <Button
               buttonName={isSubmitting ? 'Submitting...' : `Report ${isLost ? 'Lost' : 'Found'} Item`}
               type="submit"
