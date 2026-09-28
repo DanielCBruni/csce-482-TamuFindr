@@ -223,7 +223,7 @@ export default function ItemFormModal({
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
-            <Button buttonName="Cancel" type="button" onClick={handleClose} />
+            <Button buttonName="Cancel" type="button" onClick={onClose} />
             <Button
               buttonName={isSubmitting ? 'Submitting...' : `Report ${isLost ? 'Lost' : 'Found'} Item`}
               type="submit"
