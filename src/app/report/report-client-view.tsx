@@ -24,14 +24,20 @@ export default function ReportClientView({ categories, locations }: Props) {
   function handleFormSuccess(submittedTitle: string) {
     if (!formModalMode) return;
 
-    // Capture submitted data for the confirmation modal
+    // Set confirmation data to trigger the success modal
     setConfirmationData({
       mode: formModalMode,
       itemTitle: submittedTitle,
     });
 
-    // Close the form modal
+    // Close form modal
     setFormModalMode(null);
+  }
+
+  function handleOpenForm(mode: 'lost' | 'found') {
+    // Ensures any previous confirmation data is cleared before opening the form
+    setConfirmationData(null);
+    setFormModalMode(mode);
   }
 
   return (
@@ -49,7 +55,7 @@ export default function ReportClientView({ categories, locations }: Props) {
         {/* Report Lost Item CTA */}
         <button
           type="button"
-          onClick={() => setFormModalMode('lost')}
+          onClick={() => handleOpenForm('lost')}
           className="group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all duration-200 text-center"
         >
           <div className="h-16 w-16 rounded-full bg-amber-50 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-105 transition-transform duration-200">
@@ -68,7 +74,7 @@ export default function ReportClientView({ categories, locations }: Props) {
         {/* Report Found Item CTA */}
         <button
           type="button"
-          onClick={() => setFormModalMode('found')}
+          onClick={() => handleOpenForm('found')}
           className="group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all duration-200 text-center"
         >
           <div className="h-16 w-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-105 transition-transform duration-200">
@@ -95,7 +101,7 @@ export default function ReportClientView({ categories, locations }: Props) {
         onSuccess={handleFormSuccess}
       />
 
-      {/* 2. CONFIRMATION MODAL PLUGGED IN HERE */}
+      {/* 2. CONFIRMATION MODAL */}
       <ConfirmationModal
         open={confirmationData !== null}
         mode={confirmationData?.mode ?? 'lost'}
