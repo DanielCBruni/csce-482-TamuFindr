@@ -2,10 +2,10 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { requireCurrentUserId } from '@/lib/auth/current-user';
 import type { ItemType } from '../generated/prisma/enums';
 
 export type CreateReportInput = {
-  userId: string; // Typically retrieved from session/auth middleware
   type: ItemType;
   title: string;
   categoryId: string;
@@ -16,24 +16,24 @@ export type CreateReportInput = {
 };
 
 export async function createItemReport(data: CreateReportInput) {
-  // 1. Server-side Validation
   if (!data.title || data.title.trim().length < 3) {
     return { success: false, error: 'Title must be at least 3 characters long.' };
   }
   if (!data.categoryId || !data.locationId) {
     return { success: false, error: 'Category and Location are required.' };
   }
-  
+
   const parsedDate = new Date(data.incidentDate);
   if (isNaN(parsedDate.getTime())) {
     return { success: false, error: 'Invalid incident date provided.' };
   }
 
   try {
-    // 2. Insert into PostgreSQL
+    const userId = await requireCurrentUserId();
+
     const newItem = await prisma.item.create({
       data: {
-        userId: data.userId,
+        userId,
         type: data.type,
         title: data.title.trim(),
         description: data.description.trim(),

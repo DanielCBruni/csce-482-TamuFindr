@@ -46,9 +46,12 @@ const locations = [
   { name: 'The Commons', abbreviation: 'COMM' },
 ];
 
-
-
 async function main() {
+  const userId = process.env.DEFAULT_USER_ID;
+  if (!userId?.trim()) {
+    throw new Error('DEFAULT_USER_ID must be configured.');
+  }
+
   console.log('Seeding categories...');
   for (const category of categories) {
     await prisma.category.upsert({
@@ -67,11 +70,11 @@ async function main() {
     });
   }
 
-  const defaultUser = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { email: 'testuser@tamu.edu' },
-    update: {},
+    update: { id: userId },
     create: {
-      id: 'sample-user-id',
+      id: userId,
       email: 'testuser@tamu.edu',
       firstName: 'Miss',
       lastName: 'Rev',

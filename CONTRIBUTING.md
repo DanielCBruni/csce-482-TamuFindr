@@ -59,6 +59,6 @@ Use short, descriptive commit messages.
 
 Before opening a pull request:
 
-* Make sure the application builds and runs locally.
-* Run pnpm check.
-* Run pnpm build.
+- Make sure the application builds and runs locally.
+- Run pnpm check.
+- Run pnpm build.
