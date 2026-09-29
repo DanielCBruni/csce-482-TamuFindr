@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { claimItem } from '@/actions/claim-item';
 import ItemModal, { type ItemModalData } from '@/components/item_modal/item_modal';
 
 const pageStyles = {
@@ -175,11 +177,39 @@ const pageStyles = {
 };
 
 export default function ActivityClientView({ activityItems }: { activityItems: ItemModalData[] }) {
-  const alertItem = activityItems.find((item) => item.status === 'possible-match');
+  const router = useRouter();
+  const claiming = useRef(false);
+  const [isPending, setIsPending] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [claimedIds, setClaimedIds] = useState<string[]>([]);
+  const visibleItems = activityItems.filter((item) => !claimedIds.includes(item.itemId));
+  const alertItem = visibleItems.find((item) => item.status === 'possible-match');
   const [selectedItem, setSelectedItem] = useState<ItemModalData | null>(null);
 
-  const lostItems = activityItems.filter((item) => item.category === 'Lost item');
-  const foundItems = activityItems.filter((item) => item.category === 'Found item');
+  const lostItems = visibleItems.filter((item) => item.category === 'Lost item');
+  const foundItems = visibleItems.filter((item) => item.category === 'Found item');
+
+  async function handleClaim(item: ItemModalData) {
+    if (claiming.current) return;
+    claiming.current = true;
+    setIsPending(true);
+    setActionError(null);
+    try {
+      const result = await claimItem(item.itemId);
+      if (!result.success) {
+        setActionError(result.error ?? 'Unable to claim this item.');
+        return;
+      }
+      setClaimedIds((ids) => [...ids, item.itemId]);
+      setSelectedItem(null);
+      router.refresh();
+    } catch {
+      setActionError('Unable to claim this item. Please try again.');
+    } finally {
+      claiming.current = false;
+      setIsPending(false);
+    }
+  }
 
   return (
     <main style={pageStyles.shell}>
@@ -276,11 +306,21 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
       {selectedItem && (
         <ItemModal
           isOpen={true}
-          item={selectedItem}
+          item={{ ...selectedItem, primaryActionLabel: 'Claim Item' }}
           mode="activity"
-          onClose={() => setSelectedItem(null)}
-          onPrimaryAction={() => setSelectedItem(null)}
-          onSecondaryAction={() => setSelectedItem(null)}
+          onClose={() => {
+            if (!claiming.current) {
+              setSelectedItem(null);
+              setActionError(null);
+            }
+          }}
+          onPrimaryAction={
+            selectedItem.status === 'open' || selectedItem.status === 'possible-match'
+              ? handleClaim
+              : undefined
+          }
+          isPending={isPending}
+          actionError={actionError}
         />
       )}
     </main>

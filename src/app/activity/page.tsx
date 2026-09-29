@@ -18,7 +18,7 @@ const statusDisplay: Record<ItemStatus, { status: ItemModalData['status']; statu
 export default async function ActivityPage() {
   const userId = await requireCurrentUserId();
   const items = await prisma.item.findMany({
-    where: { userId },
+    where: { userId, status: { not: 'RESOLVED' } },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
     select: {
       id: true,

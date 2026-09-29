@@ -27,6 +27,8 @@ export interface ItemModalProps {
   item: ItemModalData;
   mode?: ItemModalMode;
   onClose: () => void;
+  isPending?: boolean;
+  actionError?: string | null;
   onPrimaryAction?: (item: ItemModalData) => void;
   onSecondaryAction?: (item: ItemModalData) => void;
 }
@@ -53,6 +55,8 @@ export default function ItemModal({
   onClose,
   onPrimaryAction,
   onSecondaryAction,
+  isPending = false,
+  actionError,
 }: ItemModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -162,6 +166,11 @@ export default function ItemModal({
           </aside>
         )}
       </div>
+      {actionError && (
+        <p role="alert" style={{ padding: '0 28px', color: '#b91c1c' }}>
+          {actionError}
+        </p>
+      )}
       <footer className={styles.actions}>
         <button type="button" className={styles.secondary} onClick={onClose}>
           {mode === 'home' ? 'Keep browsing' : 'Back to activity'}
@@ -176,9 +185,17 @@ export default function ItemModal({
           </button>
         )}
         {onPrimaryAction && (
-          <button type="button" className={styles.primary} onClick={() => onPrimaryAction(item)}>
-            {item.primaryActionLabel ??
-              (item.status === 'possible-match' ? 'Review Item' : 'View report')}
+          <button
+            type="button"
+            className={styles.primary}
+            disabled={isPending}
+            aria-busy={isPending}
+            onClick={() => onPrimaryAction(item)}
+          >
+            {isPending
+              ? 'Saving…'
+              : (item.primaryActionLabel ??
+                (item.status === 'possible-match' ? 'Review Item' : 'View report'))}
           </button>
         )}
       </footer>
