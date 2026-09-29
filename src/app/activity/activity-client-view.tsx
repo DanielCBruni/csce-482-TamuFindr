@@ -5,175 +5,13 @@ import { useRouter } from 'next/navigation';
 import { claimItem } from '@/actions/claim-item';
 import ItemModal, { type ItemModalData } from '@/components/item_modal/item_modal';
 
-const pageStyles = {
-  shell: {
-    minHeight: '100vh',
-    background: '#f5f6f8',
-    color: '#16253b',
-    fontFamily: 'Arial, Helvetica, sans-serif',
-  },
-  content: {
-    maxWidth: '1180px',
-    margin: '0 auto',
-    padding: '28px 28px 40px',
-  },
-  pageTitle: {
-    margin: '0 0 26px',
-    fontSize: '4rem',
-    lineHeight: 1,
-    fontWeight: 800,
-    letterSpacing: '-0.07em',
-    fontFamily: 'Georgia, serif',
-    color: '#1f2f46',
-  },
-  alertCard: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '18px',
-    background: '#edf7ff',
-    border: '1px solid #bfd9f2',
-    borderRadius: '16px',
-    padding: '18px 22px',
-    marginBottom: '28px',
-    boxSizing: 'border-box' as const,
-  },
-  alertMain: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '14px',
-    flex: 1,
-  },
-  alertIcon: {
-    width: '28px',
-    height: '28px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '50%',
-    background: '#dfeeff',
-    color: '#2f67c7',
-    fontSize: '1.1rem',
-  },
-  alertText: {
-    margin: 0,
-    color: '#1f2f46',
-    fontSize: '1.12rem',
-    lineHeight: 1.5,
-    fontWeight: 700,
-  },
-  alertSubText: {
-    margin: '4px 0 0',
-    color: '#5e6f85',
-    fontSize: '0.95rem',
-    lineHeight: 1.5,
-    fontWeight: 500,
-  },
-  reviewButton: {
-    background: '#2d7ff9',
-    color: '#ffffff',
-    border: '1px solid #2d7ff9',
-    borderRadius: '12px',
-    padding: '11px 18px',
-    fontSize: '1rem',
-    fontWeight: 700,
-    cursor: 'pointer',
-    minWidth: '140px',
-  },
-  section: {
-    marginBottom: '26px',
-  },
-  sectionLabel: {
-    margin: '0 0 12px',
-    color: '#273548',
-    fontSize: '0.9rem',
-    lineHeight: 1.2,
-    letterSpacing: '0.17em',
-    textTransform: 'uppercase',
-    fontWeight: 800,
-  },
-  rowList: {
-    border: '1px solid #dfe7f0',
-    borderRadius: '16px',
-    background: '#f8fafc',
-    overflow: 'hidden',
-  },
-  rowButton: {
-    width: '100%',
-    border: 0,
-    borderBottom: '1px solid #dfe7f0',
-    background: 'transparent',
-    padding: '20px 18px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '16px',
-    cursor: 'pointer',
-    textAlign: 'left' as const,
-    color: '#18283f',
-  },
-  rowTitle: {
-    margin: 0,
-    fontSize: '1.1rem',
-    lineHeight: 1.4,
-    fontWeight: 700,
-    color: '#1f2f46',
-  },
-  rowMeta: {
-    margin: '8px 0 0',
-    fontSize: '0.98rem',
-    color: '#697a8f',
-    lineHeight: 1.5,
-  },
-  statusPill: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: '130px',
-    padding: '9px 14px',
-    borderRadius: '999px',
-    border: '1px solid #dfe7f0',
-    fontSize: '0.94rem',
-    fontWeight: 700,
-    background: '#f4f7fb',
-    color: '#2f425e',
-    whiteSpace: 'nowrap' as const,
-  },
-  providedStyle: {
-    background: '#edf7ff',
-    borderColor: '#bfd9f2',
-    color: '#2b598d',
-  },
-  accessPage: {
-    minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '32px',
-    background: '#f5f6f8',
-    fontFamily: 'Arial, Helvetica, sans-serif',
-  },
-  accessCard: {
-    maxWidth: '520px',
-    width: '100%',
-    background: '#ffffff',
-    border: '1px solid #dfe7f0',
-    borderRadius: '20px',
-    boxShadow: '0 18px 50px rgba(15, 23, 42, 0.08)',
-    padding: '32px',
-  },
-  accessTitle: {
-    margin: '0 0 12px',
-    fontSize: '2rem',
-    color: '#1f2f46',
-    fontWeight: 800,
-  },
-  accessText: {
-    margin: 0,
-    color: '#55667a',
-    lineHeight: 1.7,
-    fontSize: '1rem',
-  },
+const statusPillClasses: Record<ItemModalData['status'], string> = {
+  open: 'border-slate-200 bg-white text-slate-700',
+  'possible-match': 'border-emerald-200 bg-emerald-100 text-emerald-800',
+  resolved: 'border-slate-200 bg-slate-200 text-slate-600',
+  cancelled: 'border-slate-200 bg-slate-200 text-slate-600',
+  'claim-under-review': 'border-slate-200 bg-white text-slate-700',
+  reported: 'border-slate-200 bg-white text-slate-700'
 };
 
 export default function ActivityClientView({ activityItems }: { activityItems: ItemModalData[] }) {
@@ -182,10 +20,10 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
   const [isPending, setIsPending] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [claimedIds, setClaimedIds] = useState<string[]>([]);
-  const visibleItems = activityItems.filter((item) => !claimedIds.includes(item.itemId));
-  const alertItem = visibleItems.find((item) => item.status === 'possible-match');
   const [selectedItem, setSelectedItem] = useState<ItemModalData | null>(null);
 
+  const visibleItems = activityItems.filter((item) => !claimedIds.includes(item.itemId));
+  const alertItem = visibleItems.find((item) => item.status === 'possible-match');
   const lostItems = visibleItems.filter((item) => item.category === 'Lost item');
   const foundItems = visibleItems.filter((item) => item.category === 'Found item');
 
@@ -212,19 +50,21 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
   }
 
   return (
-    <main style={pageStyles.shell}>
-      <div style={pageStyles.content}>
-        <h1 style={pageStyles.pageTitle}>My Activity</h1>
+    <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
+      <div className="mb-8 w-full text-left">
+        <h1 className="pb-6 text-4xl font-bold text-primary md:text-5xl">My Activity</h1>
 
         {alertItem && (
-          <aside style={pageStyles.alertCard}>
-            <div style={pageStyles.alertMain}>
-              <div style={pageStyles.alertIcon}>◔</div>
+          <aside className="mb-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-sky-200 bg-sky-50 p-5 md:flex-row md:items-center">
+            <div className="flex flex-1 items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-base font-bold text-[#2f67c7]">
+                ◔
+              </div>
               <div>
-                <p style={pageStyles.alertText}>
+                <p className="text-base font-bold leading-6 text-primary">
                   Possible match found for &quot;{alertItem.title}&quot;
                 </p>
-                <p style={pageStyles.alertSubText}>
+                <p className="mt-1 text-sm leading-5 text-slate-600">
                   A suggested match does not confirm ownership. Review the item and submit a claim
                   if it looks right.
                 </p>
@@ -232,38 +72,34 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
             </div>
             <button
               type="button"
-              style={pageStyles.reviewButton}
               onClick={() => setSelectedItem(alertItem)}
+              className="min-w-35 rounded-xl border border-[#2d7ff9] bg-[#2d7ff9] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#246de0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Review Item
             </button>
           </aside>
         )}
 
-        <section style={pageStyles.section}>
-          <h2 style={pageStyles.sectionLabel}>Lost Reports</h2>
-          <div style={pageStyles.rowList}>
-            {lostItems.length === 0 && <p style={{ padding: 18 }}>No lost reports yet.</p>}
-            {lostItems.map((item) => (
+        <section className="mb-7">
+          <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Lost Reports</p>
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            {lostItems.length === 0 && <p className="p-5 text-sm text-slate-600">No lost reports yet.</p>}
+            {lostItems.map((item, index) => (
               <button
                 key={item.itemId}
                 type="button"
-                style={pageStyles.rowButton}
                 onClick={() => setSelectedItem(item)}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
+                  }`}
               >
                 <div>
-                  <h3 style={pageStyles.rowTitle}>{item.title}</h3>
-                  <p style={pageStyles.rowMeta}>
+                  <h3 className="text-lg font-bold text-primary">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-5 text-slate-600">
                     {item.reportedDate} · {item.itemId}
                   </p>
                 </div>
                 <span
-                  style={{
-                    ...pageStyles.statusPill,
-                    ...(item.status === 'possible-match'
-                      ? pageStyles.providedStyle
-                      : pageStyles.statusPill),
-                  }}
+                  className={`inline-flex min-w-32.5 items-center justify-center rounded-full border px-3 py-2 text-xs font-bold ${statusPillClasses[item.status]}`}
                 >
                   {item.statusLabel}
                 </span>
@@ -272,28 +108,26 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
           </div>
         </section>
 
-        <section style={pageStyles.section}>
-          <h2 style={pageStyles.sectionLabel}>Found Reports</h2>
-          <div style={pageStyles.rowList}>
-            {foundItems.length === 0 && <p style={{ padding: 18 }}>No found reports yet.</p>}
-            {foundItems.map((item) => (
+        <section className="mb-7">
+          <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Found Reports</p>
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            {foundItems.length === 0 && <p className="p-5 text-sm text-slate-600">No found reports yet.</p>}
+            {foundItems.map((item, index) => (
               <button
                 key={item.itemId}
                 type="button"
-                style={pageStyles.rowButton}
                 onClick={() => setSelectedItem(item)}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
+                  }`}
               >
                 <div>
-                  <h3 style={pageStyles.rowTitle}>{item.title}</h3>
-                  <p style={pageStyles.rowMeta}>
+                  <h3 className="text-lg font-bold text-primary">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-5 text-slate-600">
                     {item.reportedDate} · {item.itemId}
                   </p>
                 </div>
                 <span
-                  style={{
-                    ...pageStyles.statusPill,
-                    ...(item.status === 'open' ? pageStyles.statusPill : pageStyles.statusPill),
-                  }}
+                  className={`inline-flex min-w-32.5 items-center justify-center rounded-full border px-3 py-2 text-xs font-bold ${statusPillClasses[item.status]}`}
                 >
                   {item.statusLabel}
                 </span>

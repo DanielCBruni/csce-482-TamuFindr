@@ -14,7 +14,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 relative flex items-center justify-center min-h-[65px] px-7 py-[18px] bg-[#fdfdfd] border-b border-[#dfe7f0] box-border w-full">
+    <header className="sticky top-0 z-50 flex items-center justify-center min-h-16.25 px-7 py-4.5 bg-[#fdfdfd] border-b border-[#dfe7f0] box-border w-full">
       {/* Left side - branding */}
       <Link href="/" className="absolute left-7 flex flex-col justify-center hover:opacity-80">
         <div className="text-[0.65rem] tracking-[0.12em] text-primary-muted font-bold whitespace-nowrap leading-tight">
@@ -27,7 +27,7 @@ export default function Header() {
 
       {/* Middle - navbar */}
       <nav
-        className="flex items-center justify-center gap-[22px] flex-wrap mx-auto"
+        className="flex items-center justify-center gap-5.5 flex-wrap mx-auto"
         aria-label="Main navigation"
       >
         <Link href="/home" className={linkClass('/home')}>

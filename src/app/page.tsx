@@ -3,7 +3,7 @@ export default function Landing() {
     <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
       <div className="w-full text-left mb-8">
         <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Welcome</p>
-        <h1 className="text-5xl font-bold text-primary md:text-6xl pb-6">Howdy!</h1>
+        <h1 className="text-5xl font-bold text-primary md:text-6xl pb-4">Howdy!</h1>
         <h2 className="text-2xl font-bold text-primary md:text-3xl pt-3">
           Lost something on campus?
         </h2>
