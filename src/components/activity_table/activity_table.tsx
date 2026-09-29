@@ -1,5 +1,3 @@
-import mockData from '../../../mockData.json';
-
 export interface ActivityItem {
   id: string;
   type: string;
@@ -34,10 +32,14 @@ function formatStatus(status: string) {
 }
 
 export interface ActivityTableProps {
-  items?: ActivityItem[];
+  items: ActivityItem[];
+  emptyMessage?: string;
 }
 
-export default function ActivityTable({ items = mockData.item }: ActivityTableProps) {
+export default function ActivityTable({
+  items,
+  emptyMessage = 'No tickets found',
+}: ActivityTableProps) {
   return (
     <div className="w-full overflow-x-auto rounded-lg border border-primary-muted/20 bg-white shadow-sm">
       <table className="w-full min-w-[720px] border-collapse text-left">
@@ -68,7 +70,7 @@ export default function ActivityTable({ items = mockData.item }: ActivityTablePr
           {items.length === 0 ? (
             <tr>
               <td colSpan={6} className="px-5 py-8 text-center text-primary-muted">
-                No active tickets
+                {emptyMessage}
               </td>
             </tr>
           ) : (

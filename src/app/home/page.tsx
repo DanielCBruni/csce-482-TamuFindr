@@ -88,7 +88,7 @@ export default async function HomePage() {
 
         <section className="mt-16 w-full text-left">
           <h2 className="mb-4 text-2xl font-bold text-white">Your Activity</h2>
-          <ActivityTable items={activityItems} />
+          <ActivityTable items={activityItems} emptyMessage="No active tickets" />
         </section>
       </div>
     </main>
