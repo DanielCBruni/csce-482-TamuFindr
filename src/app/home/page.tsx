@@ -1,11 +1,35 @@
-'use client';
+import Link from 'next/link';
+import ActivityTable, { type ActivityItem } from '@/components/activity_table/activity_table';
+import { requireCurrentUserId } from '@/lib/auth/current-user';
+import { prisma } from '@/lib/prisma';
 
-import { useRouter } from 'next/navigation';
-import Button from '../../components/button/button';
-import ActivityTable from '../../components/activity_table/activity_table';
+export const dynamic = 'force-dynamic';
 
-export default function HomePage() {
-  const router = useRouter();
+export default async function HomePage() {
+  const userId = await requireCurrentUserId();
+  const items = await prisma.item.findMany({
+    where: { userId, status: { in: ['OPEN', 'MATCHED'] } },
+    orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
+    select: {
+      id: true,
+      title: true,
+      type: true,
+      status: true,
+      createdAt: true,
+      locationExtra: true,
+      category: { select: { name: true } },
+      location: { select: { name: true } },
+    },
+  });
+  const activityItems: ActivityItem[] = items.map((item) => ({
+    id: item.id,
+    type: item.type,
+    status: item.status,
+    date: item.createdAt,
+    location: [item.location.name, item.locationExtra].filter(Boolean).join(' · '),
+    item: item.title,
+    itemType: item.category.name,
+  }));
   const userName = '$username$';
 
   return (
@@ -20,11 +44,11 @@ export default function HomePage() {
         </p>
 
         <div className="mt-12 grid w-full max-w-2xl grid-cols-1 gap-12 sm:grid-cols-2">
-          <Button
-            buttonName="Lost an item"
-            onClick={() => router.push('/report')}
+          <Link
+            href="/report"
             className="transition-all duration-200 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/40"
             style={{
+              display: 'block',
               width: '100%',
               border: '1px solid rgba(255,255,255,0.9)',
               borderRadius: '22px',
@@ -37,12 +61,14 @@ export default function HomePage() {
               letterSpacing: '-0.03em',
               lineHeight: 1.2,
             }}
-          />
-          <Button
-            buttonName="Found an item"
-            onClick={() => router.push('/report')}
+          >
+            Lost an item
+          </Link>
+          <Link
+            href="/report"
             className="transition-all duration-200 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/40"
             style={{
+              display: 'block',
               width: '100%',
               border: '1px solid rgba(255,255,255,0.9)',
               borderRadius: '22px',
@@ -55,12 +81,14 @@ export default function HomePage() {
               letterSpacing: '-0.03em',
               lineHeight: 1.2,
             }}
-          />
+          >
+            Found an item
+          </Link>
         </div>
 
         <section className="mt-16 w-full text-left">
           <h2 className="mb-4 text-2xl font-bold text-white">Your Activity</h2>
-          <ActivityTable />
+          <ActivityTable items={activityItems} />
         </section>
       </div>
     </main>

@@ -1,8 +1,25 @@
 import mockData from '../../../mockData.json';
 
-export type ActivityItem = (typeof mockData.item)[number];
+export interface ActivityItem {
+  id: string;
+  type: string;
+  status: string;
+  date: string | Date;
+  location: string;
+  item: string;
+  itemType: string;
+}
 
-function formatDate(date: string) {
+function formatDate(date: string | Date) {
+  if (date instanceof Date) {
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: 'America/Chicago',
+    });
+  }
+
   const [month, day, year] = date.split('-').map(Number);
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
@@ -12,7 +29,8 @@ function formatDate(date: string) {
 }
 
 function formatStatus(status: string) {
-  return status.charAt(0).toUpperCase() + status.slice(1);
+  const normalizedStatus = status.toLowerCase();
+  return normalizedStatus.charAt(0).toUpperCase() + normalizedStatus.slice(1);
 }
 
 export interface ActivityTableProps {
@@ -47,25 +65,33 @@ export default function ActivityTable({ items = mockData.item }: ActivityTablePr
           </tr>
         </thead>
         <tbody className="divide-y divide-primary-muted/15 text-sm text-primary-dark">
-          {items.map((item) => (
-            <tr key={item.id} className="transition hover:bg-secondary/20">
-              <th className="px-5 py-4 font-semibold" scope="row">
-                {item.item}
-                <span className="mt-1 block text-xs font-normal text-primary-muted">
-                  Ticket {item.id}
-                </span>
-              </th>
-              <td className="px-5 py-4">{item.type === 'LOST' ? 'Lost' : 'Found'}</td>
-              <td className="px-5 py-4">
-                <span className="inline-flex rounded-full bg-primary-muted/10 px-3 py-1 text-xs font-semibold text-primary-muted">
-                  {formatStatus(item.status)}
-                </span>
+          {items.length === 0 ? (
+            <tr>
+              <td colSpan={6} className="px-5 py-8 text-center text-primary-muted">
+                No active tickets
               </td>
-              <td className="px-5 py-4">{item.itemType}</td>
-              <td className="px-5 py-4">{item.location}</td>
-              <td className="whitespace-nowrap px-5 py-4">{formatDate(item.date)}</td>
             </tr>
-          ))}
+          ) : (
+            items.map((item) => (
+              <tr key={item.id} className="transition hover:bg-secondary/20">
+                <th className="px-5 py-4 font-semibold" scope="row">
+                  {item.item}
+                  <span className="mt-1 block text-xs font-normal text-primary-muted">
+                    Ticket {item.id}
+                  </span>
+                </th>
+                <td className="px-5 py-4">{item.type === 'LOST' ? 'Lost' : 'Found'}</td>
+                <td className="px-5 py-4">
+                  <span className="inline-flex rounded-full bg-primary-muted/10 px-3 py-1 text-xs font-semibold text-primary-muted">
+                    {formatStatus(item.status)}
+                  </span>
+                </td>
+                <td className="px-5 py-4">{item.itemType}</td>
+                <td className="px-5 py-4">{item.location}</td>
+                <td className="whitespace-nowrap px-5 py-4">{formatDate(item.date)}</td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>
