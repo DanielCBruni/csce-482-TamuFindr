@@ -47,7 +47,8 @@ export default function ReportClientView({ categories, locations }: Props) {
           What would you like to report?
         </h1>
         <p className="text-base text-slate-600 max-w-xl mx-auto">
-          Select an option below to submit a lost item report or turn in something you&apos;ve found on campus.
+          Select an option below to submit a lost item report or turn in something you&apos;ve found
+          on campus.
         </p>
       </div>
 
@@ -60,7 +61,12 @@ export default function ReportClientView({ categories, locations }: Props) {
         >
           <div className="h-16 w-16 rounded-full bg-amber-50 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-105 transition-transform duration-200">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">
@@ -79,7 +85,12 @@ export default function ReportClientView({ categories, locations }: Props) {
         >
           <div className="h-16 w-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-105 transition-transform duration-200">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors">

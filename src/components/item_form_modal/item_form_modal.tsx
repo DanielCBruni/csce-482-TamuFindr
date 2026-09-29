@@ -93,8 +93,6 @@ export default function ItemFormModal({
 
     // Call Server Action
     const result = await createItemReport({
-      /* TODO: This is hardcoded as of now, need to dynamically fetch user's id from session */
-      userId: 'sample-user-id',
       type: mode === 'lost' ? 'LOST' : 'FOUND',
       title,
       categoryId,
@@ -227,7 +225,9 @@ export default function ItemFormModal({
           <div className="flex justify-end gap-3 pt-2">
             <Button buttonName="Cancel" type="button" onClick={handleDismiss} />
             <Button
-              buttonName={isSubmitting ? 'Submitting...' : `Report ${isLost ? 'Lost' : 'Found'} Item`}
+              buttonName={
+                isSubmitting ? 'Submitting...' : `Report ${isLost ? 'Lost' : 'Found'} Item`
+              }
               type="submit"
             />
           </div>

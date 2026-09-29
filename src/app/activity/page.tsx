@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { requireCurrentUserId } from '@/lib/auth/current-user';
 import type { ItemStatus } from '@/generated/prisma/enums';
 import type { ItemModalData } from '@/components/item_modal/item_modal';
 import ActivityClientView from './activity-client-view';
@@ -15,10 +16,9 @@ const statusDisplay: Record<ItemStatus, { status: ItemModalData['status']; statu
   };
 
 export default async function ActivityPage() {
+  const userId = await requireCurrentUserId();
   const items = await prisma.item.findMany({
-    // TODO: Replace with the authenticated user's ID when sessions are implemented.
-    // This matches the seeded user currently used by report submission.
-    where: { userId: 'sample-user-id' },
+    where: { userId },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
     select: {
       id: true,

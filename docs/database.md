@@ -64,14 +64,14 @@ pnpm db:migrate -- --name add_item_status
 
 ## Useful Commands
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm db:format` | Format `prisma/schema.prisma` |
-| `pnpm db:validate` | Validate the Prisma schema |
-| `pnpm db:generate` | Generate the Prisma client |
-| `pnpm db:migrate` | Create/apply development migrations |
-| `pnpm db:seed` | Seed development data |
-| `pnpm prisma migrate status` | Check migration status |
+| Command                      | Purpose                             |
+| ---------------------------- | ----------------------------------- |
+| `pnpm db:format`             | Format `prisma/schema.prisma`       |
+| `pnpm db:validate`           | Validate the Prisma schema          |
+| `pnpm db:generate`           | Generate the Prisma client          |
+| `pnpm db:migrate`            | Create/apply development migrations |
+| `pnpm db:seed`               | Seed development data               |
+| `pnpm prisma migrate status` | Check migration status              |
 
 ## Pulling Database Changes
 
