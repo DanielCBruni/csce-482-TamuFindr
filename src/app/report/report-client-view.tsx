@@ -41,12 +41,12 @@ export default function ReportClientView({ categories, locations }: Props) {
   }
 
   return (
-    <main className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center p-6 bg-slate-50">
-      <div className="max-w-3xl w-full text-center space-y-3 mb-10">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+    <main className="flex flex-1 flex-col items-center justify-center bg-slate-50 p-6">
+      <div className="max-w-3xl w-full text-center space-y-3 mb-10 mt-20">
+        <h1 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
           What would you like to report?
         </h1>
-        <p className="text-base text-slate-600 max-w-xl mx-auto">
+        <p className="text-lg text-slate-600 max-w-xl mx-auto">
           Select an option below to submit a lost item report or turn in something you&apos;ve found
           on campus.
         </p>

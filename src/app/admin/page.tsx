@@ -45,7 +45,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     <section className="mx-auto mt-16 w-full max-w-6xl px-6 pb-16 text-left text-primary-dark">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-primary-dark">Admin Panel</h1>
+          <h1 className="text-3xl font-bold text-primary">Admin Panel</h1>
           <p className="mt-1 text-sm text-primary-muted">All tickets from all users</p>
         </div>
         <p className="text-sm font-semibold text-primary-muted">{items.length} tickets</p>
@@ -84,21 +84,21 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </label>
         <button
           type="submit"
-          className="rounded border border-primary bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="rounded-[10px] border border-primary bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           Apply filters
         </button>
         {(selectedStatus || selectedType) && (
           <Link
             href="/admin"
-            className="rounded border border-primary-muted/30 px-4 py-2 font-semibold text-primary-dark transition-colors hover:bg-secondary/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="rounded-[10px] border border-primary-muted/30 px-4 py-2 font-semibold text-primary-dark transition-colors hover:bg-[#f3f4f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Clear filters
           </Link>
         )}
       </form>
 
-      <h2 className="mb-4 text-2xl font-bold text-primary-dark">All Activity</h2>
+      <h2 className="mb-4 text-2xl font-bold text-primary">All Activity</h2>
       <ActivityTable items={activityItems} emptyMessage="No tickets match these filters" />
     </section>
   );

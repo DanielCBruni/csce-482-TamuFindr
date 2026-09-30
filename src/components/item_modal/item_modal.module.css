@@ -188,24 +188,26 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 18px;
+  min-height: 42px;
+  padding: 10px 15px;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.2;
   font-weight: 600;
   cursor: pointer;
 }
 .primary {
-  background: #1d5cff;
+  background: var(--color-primary);
   color: white;
-  border: 1px solid #1d5cff;
+  border: 1px solid var(--color-primary);
 }
 .secondary {
   background: white;
-  color: #525d6d;
+  color: #475467;
   border: 1px solid #d6d9df;
 }
 .primary:hover {
-  background: #174bd1;
+  background: var(--color-accent);
 }
 .secondary:hover,
 .close:hover {

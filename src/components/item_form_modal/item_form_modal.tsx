@@ -28,6 +28,7 @@ export default function ItemFormModal({
   const [locationId, setLocationId] = useState('');
   const [locationAdditional, setLocationAdditional] = useState('');
   const [incidentDate, setIncidentDate] = useState('');
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   // Validation and Status States
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +43,7 @@ export default function ItemFormModal({
     setLocationId('');
     setLocationAdditional('');
     setIncidentDate('');
+    setPhotoPreview(null);
     setError(null);
   }
 
@@ -84,6 +86,21 @@ export default function ItemFormModal({
     return true;
   }
 
+  function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setPhotoPreview(null);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : null;
+      setPhotoPreview(result ?? URL.createObjectURL(file));
+    };
+    reader.readAsDataURL(file);
+  }
+
   async function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -119,118 +136,237 @@ export default function ItemFormModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#10182880] p-4 backdrop-blur-[3px]"
       onClick={handleDismiss}
     >
       <div
-        className="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg"
+        className="w-full max-w-[860px] max-h-[calc(100vh-32px)] overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(16,24,40,0.28)]"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
       >
-        <h2 className="mb-1 text-2xl font-bold text-slate-900">
-          Report {isLost ? 'Lost' : 'Found'} Item
-        </h2>
-        <p className="mb-4 text-sm text-slate-600">
-          Enter the details of the {isLost ? 'lost' : 'found'} item.
-        </p>
-
-        {/* Local Validation Banner */}
-        {error && (
-          <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700 border border-red-200">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <header className="flex items-center justify-between gap-5 border-b border-slate-200 px-6 py-4">
           <div>
-            <label className="mb-1 block text-sm font-medium">Item Title</label>
-            <input
-              type="text"
-              placeholder="Blue Owala Water Bottle"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium">Category</label>
-            <select
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-amber-500"
+            <p className="m-0 text-[12px] font-bold uppercase tracking-[0.1em] text-slate-500">
+              {isLost ? 'Report lost item' : 'Report found item'}
+            </p>
+            <h2
+              className="mt-0 text-[30px] font-bold text-[#101828]"
+              style={{ fontFamily: 'Georgia, serif' }}
             >
-              <option value="">Select a category</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+              Item Details
+            </h2>
+          </div>
+          <button
+            type="button"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-[26px] text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-blue-600"
+            aria-label="Close report form"
+            onClick={handleDismiss}
+          >
+            ×
+          </button>
+        </header>
+
+        <form
+          onSubmit={handleSubmit}
+          className="flex max-h-[calc(100vh-120px)] flex-col overflow-y-auto"
+        >
+          <div className="grid gap-5 p-5 md:grid-cols-[0.7fr_1.3fr]">
+            <div className="flex flex-col items-center justify-center">
+              <div className="w-full max-w-[260px] overflow-hidden rounded-[14px] border border-slate-200 bg-slate-100">
+                {photoPreview ? (
+                  <img
+                    src={photoPreview}
+                    alt="Selected item preview"
+                    className="aspect-[3/4] w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex aspect-[3/4] w-full flex-col items-center justify-center gap-3 text-slate-500">
+                    <span aria-hidden="true" className="text-[40px]">
+                      ▧
+                    </span>
+                    <p className="text-sm">Photo preview</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-3 w-full max-w-[260px]">
+                <label htmlFor="item-photo" className="sr-only">
+                  Add photo
+                </label>
+                <input
+                  id="item-photo"
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className="block w-full cursor-pointer rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-slate-200 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-slate-700 hover:file:bg-slate-300 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
+            </div>
+
+            <section className="flex min-w-0 flex-col gap-3">
+              {error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="item-title" className="text-sm font-bold text-[#101828]">
+                  Item title
+                </label>
+                <input
+                  id="item-title"
+                  type="text"
+                  placeholder="Blue Owala Water Bottle"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="item-category" className="text-sm font-bold text-[#101828]">
+                    Category
+                  </label>
+                  <select
+                    id="item-category"
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}
+                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      categoryId ? 'text-slate-900' : 'text-slate-400'
+                    }`}
+                  >
+                    <option value="" className="text-slate-400">
+                      Select
+                    </option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id} className="text-slate-900">
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="item-date" className="text-sm font-bold text-[#101828]">
+                    Date {isLost ? 'lost' : 'found'}
+                  </label>
+                  <input
+                    id="item-date"
+                    type="date"
+                    value={incidentDate}
+                    onChange={(e) => setIncidentDate(e.target.value)}
+                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      incidentDate ? 'text-slate-900' : 'text-slate-400'
+                    }`}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="item-description" className="text-sm font-bold text-[#101828]">
+                  Description
+                </label>
+                <textarea
+                  id="item-description"
+                  placeholder="Color, brand, identifying details, etc."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="min-h-[90px] w-full resize-y rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="item-location" className="text-sm font-bold text-[#101828]">
+                  {isLost ? 'Last seen location' : 'Found location'}
+                </label>
+                <select
+                  id="item-location"
+                  value={locationId}
+                  onChange={(e) => setLocationId(e.target.value)}
+                  className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                    locationId ? 'text-slate-900' : 'text-slate-400'
+                  }`}
+                >
+                  <option value="" className="text-slate-400">
+                    Select a location
+                  </option>
+                  {locations.map((loc) => (
+                    <option key={loc.id} value={loc.id} className="text-slate-900">
+                      {loc.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="location-additional" className="text-sm font-bold text-[#101828]">
+                  Additional location details
+                </label>
+                <input
+                  id="location-additional"
+                  type="text"
+                  placeholder="Room 350, men's bathroom, etc."
+                  value={locationAdditional}
+                  onChange={(e) => setLocationAdditional(e.target.value)}
+                  className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
+            </section>
           </div>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium">Description</label>
-            <textarea
-              placeholder="Color, brand, identifying details, etc."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-              className="w-full resize-none rounded border border-gray-300 px-3 py-2 outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium">
-              {isLost ? 'Last Seen Location' : 'Found Location'}
-            </label>
-            <select
-              value={locationId}
-              onChange={(e) => setLocationId(e.target.value)}
-              className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-amber-500"
-            >
-              <option value="">Select a location</option>
-              {locations.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium">Additional Location Details</label>
-            <input
-              type="text"
-              placeholder="Room 350, men's bathroom, etc."
-              value={locationAdditional}
-              onChange={(e) => setLocationAdditional(e.target.value)}
-              className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium">
-              Date {isLost ? 'Lost' : 'Found'}
-            </label>
-            <input
-              type="date"
-              value={incidentDate}
-              onChange={(e) => setIncidentDate(e.target.value)}
-              className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div className="flex justify-end gap-3 pt-2">
-            <Button buttonName="Cancel" type="button" onClick={handleDismiss} />
+          <footer className="flex flex-wrap justify-end gap-3 border-t border-slate-200 px-6 pb-5 pt-4">
             <Button
+              type="button"
+              onClick={handleDismiss}
+              buttonName="Cancel"
+              style={{
+                backgroundColor: 'white',
+                border: '1px solid #d6d9df',
+                borderRadius: '10px',
+                color: '#475467',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+                lineHeight: 1.2,
+                padding: '10px 15px',
+                minHeight: '42px',
+                transition: 'background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease',
+              }}
+              onMouseEnter={(event) => {
+                event.currentTarget.style.backgroundColor = '#f3f4f6';
+              }}
+              onMouseLeave={(event) => {
+                event.currentTarget.style.backgroundColor = 'white';
+              }}
+            />
+            <Button
+              type="submit"
+              disabled={isSubmitting}
               buttonName={
                 isSubmitting ? 'Submitting...' : `Report ${isLost ? 'Lost' : 'Found'} Item`
               }
-              type="submit"
+              style={{
+                backgroundColor: 'var(--color-primary)',
+                border: '1px solid var(--color-primary)',
+                borderRadius: '10px',
+                color: 'white',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+                lineHeight: 1.2,
+                padding: '10px 15px',
+                minHeight: '42px',
+                transition: 'background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease',
+              }}
+              onMouseEnter={(event) => {
+                event.currentTarget.style.backgroundColor = 'var(--color-accent)';
+              }}
+              onMouseLeave={(event) => {
+                event.currentTarget.style.backgroundColor = 'var(--color-primary)';
+              }}
             />
-          </div>
+          </footer>
         </form>
       </div>
     </div>

@@ -11,7 +11,7 @@ const statusPillClasses: Record<ItemModalData['status'], string> = {
   resolved: 'border-slate-200 bg-slate-200 text-slate-600',
   cancelled: 'border-slate-200 bg-slate-200 text-slate-600',
   'claim-under-review': 'border-slate-200 bg-white text-slate-700',
-  reported: 'border-slate-200 bg-white text-slate-700'
+  reported: 'border-slate-200 bg-white text-slate-700',
 };
 
 export default function ActivityClientView({ activityItems }: { activityItems: ItemModalData[] }) {
@@ -83,14 +83,17 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
         <section className="mb-7">
           <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Lost Reports</p>
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            {lostItems.length === 0 && <p className="p-5 text-sm text-slate-600">No lost reports yet.</p>}
+            {lostItems.length === 0 && (
+              <p className="p-5 text-sm text-slate-600">No lost reports yet.</p>
+            )}
             {lostItems.map((item, index) => (
               <button
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
-                  }`}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                  index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
+                }`}
               >
                 <div>
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>
@@ -111,14 +114,17 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
         <section className="mb-7">
           <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Found Reports</p>
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            {foundItems.length === 0 && <p className="p-5 text-sm text-slate-600">No found reports yet.</p>}
+            {foundItems.length === 0 && (
+              <p className="p-5 text-sm text-slate-600">No found reports yet.</p>
+            )}
             {foundItems.map((item, index) => (
               <button
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
-                  }`}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                  index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
+                }`}
               >
                 <div>
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>
