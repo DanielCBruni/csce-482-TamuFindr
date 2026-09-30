@@ -8,6 +8,11 @@ services:
     container_name: tamufindr-app-prod
     ports:
       - '3000:3000'
+    env_file:
+      - .env.production
+    depends_on:
+      db:
+        condition: service_healthy
 
   app-dev:
     build:
@@ -20,6 +25,7 @@ services:
     environment:
       - WATCHPACK_POLLING=true
       - DATABASE_URL=postgresql://tamufindr:tamufindr@db:5432/tamufindr
+      - DEFAULT_USER_ID=sample-user-id
     depends_on:
       db:
         condition: service_healthy
