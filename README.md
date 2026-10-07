@@ -1,5 +1,7 @@
 # TAMUfindr
 
+TAMUfindr is a centralized lost-and-found web application for Texas A&M University. It allows users to report lost and found items and provides campus lost-and-found staff with a shared system for managing those reports.
+
 ## Local Development
 
 TAMUfindr runs the PostgreSQL database in Docker while the Next.js application runs locally.
