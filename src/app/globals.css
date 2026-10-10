@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+/* TODO: Global theme, fonts, etc */
+
+@theme {
+  --color-primary: #500000;
+  --color-secondary: #d6d3c4;
+  --color-accent: #732f2f;
+  --color-primary-dark: #210202;
+  --color-primary-muted: #4d3d3d;
+
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-serif: Georgia, serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-slate-50);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+  }
+}
