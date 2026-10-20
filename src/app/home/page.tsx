@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { cancelItem } from '@/actions/cancel-item';
 import ActivityTable, { type ActivityItem } from '@/components/activity_table/activity_table';
 import { requireCurrentUserId } from '@/lib/auth/current-user';
 import { prisma } from '@/lib/prisma';
@@ -65,7 +66,7 @@ export default async function HomePage() {
             Lost an item
           </Link>
           <Link
-            href="/report"
+            href="/help?faq=report-found#report-found"
             className="transition-all duration-200 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/40"
             style={{
               display: 'block',
@@ -88,7 +89,11 @@ export default async function HomePage() {
 
         <section className="mt-16 w-full text-left">
           <h2 className="mb-4 text-2xl font-bold text-white">Your Activity</h2>
-          <ActivityTable items={activityItems} emptyMessage="No active tickets" />
+          <ActivityTable
+            items={activityItems}
+            emptyMessage="No active tickets"
+            cancelAction={cancelItem}
+          />
         </section>
       </div>
     </main>

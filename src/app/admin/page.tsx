@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import type { ItemStatus, ItemType } from '@/generated/prisma/enums';
+import { resolveAdminTicket } from '@/actions/resolve-admin-ticket';
+import { reopenAdminTicket } from '@/actions/reopen-admin-ticket';
 import ActivityTable, { type ActivityItem } from '@/components/activity_table/activity_table';
+import AdminFunctions, { type AdminExportItem } from './admin-functions';
 import { prisma } from '@/lib/prisma';
 
 const statuses: ItemStatus[] = ['OPEN', 'MATCHED', 'RESOLVED', 'CANCELLED'];
@@ -14,23 +17,29 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   const filters = await searchParams;
   const selectedStatus = statuses.find((status) => status === filters.status);
   const selectedType = types.find((type) => type === filters.type);
-  const items = await prisma.item.findMany({
-    where: {
-      ...(selectedStatus ? { status: selectedStatus } : {}),
-      ...(selectedType ? { type: selectedType } : {}),
-    },
-    orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
-    select: {
-      id: true,
-      title: true,
-      type: true,
-      status: true,
-      createdAt: true,
-      locationExtra: true,
-      category: { select: { name: true } },
-      location: { select: { name: true } },
-    },
-  });
+  const [items, categories, locations] = await Promise.all([
+    prisma.item.findMany({
+      where: {
+        ...(selectedStatus ? { status: selectedStatus } : {}),
+        ...(selectedType ? { type: selectedType } : {}),
+      },
+      orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
+      select: {
+        id: true,
+        title: true,
+        type: true,
+        status: true,
+        createdAt: true,
+        incidentDate: true,
+        description: true,
+        locationExtra: true,
+        category: { select: { name: true } },
+        location: { select: { name: true } },
+      },
+    }),
+    prisma.category.findMany({ orderBy: { name: 'asc' }, select: { id: true, name: true } }),
+    prisma.location.findMany({ orderBy: { name: 'asc' }, select: { id: true, name: true } }),
+  ]);
   const activityItems: ActivityItem[] = items.map((item) => ({
     id: item.id,
     type: item.type,
@@ -39,6 +48,18 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     location: [item.location.name, item.locationExtra].filter(Boolean).join(' · '),
     item: item.title,
     itemType: item.category.name,
+  }));
+  const exportItems: AdminExportItem[] = items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    type: item.type,
+    status: item.status,
+    createdAt: item.createdAt.toISOString().slice(0, 10),
+    incidentDate: item.incidentDate.toISOString().slice(0, 10),
+    description: item.description,
+    locationExtra: item.locationExtra ?? '',
+    category: item.category.name,
+    location: item.location.name,
   }));
 
   return (
@@ -50,6 +71,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </div>
         <p className="text-sm font-semibold text-primary-muted">{items.length} tickets</p>
       </div>
+
+      <AdminFunctions categories={categories} locations={locations} items={exportItems} />
 
       <form
         action="/admin"
@@ -99,7 +122,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       </form>
 
       <h2 className="mb-4 text-2xl font-bold text-primary">All Activity</h2>
-      <ActivityTable items={activityItems} emptyMessage="No tickets match these filters" />
+      <ActivityTable
+        items={activityItems}
+        emptyMessage="No tickets match these filters"
+        resolveAction={resolveAdminTicket}
+        reopenAction={reopenAdminTicket}
+      />
     </section>
   );
 }

@@ -155,7 +155,9 @@ export default function ItemModal({
             <strong>Possible match found</strong>
             <p>
               {item.matchSummary ??
-                'A suggested match does not confirm ownership. Review the item and submit a claim if it looks right.'}
+                (mode === 'activity'
+                  ? 'A suggested match does not confirm ownership. Review the item details and compare them with your report.'
+                  : 'A suggested match does not confirm ownership. Review the item details carefully.')}
             </p>
           </aside>
         )}
@@ -171,34 +173,38 @@ export default function ItemModal({
           {actionError}
         </p>
       )}
-      <footer className={styles.actions}>
-        <button type="button" className={styles.secondary} onClick={onClose}>
-          {mode === 'home' ? 'Keep browsing' : 'Back to activity'}
-        </button>
-        {onSecondaryAction && (
-          <button
-            type="button"
-            className={styles.secondary}
-            onClick={() => onSecondaryAction(item)}
-          >
-            {item.secondaryActionLabel ?? 'Not a match'}
-          </button>
-        )}
-        {onPrimaryAction && (
-          <button
-            type="button"
-            className={styles.primary}
-            disabled={isPending}
-            aria-busy={isPending}
-            onClick={() => onPrimaryAction(item)}
-          >
-            {isPending
-              ? 'Saving…'
-              : (item.primaryActionLabel ??
-                (item.status === 'possible-match' ? 'Review Item' : 'View report'))}
-          </button>
-        )}
-      </footer>
+      {(mode === 'home' || onSecondaryAction || onPrimaryAction) && (
+        <footer className={styles.actions}>
+          {mode === 'home' && (
+            <button type="button" className={styles.secondary} onClick={onClose}>
+              Keep browsing
+            </button>
+          )}
+          {onSecondaryAction && (
+            <button
+              type="button"
+              className={styles.secondary}
+              onClick={() => onSecondaryAction(item)}
+            >
+              {item.secondaryActionLabel ?? 'Not a match'}
+            </button>
+          )}
+          {onPrimaryAction && (
+            <button
+              type="button"
+              className={styles.primary}
+              disabled={isPending}
+              aria-busy={isPending}
+              onClick={() => onPrimaryAction(item)}
+            >
+              {isPending
+                ? 'Saving…'
+                : (item.primaryActionLabel ??
+                  (item.status === 'possible-match' ? 'Review Item' : 'View report'))}
+            </button>
+          )}
+        </footer>
+      )}
     </dialog>
   );
 }

@@ -27,8 +27,9 @@ const faqs = [
       'No. TAMUfindr is a platform for reporting and locating lost items, but it does not physically possess any items.',
   },
   {
+    id: 'report-found',
     question: 'How do I report a found item?',
-    answer: 'Create a listing and provide information about the item and where you found it.',
+    answer: 'Please find your nearest lost and found resource on campus and turn it in to university staff.',
   },
   {
     question: 'How do I claim an item?',
@@ -47,15 +48,21 @@ const faqs = [
 ];
 
 type FAQItem = {
+  id?: string;
   question: string;
   answer: string;
 };
 
-function FAQ({ items }: { items: FAQItem[] }) {
+function FAQ({ items, openQuestion }: { items: FAQItem[]; openQuestion?: string }) {
   return (
     <div className="divide-y divide-secondary border-y border-secondary">
-      {items.map(({ question, answer }) => (
-        <details key={question} className="group py-5">
+      {items.map(({ id, question, answer }) => (
+        <details
+          key={question}
+          id={id}
+          open={Boolean(id && id === openQuestion)}
+          className={id ? 'group scroll-mt-28 py-5' : 'group py-5'}
+        >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
             {question}
 
@@ -74,7 +81,13 @@ function FAQ({ items }: { items: FAQItem[] }) {
   );
 }
 
-export default function HelpPage() {
+export default async function HelpPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ faq?: string }>;
+}) {
+  const { faq } = await searchParams;
+
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
       <header className="mb-12">
@@ -94,7 +107,7 @@ export default function HelpPage() {
           Frequently Asked Questions
         </h2>
 
-        <FAQ items={faqs} />
+        <FAQ items={faqs} openQuestion={faq} />
       </section>
 
       <section aria-labelledby="links-heading" className="mt-12 border-b border-secondary pb-10">

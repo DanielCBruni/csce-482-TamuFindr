@@ -1,8 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { claimItem } from '@/actions/claim-item';
+import { useState } from 'react';
 import ItemModal, { type ItemModalData } from '@/components/item_modal/item_modal';
 
 const statusPillClasses: Record<ItemModalData['status'], string> = {
@@ -15,39 +13,11 @@ const statusPillClasses: Record<ItemModalData['status'], string> = {
 };
 
 export default function ActivityClientView({ activityItems }: { activityItems: ItemModalData[] }) {
-  const router = useRouter();
-  const claiming = useRef(false);
-  const [isPending, setIsPending] = useState(false);
-  const [actionError, setActionError] = useState<string | null>(null);
-  const [claimedIds, setClaimedIds] = useState<string[]>([]);
   const [selectedItem, setSelectedItem] = useState<ItemModalData | null>(null);
 
-  const visibleItems = activityItems.filter((item) => !claimedIds.includes(item.itemId));
-  const alertItem = visibleItems.find((item) => item.status === 'possible-match');
-  const lostItems = visibleItems.filter((item) => item.category === 'Lost item');
-  const foundItems = visibleItems.filter((item) => item.category === 'Found item');
-
-  async function handleClaim(item: ItemModalData) {
-    if (claiming.current) return;
-    claiming.current = true;
-    setIsPending(true);
-    setActionError(null);
-    try {
-      const result = await claimItem(item.itemId);
-      if (!result.success) {
-        setActionError(result.error ?? 'Unable to claim this item.');
-        return;
-      }
-      setClaimedIds((ids) => [...ids, item.itemId]);
-      setSelectedItem(null);
-      router.refresh();
-    } catch {
-      setActionError('Unable to claim this item. Please try again.');
-    } finally {
-      claiming.current = false;
-      setIsPending(false);
-    }
-  }
+  const alertItem = activityItems.find((item) => item.status === 'possible-match');
+  const lostItems = activityItems.filter((item) => item.category === 'Lost item');
+  const foundItems = activityItems.filter((item) => item.category === 'Found item');
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
@@ -65,8 +35,8 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                   Possible match found for &quot;{alertItem.title}&quot;
                 </p>
                 <p className="mt-1 text-sm leading-5 text-slate-600">
-                  A suggested match does not confirm ownership. Review the item and submit a claim
-                  if it looks right.
+                  A suggested match does not confirm ownership. Review the item details and compare
+                  them with your report.
                 </p>
               </div>
             </div>
@@ -91,9 +61,8 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
-                  index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
-                }`}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
+                  }`}
               >
                 <div>
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>
@@ -122,9 +91,8 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
-                  index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
-                }`}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
+                  }`}
               >
                 <div>
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>
@@ -146,21 +114,9 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
       {selectedItem && (
         <ItemModal
           isOpen={true}
-          item={{ ...selectedItem, primaryActionLabel: 'Claim Item' }}
+          item={selectedItem}
           mode="activity"
-          onClose={() => {
-            if (!claiming.current) {
-              setSelectedItem(null);
-              setActionError(null);
-            }
-          }}
-          onPrimaryAction={
-            selectedItem.status === 'open' || selectedItem.status === 'possible-match'
-              ? handleClaim
-              : undefined
-          }
-          isPending={isPending}
-          actionError={actionError}
+          onClose={() => setSelectedItem(null)}
         />
       )}
     </main>

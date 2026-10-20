@@ -59,20 +59,15 @@ export default function ConfirmationModal({
           successfully created.
         </p>
 
-        <div className="mt-4 rounded-lg bg-slate-50 p-4 text-left text-xs text-slate-500 space-y-1 border border-slate-100">
-          <p className="font-medium text-slate-700">What happens next?</p>
-          {isLost ? (
+        {isLost && (
+          <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50 p-4 text-left text-xs text-slate-500">
+            <p className="font-medium text-slate-700">What happens next?</p>
             <p>
               We’ll cross-reference your submission against items turned into campus facilities. You
               will be notified if a potential match is found.
             </p>
-          ) : (
-            <p>
-              If you turned this item in to a building office or MSC desk, campus staff will verify
-              and hold it securely until the owner claims it.
-            </p>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Action Button */}
         <div className="mt-6 flex justify-center">
