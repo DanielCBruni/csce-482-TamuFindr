@@ -24,7 +24,7 @@ const faqs = [
   {
     question: 'Does TAMUfindr have possession of my item?',
     answer:
-      'No. TAMUfindr is a platform for reporting and locating lost items, but it does not physically possess any items.',
+      'No. TAMUfindr is a platform for reporting and locating lost items, but it does not physically possess any items. Please refer to university lost and found resources.',
   },
   {
     id: 'report-found',
