@@ -50,10 +50,10 @@ export default function ActivityTable({
 }: ActivityTableProps) {
   const hasActions = Boolean(resolveAction || reopenAction || cancelAction);
   return (
-    <div className="w-full overflow-x-auto rounded-lg border border-primary-muted/20 bg-white shadow-sm">
+    <div className="activity-table w-full overflow-x-auto rounded-lg border border-[var(--surface-border)] bg-[var(--surface-raised)] shadow-sm">
       <table className="w-full min-w-[720px] border-collapse text-left">
         <caption className="sr-only">Submitted lost and found items</caption>
-        <thead className="bg-secondary/40 text-xs uppercase tracking-wider text-primary-muted">
+        <thead className="bg-[var(--surface-subtle)] text-xs uppercase tracking-wider text-[var(--text-muted)]">
           <tr>
             <th className="px-5 py-4 font-semibold" scope="col">
               Item
@@ -80,25 +80,25 @@ export default function ActivityTable({
             )}
           </tr>
         </thead>
-        <tbody className="divide-y divide-primary-muted/15 text-sm text-primary-dark">
+        <tbody className="divide-y divide-[var(--surface-border)] text-sm text-[var(--text-primary)]">
           {items.length === 0 ? (
             <tr>
-              <td colSpan={hasActions ? 7 : 6} className="px-5 py-8 text-center text-primary-muted">
+              <td colSpan={hasActions ? 7 : 6} className="px-5 py-8 text-center text-[var(--text-muted)]">
                 {emptyMessage}
               </td>
             </tr>
           ) : (
             items.map((item) => (
-              <tr key={item.id} className="transition hover:bg-secondary/20">
+              <tr key={item.id} className="transition hover:bg-[var(--surface-hover)]">
                 <th className="px-5 py-4 font-semibold" scope="row">
                   {item.item}
-                  <span className="mt-1 block text-xs font-normal text-primary-muted">
+                  <span className="mt-1 block text-xs font-normal text-[var(--text-muted)]">
                     Ticket {item.id}
                   </span>
                 </th>
                 <td className="px-5 py-4">{item.type === 'LOST' ? 'Lost' : 'Found'}</td>
                 <td className="px-5 py-4">
-                  <span className="inline-flex rounded-full bg-primary-muted/10 px-3 py-1 text-xs font-semibold text-primary-muted">
+                  <span className="inline-flex rounded-full bg-[var(--surface-subtle)] px-3 py-1 text-xs font-semibold text-[var(--text-muted)]">
                     {formatStatus(item.status)}
                   </span>
                 </td>
@@ -112,7 +112,7 @@ export default function ActivityTable({
                         <input type="hidden" name="itemId" value={item.id} />
                         <button
                           type="submit"
-                          className="rounded-md border border-primary px-3 py-1.5 font-semibold text-primary transition-colors hover:bg-primary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                          className="activity-table-action rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] px-3 py-1.5 font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
                         >
                           Resolve
                         </button>
@@ -123,7 +123,7 @@ export default function ActivityTable({
                         <input type="hidden" name="itemId" value={item.id} />
                         <button
                           type="submit"
-                          className="rounded-md border border-primary px-3 py-1.5 font-semibold text-primary transition-colors hover:bg-primary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                          className="activity-table-action rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] px-3 py-1.5 font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
                         >
                           Reopen
                         </button>

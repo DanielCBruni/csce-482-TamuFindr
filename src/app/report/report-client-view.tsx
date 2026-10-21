@@ -41,7 +41,7 @@ export default function ReportClientView({ categories, locations }: Props) {
   }
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center bg-slate-50 p-6">
+    <main className="flex flex-1 flex-col items-center justify-center bg-[var(--surface)] p-6">
       <div className="max-w-3xl w-full text-center space-y-3 mb-10 mt-20">
         <h1 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
           Report a lost item
@@ -68,10 +68,10 @@ export default function ReportClientView({ categories, locations }: Props) {
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">
+          <h2 className="text-xl font-semibold text-[var(--text-muted)] transition-colors">
             I Lost an Item
           </h2>
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-[var(--text-muted)]">
             Submit details about something you misplaced so we can help match it when found.
           </p>
         </button>

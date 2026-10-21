@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-/* TODO: Global theme, fonts, etc */
-
 @theme {
   --color-primary: #500000;
   --color-secondary: #d6d3c4;
@@ -13,14 +11,181 @@
   --font-serif: Georgia, serif;
 }
 
+:root {
+  color-scheme: light;
+  --surface: #fdfdfd;
+  --surface-raised: #ffffff;
+  --surface-subtle: #f3f4f6;
+  --surface-hover: #f8f1f1;
+  --surface-header: #ffffff;
+  --surface-footer: #500000;
+  --surface-border: #dfe7f0;
+  --status-neutral-bg: #e2e8f0;
+  --status-neutral-text: #475569;
+  --status-neutral-border: #cbd5e1;
+  --text-primary: #210202;
+  --text-muted: #4d3d3d;
+  --focus-ring: #500000;
+  --danger-text: #b42332;
+  --danger-border: #e2a7ad;
+  --danger-surface: #fff7f7;
+  --danger-hover: #fce8e8;
+  --home-action-shadow: 0 8px 20px rgba(80, 0, 0, 0.12), 0 2px 5px rgba(15, 23, 42, 0.05);
+  --home-action-shadow-hover: 0 12px 24px rgba(80, 0, 0, 0.18), 0 3px 8px rgba(15, 23, 42, 0.08);
+  --settings-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-primary: #732f2f;
+  --color-accent: #efc5c5;
+  --color-primary-dark: #ffffff;
+  --color-primary-muted: #f0dede;
+  --surface: #210202;
+  --surface-raised: #351416;
+  --surface-subtle: #421a1d;
+  --surface-hover: #4d2024;
+  --surface-header: #3a0909;
+  --surface-border: #766868;
+  --status-neutral-bg: #5b3438;
+  --status-neutral-text: #f0dede;
+  --status-neutral-border: #8a5c60;
+  --text-primary: #ffffff;
+  --text-muted: #f0dede;
+  --focus-ring: #ffffff;
+  --danger-text: #ffb8bd;
+  --danger-border: #a85c64;
+  --danger-surface: #3c2023;
+  --danger-hover: #51272b;
+  --home-action-shadow: 0 9px 20px rgba(0, 0, 0, 0.36), 0 2px 6px rgba(0, 0, 0, 0.24);
+  --home-action-shadow-hover: 0 13px 26px rgba(0, 0, 0, 0.46), 0 3px 8px rgba(0, 0, 0, 0.3);
+  --settings-shadow: 0 16px 38px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+:root[data-theme='light'] footer {
+  --text-primary: #ffffff;
+  --text-muted: #f0dede;
+}
+
+:root[data-text-size='large'] {
+  font-size: 112.5%;
+}
+
+:root[data-text-size='largest'] {
+  font-size: 125%;
+}
+
 @layer base {
   body {
     font-family: var(--font-sans);
-    background-color: var(--color-slate-50);
+    background-color: var(--surface);
+    color: var(--text-primary);
   }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
   h1,
   h2,
   h3 {
     font-family: var(--font-serif);
   }
+}
+
+:root[data-theme='dark'] .bg-white {
+  background-color: var(--surface-raised);
+}
+
+:root[data-theme='dark'] .bg-slate-50 {
+  background-color: var(--surface-raised);
+}
+
+:root[data-theme='dark'] .text-slate-900,
+:root[data-theme='dark'] .text-slate-700,
+:root[data-theme='dark'] .text-slate-600 {
+  color: var(--text-primary);
+}
+
+:root[data-theme='dark'] .text-primary {
+  color: var(--text-primary);
+}
+
+:root[data-theme='dark'] .border-slate-200 {
+  border-color: var(--surface-border);
+}
+
+:root[data-theme='dark'] .activity-table {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+:root[data-theme='dark'] .activity-table tbody > tr:not(:last-child) {
+  border-color: transparent;
+}
+
+:root[data-theme='dark'] .activity-table-action {
+  border-color: transparent;
+  background-color: var(--surface-subtle);
+}
+
+:root[data-theme='dark'] .activity-table-cancel {
+  border-color: transparent;
+}
+
+.home-action {
+  box-shadow: var(--home-action-shadow);
+}
+
+.home-action:hover {
+  box-shadow: var(--home-action-shadow-hover);
+}
+
+.settings-panel {
+  box-shadow: var(--settings-shadow);
+}
+
+.status-neutral {
+  border-color: var(--status-neutral-border);
+  background-color: var(--status-neutral-bg);
+  color: var(--status-neutral-text);
+}
+
+:root[data-contrast='high'] {
+  --surface-border: #000000;
+  --text-primary: #000000;
+  --text-muted: #1a1a1a;
+}
+
+:root[data-theme='dark'][data-contrast='high'] {
+  --surface-border: #ffffff;
+  --text-primary: #ffffff;
+  --text-muted: #ffffff;
+}
+
+:root[data-contrast='high'] footer {
+  --text-primary: #ffffff;
+  --text-muted: #ffffff;
+}
+
+:root[data-contrast='high'] .activity-panel,
+:root[data-contrast='high'] .activity-table,
+:root[data-contrast='high'] .how-it-works-card,
+:root[data-contrast='high'] .report-action {
+  border: 1px solid var(--surface-border) !important;
+}
+
+:root[data-contrast='high'] .activity-panel > button:not(:last-child),
+:root[data-contrast='high'] .activity-table tbody > tr:not(:last-child) {
+  border-bottom: 1px solid var(--surface-border) !important;
+}
+
+:root[data-contrast='high'] :is(a, button, input, select, summary) {
+  outline-color: currentColor;
+}
+
+:root[data-contrast='high'] :is(a, button, input, select, summary):focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
 }

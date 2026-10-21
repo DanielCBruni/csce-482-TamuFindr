@@ -6,8 +6,8 @@ import ItemModal, { type ItemModalData } from '@/components/item_modal/item_moda
 const statusPillClasses: Record<ItemModalData['status'], string> = {
   open: 'border-slate-200 bg-white text-slate-700',
   'possible-match': 'border-emerald-200 bg-emerald-100 text-emerald-800',
-  resolved: 'border-slate-200 bg-slate-200 text-slate-600',
-  cancelled: 'border-slate-200 bg-slate-200 text-slate-600',
+  resolved: 'status-neutral',
+  cancelled: 'status-neutral',
   'claim-under-review': 'border-slate-200 bg-white text-slate-700',
   reported: 'border-slate-200 bg-white text-slate-700',
 };
@@ -52,7 +52,7 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
 
         <section className="mb-7">
           <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Lost Reports</p>
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div className="activity-panel overflow-hidden rounded-2xl border border-slate-200 bg-white">
             {lostItems.length === 0 && (
               <p className="p-5 text-sm text-slate-600">No lost reports yet.</p>
             )}
@@ -82,7 +82,7 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
 
         <section className="mb-7">
           <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Found Reports</p>
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div className="activity-panel overflow-hidden rounded-2xl border border-slate-200 bg-white">
             {foundItems.length === 0 && (
               <p className="p-5 text-sm text-slate-600">No found reports yet.</p>
             )}
