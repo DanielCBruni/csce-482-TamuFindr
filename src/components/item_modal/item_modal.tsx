@@ -14,7 +14,7 @@ export interface ItemModalData {
   reportedBy?: string;
   location: string;
   itemId: string;
-  description: string;
+  description: string | null;
   imageUrl?: string;
   primaryActionLabel?: string;
   secondaryActionLabel?: string;

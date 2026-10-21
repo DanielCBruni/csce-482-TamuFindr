@@ -4,14 +4,16 @@
 import { useState } from 'react';
 import ItemFormModal from '@/components/item_form_modal/item_form_modal';
 import ConfirmationModal from '@/components/confirmation_modal/confirmation_modal';
-import type { Category, Location } from '../../generated/prisma/browser';
+import type { Category, ItemCondition, Location, PrimaryColor } from '../../generated/prisma/browser';
 
 type Props = {
   categories: Category[];
   locations: Location[];
+  conditions: ItemCondition[];
+  colors: PrimaryColor[];
 };
 
-export default function ReportClientView({ categories, locations }: Props) {
+export default function ReportClientView({ categories, locations, colors, conditions }: Props) {
   // 1. Controls opening/closing ItemFormModal
   const [formModalMode, setFormModalMode] = useState<'lost' | null>(null);
 
@@ -83,6 +85,8 @@ export default function ReportClientView({ categories, locations }: Props) {
         mode={formModalMode ?? 'lost'}
         categories={categories}
         locations={locations}
+        colors={colors}
+        conditions={conditions}
         open={formModalMode !== null}
         onClose={() => setFormModalMode(null)}
         onSuccess={handleFormSuccess}

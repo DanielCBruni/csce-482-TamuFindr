@@ -3,7 +3,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { requireCurrentUserId } from '@/lib/auth/current-user';
-import type { ItemType } from '../generated/prisma/enums';
+import type { ItemCondition, ItemType, PrimaryColor } from '../generated/prisma/enums';
 
 export type CreateReportInput = {
   type: ItemType;
@@ -13,6 +13,10 @@ export type CreateReportInput = {
   locationId: string;
   locationAdditional?: string;
   incidentDate: string;
+  primaryColor: PrimaryColor;
+  secondaryColor?: PrimaryColor | null;
+  brand?: string | null;
+  itemCondition: ItemCondition;
 };
 
 export async function createItemReport(data: CreateReportInput) {
@@ -42,6 +46,10 @@ export async function createItemReport(data: CreateReportInput) {
         locationExtra: data.locationAdditional || null,
         incidentDate: parsedDate,
         status: 'OPEN',
+        primaryColor: data.primaryColor,
+        secondaryColor: data.secondaryColor || null,
+        brand: data.brand || null,
+        condition: data.itemCondition
       },
     });
 

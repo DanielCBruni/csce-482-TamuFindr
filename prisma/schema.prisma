@@ -24,6 +24,42 @@ enum ItemStatus {
   CANCELLED
 }
 
+// Constants for Matching Algorithm
+enum PrimaryColor {
+  BLACK
+  WHITE
+  SILVER
+  GRAY
+  RED
+  BLUE
+  GREEN
+  YELLOW
+  BROWN
+  PURPLE
+  PINK
+  ORANGE
+  /**
+   * TODO: If OTHER then add input box?
+   */
+  OTHER
+}
+
+enum ItemCondition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+  POOR
+  DAMAGED
+}
+
+enum MatchStatus {
+  PENDING
+  CONFIRMED
+  REJECTED
+  EXPIRED
+}
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -49,42 +85,86 @@ model Location {
   name         String  @unique
   abbreviation String? @unique
 
+  // Location for matching algorithm
+  latitude  Float?
+  longitude Float?
+
   items        Item[] @relation("ItemLocation")
   storageItems Item[] @relation("StorageLocation")
 }
 
 model Item {
-  id                   String     @id @default(cuid())
+  id                   String        @id @default(cuid())
   userId               String
   categoryId           String
   type                 ItemType
-  status               ItemStatus @default(OPEN)
+  status               ItemStatus    @default(OPEN)
   title                String
-  description          String
+  description          String?
+  
+  // Standardized Constant Attributes
+  primaryColor         PrimaryColor
+  secondaryColor       PrimaryColor?
+  brand                String?       // Normalized lowercase string
+  condition            ItemCondition
+
+  // Location & Spatial Data
+  // LocationId = where it was found
   locationId           String
   locationExtra        String?
   storageLocationId    String?
   storageLocationExtra String?
+
   incidentDate         DateTime
   servicedById         String?
   resolvedDate         DateTime?
   resolutionNotes      String?
-  createdAt            DateTime   @default(now())
-  updatedAt            DateTime   @updatedAt
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
 
-  submitter       User        @relation("ItemSubmitter", fields: [userId], references: [id], onDelete: Restrict)
-  category        Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  location        Location   @relation("ItemLocation", fields: [locationId], references: [id], onDelete: Restrict)
-  storageLocation Location?   @relation("StorageLocation", fields: [storageLocationId], references: [id], onDelete: SetNull)
-  servicedBy      User?       @relation("ItemServicer", fields: [servicedById], references: [id], onDelete: SetNull)
-  images          ItemImage[]
+  // Relations
+  submitter            User          @relation("ItemSubmitter", fields: [userId], references: [id], onDelete: Restrict)
+  category             Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  location             Location      @relation("ItemLocation", fields: [locationId], references: [id], onDelete: Restrict)
+  storageLocation      Location?     @relation("StorageLocation", fields: [storageLocationId], references: [id], onDelete: SetNull)
+  servicedBy           User?         @relation("ItemServicer", fields: [servicedById], references: [id], onDelete: SetNull)
+  images               ItemImage[]
+
+  // Matches
+  lostMatches          ItemMatch[]   @relation("LostItemMatches")
+  foundMatches         ItemMatch[]   @relation("FoundItemMatches")
 
   @@index([userId])
   @@index([categoryId])
   @@index([status, type])
   @@index([incidentDate])
   @@index([locationId])
-  @@index([storageLocationId])
+  @@index([primaryColor])
+}
+
+model ItemMatch {
+  id               String      @id @default(cuid())
+  lostItemId       String
+  potentialMatchId String
+  score            Float       // Score from 0.0 to 1.0 (or 0 to 100)
+  scoreDetails     Json?       // Stores calculation breakdown: { category: 1.0, distance: 0.85, ... }
+  status           MatchStatus @default(PENDING)
+  // reviewedById     String?
+  // reviewedAt       DateTime?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  // Relations
+  lostItem         Item        @relation("LostItemMatches", fields: [lostItemId], references: [id], onDelete: Cascade)
+  potentialMatch   Item        @relation("FoundItemMatches", fields: [potentialMatchId], references: [id], onDelete: Cascade)
+
+  // Ensure a lost item and candidate match pair is unique
+  @@unique([lostItemId, potentialMatchId])
+  
+  // Indexes for query performance
+  @@index([lostItemId])
+  @@index([potentialMatchId])
+  @@index([status, score])
 }
 
 model ItemImage {
