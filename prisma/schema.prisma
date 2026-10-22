@@ -45,6 +45,7 @@ enum PrimaryColor {
 }
 
 enum ItemCondition {
+  UNKNOWN
   NEW
   LIKE_NEW
   GOOD
@@ -94,19 +95,19 @@ model Location {
 }
 
 model Item {
-  id                   String        @id @default(cuid())
-  userId               String
-  categoryId           String
-  type                 ItemType
-  status               ItemStatus    @default(OPEN)
-  title                String
-  description          String?
-  
+  id          String     @id @default(cuid())
+  userId      String
+  categoryId  String
+  type        ItemType
+  status      ItemStatus @default(OPEN)
+  title       String
+  description String?
+
   // Standardized Constant Attributes
-  primaryColor         PrimaryColor
-  secondaryColor       PrimaryColor?
-  brand                String?       // Normalized lowercase string
-  condition            ItemCondition
+  primaryColor   PrimaryColor
+  secondaryColor PrimaryColor?
+  brand          String? // Normalized lowercase string
+  condition      ItemCondition
 
   // Location & Spatial Data
   // LocationId = where it was found
@@ -115,24 +116,24 @@ model Item {
   storageLocationId    String?
   storageLocationExtra String?
 
-  incidentDate         DateTime
-  servicedById         String?
-  resolvedDate         DateTime?
-  resolutionNotes      String?
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
+  incidentDate    DateTime
+  servicedById    String?
+  resolvedDate    DateTime?
+  resolutionNotes String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   // Relations
-  submitter            User          @relation("ItemSubmitter", fields: [userId], references: [id], onDelete: Restrict)
-  category             Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  location             Location      @relation("ItemLocation", fields: [locationId], references: [id], onDelete: Restrict)
-  storageLocation      Location?     @relation("StorageLocation", fields: [storageLocationId], references: [id], onDelete: SetNull)
-  servicedBy           User?         @relation("ItemServicer", fields: [servicedById], references: [id], onDelete: SetNull)
-  images               ItemImage[]
+  submitter       User        @relation("ItemSubmitter", fields: [userId], references: [id], onDelete: Restrict)
+  category        Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  location        Location    @relation("ItemLocation", fields: [locationId], references: [id], onDelete: Restrict)
+  storageLocation Location?   @relation("StorageLocation", fields: [storageLocationId], references: [id], onDelete: SetNull)
+  servicedBy      User?       @relation("ItemServicer", fields: [servicedById], references: [id], onDelete: SetNull)
+  images          ItemImage[]
 
   // Matches
-  lostMatches          ItemMatch[]   @relation("LostItemMatches")
-  foundMatches         ItemMatch[]   @relation("FoundItemMatches")
+  lostMatches  ItemMatch[] @relation("LostItemMatches")
+  foundMatches ItemMatch[] @relation("FoundItemMatches")
 
   @@index([userId])
   @@index([categoryId])
@@ -146,8 +147,8 @@ model ItemMatch {
   id               String      @id @default(cuid())
   lostItemId       String
   potentialMatchId String
-  score            Float       // Score from 0.0 to 1.0 (or 0 to 100)
-  scoreDetails     Json?       // Stores calculation breakdown: { category: 1.0, distance: 0.85, ... }
+  score            Float // Score from 0.0 to 1.0 (or 0 to 100)
+  scoreDetails     Json? // Stores calculation breakdown: { category: 1.0, distance: 0.85, ... }
   status           MatchStatus @default(PENDING)
   // reviewedById     String?
   // reviewedAt       DateTime?
@@ -155,12 +156,11 @@ model ItemMatch {
   updatedAt        DateTime    @updatedAt
 
   // Relations
-  lostItem         Item        @relation("LostItemMatches", fields: [lostItemId], references: [id], onDelete: Cascade)
-  potentialMatch   Item        @relation("FoundItemMatches", fields: [potentialMatchId], references: [id], onDelete: Cascade)
+  lostItem       Item @relation("LostItemMatches", fields: [lostItemId], references: [id], onDelete: Cascade)
+  potentialMatch Item @relation("FoundItemMatches", fields: [potentialMatchId], references: [id], onDelete: Cascade)
 
   // Ensure a lost item and candidate match pair is unique
   @@unique([lostItemId, potentialMatchId])
-  
   // Indexes for query performance
   @@index([lostItemId])
   @@index([potentialMatchId])

@@ -3,7 +3,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { requireCurrentUserId } from '@/lib/auth/current-user';
-import type { ItemCondition, ItemType, PrimaryColor } from '../generated/prisma/enums';
+import { ItemCondition, PrimaryColor, type ItemType } from '../generated/prisma/enums';
 
 export type CreateReportInput = {
   type: ItemType;
@@ -25,6 +25,14 @@ export async function createItemReport(data: CreateReportInput) {
   }
   if (!data.categoryId || !data.locationId) {
     return { success: false, error: 'Category and Location are required.' };
+  }
+
+  if (
+    !Object.values(PrimaryColor).includes(data.primaryColor) ||
+    !Object.values(ItemCondition).includes(data.itemCondition) ||
+    (data.secondaryColor != null && !Object.values(PrimaryColor).includes(data.secondaryColor))
+  ) {
+    return { success: false, error: 'Select a valid primary color and condition.' };
   }
 
   const parsedDate = new Date(data.incidentDate);
@@ -49,7 +57,7 @@ export async function createItemReport(data: CreateReportInput) {
         primaryColor: data.primaryColor,
         secondaryColor: data.secondaryColor || null,
         brand: data.brand || null,
-        condition: data.itemCondition
+        condition: data.itemCondition,
       },
     });
 

@@ -125,3 +125,14 @@ pnpm db:generate
 ```bash
 pnpm db:seed
 ```
+
+## Item Matching Attributes
+
+The item matching migration adds required `primaryColor` and `condition` fields.
+Existing reports are preserved with `OTHER` for color and `UNKNOWN` for condition;
+these values should be updated when the actual attributes are known. New reports
+must supply both fields explicitly.
+
+Admin CSV imports now require `primaryColor` and `condition` columns in addition
+to the existing required columns. Use Prisma enum values such as `BLUE` and
+`LIKE_NEW` (case insensitive). CSV exports include both columns.

@@ -630,8 +630,9 @@ export default function ItemFormModal({
                     id="item-category"
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${categoryId ? 'text-slate-900' : 'text-slate-400'
-                      }`}
+                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      categoryId ? 'text-slate-900' : 'text-slate-400'
+                    }`}
                   >
                     <option value="" className="text-slate-400">
                       Select category
@@ -653,8 +654,9 @@ export default function ItemFormModal({
                     type="date"
                     value={incidentDate}
                     onChange={(e) => setIncidentDate(e.target.value)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${incidentDate ? 'text-slate-900' : 'text-slate-400'
-                      }`}
+                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      incidentDate ? 'text-slate-900' : 'text-slate-400'
+                    }`}
                   />
                 </div>
               </div>
@@ -683,8 +685,9 @@ export default function ItemFormModal({
                     id="item-condition"
                     value={condition}
                     onChange={(e) => setCondition(e.target.value as ItemCondition)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${condition ? 'text-slate-900' : 'text-slate-400'
-                      }`}
+                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      condition ? 'text-slate-900' : 'text-slate-400'
+                    }`}
                   >
                     <option value="" className="text-slate-400">
                       Select condition
@@ -708,8 +711,9 @@ export default function ItemFormModal({
                     id="primary-color"
                     value={primaryColor}
                     onChange={(e) => setPrimaryColor(e.target.value as PrimaryColor)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${primaryColor ? 'text-slate-900' : 'text-slate-400'
-                      }`}
+                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      primaryColor ? 'text-slate-900' : 'text-slate-400'
+                    }`}
                   >
                     <option value="" className="text-slate-400">
                       Select primary color
@@ -730,8 +734,9 @@ export default function ItemFormModal({
                     id="secondary-color"
                     value={secondaryColor}
                     onChange={(e) => setSecondaryColor(e.target.value as PrimaryColor)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${secondaryColor ? 'text-slate-900' : 'text-slate-400'
-                      }`}
+                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      secondaryColor ? 'text-slate-900' : 'text-slate-400'
+                    }`}
                   >
                     <option value="" className="text-slate-400">
                       Select secondary color
@@ -766,8 +771,9 @@ export default function ItemFormModal({
                   id="item-location"
                   value={locationId}
                   onChange={(e) => setLocationId(e.target.value)}
-                  className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${locationId ? 'text-slate-900' : 'text-slate-400'
-                    }`}
+                  className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                    locationId ? 'text-slate-900' : 'text-slate-400'
+                  }`}
                 >
                   <option value="" className="text-slate-400">
                     Select a location

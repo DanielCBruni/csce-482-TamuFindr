@@ -4,7 +4,12 @@
 import { useState } from 'react';
 import ItemFormModal from '@/components/item_form_modal/item_form_modal';
 import ConfirmationModal from '@/components/confirmation_modal/confirmation_modal';
-import type { Category, ItemCondition, Location, PrimaryColor } from '../../generated/prisma/browser';
+import type {
+  Category,
+  ItemCondition,
+  Location,
+  PrimaryColor,
+} from '../../generated/prisma/browser';
 
 type Props = {
   categories: Category[];
@@ -49,7 +54,8 @@ export default function ReportClientView({ categories, locations, colors, condit
           Report a lost item
         </h1>
         <p className="text-lg text-slate-600 max-w-xl mx-auto">
-          Submit details about something you misplaced so it can be matched if it is found on campus.
+          Submit details about something you misplaced so it can be matched if it is found on
+          campus.
         </p>
       </div>
 
@@ -77,7 +83,6 @@ export default function ReportClientView({ categories, locations, colors, condit
             Submit details about something you misplaced so we can help match it when found.
           </p>
         </button>
-
       </div>
 
       {/* 1. INPUT FORM MODAL */}
