@@ -29,7 +29,8 @@ const faqs = [
   {
     id: 'report-found',
     question: 'How do I report a found item?',
-    answer: 'Please find your nearest lost and found resource on campus and turn it in to university staff.',
+    answer:
+      'Please find your nearest lost and found resource on campus and turn it in to university staff.',
   },
   {
     question: 'How do I claim an item?',

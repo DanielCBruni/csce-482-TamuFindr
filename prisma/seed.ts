@@ -1,5 +1,6 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client';
+import { randomUUID } from 'node:crypto';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
@@ -75,11 +76,6 @@ const locations = [
 ];
 
 async function main() {
-  const userId = process.env.DEFAULT_USER_ID;
-  if (!userId?.trim()) {
-    throw new Error('DEFAULT_USER_ID must be configured.');
-  }
-
   console.log('Seeding categories...');
   for (const category of categories) {
     await prisma.category.upsert({
@@ -102,16 +98,35 @@ async function main() {
     });
   }
 
+  // Development USER
   await prisma.user.upsert({
     where: { email: 'testuser@tamu.edu' },
-    update: { id: userId },
-    create: {
-      id: userId,
-      email: 'testuser@tamu.edu',
-      firstName: 'Miss',
-      lastName: 'Rev',
-      passwordHash: 'hashed_password_here',
+    update: {
+      name: 'Miss Rev',
       role: 'USER',
+    },
+    create: {
+      id: randomUUID(),
+      email: 'testuser@tamu.edu',
+      name: 'Miss Rev',
+      emailVerified: false,
+      role: 'USER',
+    },
+  });
+
+  // Development ADMIN
+  await prisma.user.upsert({
+    where: { email: 'testadmin@tamu.edu' },
+    update: {
+      name: 'LeBron James',
+      role: 'ADMIN',
+    },
+    create: {
+      id: randomUUID(),
+      email: 'testadmin@tamu.edu',
+      name: 'LeBron James',
+      emailVerified: false,
+      role: 'ADMIN',
     },
   });
 

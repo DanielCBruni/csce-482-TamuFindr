@@ -61,8 +61,9 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
-                  }`}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                  index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
+                }`}
               >
                 <div>
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>
@@ -91,8 +92,9 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
-                  }`}
+                className={`flex w-full items-center justify-between gap-4 bg-white px-5 py-5 text-left transition-colors hover:bg-accent/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                  index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
+                }`}
               >
                 <div>
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>

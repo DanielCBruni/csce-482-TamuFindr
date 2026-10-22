@@ -49,11 +49,13 @@ Automated matching may suggest corresponding lost and found items.
 ## Iteration 1 Scope
 
 Included:
+
 - Item reporting
 - Item management
 - Manual matching
 
 Not included:
+
 - Automated matching
 - TAMU authentication
 - Image uploads

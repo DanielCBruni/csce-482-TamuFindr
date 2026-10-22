@@ -83,7 +83,10 @@ export default function ActivityTable({
         <tbody className="divide-y divide-[var(--surface-border)] text-sm text-[var(--text-primary)]">
           {items.length === 0 ? (
             <tr>
-              <td colSpan={hasActions ? 7 : 6} className="px-5 py-8 text-center text-[var(--text-muted)]">
+              <td
+                colSpan={hasActions ? 7 : 6}
+                className="px-5 py-8 text-center text-[var(--text-muted)]"
+              >
                 {emptyMessage}
               </td>
             </tr>
