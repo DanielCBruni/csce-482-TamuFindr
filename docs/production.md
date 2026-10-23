@@ -2,7 +2,7 @@
 
 Current production deployment is manual.
 
-Build, download, and transfer the docker image to the server. 
+Build, download, and transfer the docker image to the server.
 
 ```bash
 docker build -t tamufindr:prod .
@@ -48,4 +48,3 @@ sudo docker compose \
   -f compose.prod.yaml \
   up -d
 ```
-

@@ -38,9 +38,6 @@ enum PrimaryColor {
   PURPLE
   PINK
   ORANGE
-  /**
-   * TODO: If OTHER then add input box?
-   */
   OTHER
 }
 
@@ -60,7 +57,6 @@ enum MatchStatus {
   REJECTED
   EXPIRED
 }
-
 
 model Category {
   id    String @id @default(cuid())
@@ -137,8 +133,6 @@ model ItemMatch {
   score            Float // Score from 0.0 to 1.0 (or 0 to 100)
   scoreDetails     Json? // Stores calculation breakdown: { category: 1.0, distance: 0.85, ... }
   status           MatchStatus @default(PENDING)
-  // reviewedById     String?
-  // reviewedAt       DateTime?
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
 
@@ -147,8 +141,8 @@ model ItemMatch {
   potentialMatch Item @relation("FoundItemMatches", fields: [potentialMatchId], references: [id], onDelete: Cascade)
 
   // Ensure a lost item and candidate match pair is unique
-  @@unique([lostItemId, potentialMatchId])
   // Indexes for query performance
+  @@unique([lostItemId, potentialMatchId])
   @@index([lostItemId])
   @@index([potentialMatchId])
   @@index([status, score])
@@ -167,6 +161,7 @@ model ItemImage {
 }
 
 // Better Auth Required Models
+
 model User {
   id            String    @id
   name          String
@@ -178,10 +173,12 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
-  phoneNumber   String?
-  role          UserRole  @default(USER)
-  submittedItems Item[] @relation("ItemSubmitter")
-  servicedItems  Item[] @relation("ItemServicer")
+  phoneNumber    String?
+  role           UserRole @default(USER)
+  submittedItems Item[]   @relation("ItemSubmitter")
+  servicedItems  Item[]   @relation("ItemServicer")
+
+  ssoproviders SsoProvider[]
 
   @@unique([email])
   @@map("user")
@@ -233,4 +230,19 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model SsoProvider {
+  id             String  @id
+  issuer         String
+  oidcConfig     String?
+  samlConfig     String?
+  userId         String
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  providerId     String
+  organizationId String?
+  domain         String
+
+  @@unique([providerId])
+  @@map("ssoProvider")
 }
