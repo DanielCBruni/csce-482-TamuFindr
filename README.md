@@ -24,8 +24,15 @@ git clone https://github.com/DanielCBruni/csce-482-TamuFindr.git
 cd csce-482-TamuFindr
 
 pnpm install
+```
+
+Configure the .env
+
+```bash
 cp .env.example .env
 ```
+
+Generate a random db password and auth secret with `openssl rand -hex 32`
 
 Start the PostgreSQL database:
 
