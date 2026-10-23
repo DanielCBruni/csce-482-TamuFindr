@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { requireCurrentUserId } from '@/lib/auth/current-user';
+import { requireUser } from '@/lib/auth/guard';
 import { prisma } from '@/lib/prisma';
 
 export async function cancelItem(formData: FormData): Promise<void> {
@@ -10,7 +10,7 @@ export async function cancelItem(formData: FormData): Promise<void> {
     return;
   }
 
-  const userId = await requireCurrentUserId();
+  const { id: userId } = await requireUser();
   await prisma.item.updateMany({
     where: { id: itemId, userId, status: { in: ['OPEN', 'MATCHED'] } },
     data: { status: 'CANCELLED' },

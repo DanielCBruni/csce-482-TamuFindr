@@ -2,6 +2,8 @@
 
 TAMUfindr is a centralized lost-and-found web application for Texas A&M University. It allows users to report lost and found items and provides campus lost-and-found staff with a shared system for managing those reports.
 
+77.113.130.242
+
 ## Local Development
 
 TAMUfindr runs the PostgreSQL database in Docker while the Next.js application runs locally.
@@ -46,6 +48,30 @@ pnpm dev
 ```
 
 The database will continue running in Docker while the Next.js application runs locally.
+
+### Local authentication and roles
+
+Set `DEV_USER_EMAIL` in `.env` to select a seeded development account:
+
+- `testuser@tamu.edu` has the `USER` role.
+- `testadmin@tamu.edu` has the `ADMIN` role.
+
+### Future TAMU SAML handoff
+
+SAML is not enabled yet. Reserve the Better Auth provider ID `tamu`. With the default
+`/api/auth` base path, the future Entra ID Reply URL (ACS URL) will be:
+
+```text
+https://<deployment-host>/api/auth/sso/saml2/sp/acs/tamu
+```
+
+Replace `<deployment-host>` with the agreed deployment hostname before sending this
+URL to TAMU IT. The local equivalent is
+`http://localhost:3000/api/auth/sso/saml2/sp/acs/tamu`.
+These URLs follow the [Better Auth SSO endpoint convention](https://better-auth.com/docs/plugins/sso);
+they will accept SAML responses only after the server SSO plugin and TAMU provider are configured.
+Entra ID will identify users; application permissions currently come from the database's
+`USER` and `ADMIN` roles. Entra role mapping is deferred.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow and [docs/database.md](docs/database.md) for database development instructions.
 
