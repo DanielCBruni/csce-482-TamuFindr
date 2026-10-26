@@ -2,6 +2,7 @@ import uuid
 from datetime import timedelta, timezone, datetime
 from sqlalchemy import create_engine, select
 from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, joinedload
 
 from config import DATABASE_URL, MAX_INCIDENT_DAYS_DIFF, SCORE_THRESHOLD
@@ -10,7 +11,11 @@ from scoring import calculate_match_score
 
 now = datetime.now()
 
-engine = create_engine(DATABASE_URL, echo=False)
+database_url = make_url(DATABASE_URL)
+database_url = database_url.set(drivername="postgresql+psycopg")
+database_url = database_url.difference_update_query(["schema"])
+
+engine = create_engine(database_url, echo=False)
 
 def run_matching_batch():
     with Session(engine) as session:

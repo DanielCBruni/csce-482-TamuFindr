@@ -25,6 +25,7 @@ class PrimaryColor(str, enum.Enum):
     OTHER = "OTHER"
 
 class ItemCondition(str, enum.Enum):
+    UNKNOWN = "UNKNOWN"
     NEW = "NEW"
     LIKE_NEW = "LIKE_NEW"
     GOOD = "GOOD"

@@ -72,7 +72,10 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 grid min-h-16.25 w-full grid-cols-[1fr_auto] items-center gap-x-4 gap-y-3 border-b border-[var(--surface-border)] bg-[var(--surface-header)] px-4 py-3 shadow-sm box-border md:grid-cols-[1fr_auto_1fr] md:px-7 md:py-4.5">
       {/* Left side - branding */}
-      <Link href="/" className="col-start-1 row-start-1 flex flex-col justify-center hover:opacity-80">
+      <Link
+        href="/"
+        className="col-start-1 row-start-1 flex flex-col justify-center hover:opacity-80"
+      >
         <div className="text-[0.65rem] tracking-[0.12em] text-primary-muted font-bold whitespace-nowrap leading-tight">
           TEXAS A&M UNIVERSITY
         </div>
@@ -94,6 +97,9 @@ export default function Header() {
         </Link>
         <Link href="/activity" className={linkClass('/activity')}>
           Activity
+        </Link>
+        <Link href="/potential-matches" className={linkClass('/potential-matches')}>
+          Potential Matches
         </Link>
         <Link href="/help" className={linkClass('/help')}>
           Help

@@ -61,11 +61,14 @@ def calculate_match_score(lost: Item, found: Item) -> tuple[float, dict]:
     days_diff = abs((lost.incidentDate - found.incidentDate).days)
     scores["date_proximity"] = max(0.0, math.exp(-days_diff / 7.0))
 
-    # 6. Condition Scale Distance Score
-    lost_cond = CONDITION_RANKS.get(lost.condition, 2)
-    found_cond = CONDITION_RANKS.get(found.condition, 2)
-    cond_diff = abs(lost_cond - found_cond)
-    scores["condition"] = max(0.0, 1.0 - (cond_diff / 5.0))
+    # 6. Condition Scale Distance Score (This is just for UNKNOWN)
+    if lost.condition == ItemCondition.UNKNOWN or found.condition == ItemCondition.UNKNOWN:
+        scores["condition"] = 0.5  # Missing condition is neutral, not a known match.
+    else:
+        lost_cond = CONDITION_RANKS[lost.condition]
+        found_cond = CONDITION_RANKS[found.condition]
+        cond_diff = abs(lost_cond - found_cond)
+        scores["condition"] = max(0.0, 1.0 - (cond_diff / 5.0))
 
     # Weighted Sum Aggregation
     total_score = sum(scores[attr] * WEIGHTS[attr] for attr in WEIGHTS)
