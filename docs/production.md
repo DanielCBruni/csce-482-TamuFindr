@@ -37,7 +37,7 @@ Apply the migrations
 sudo docker compose \
   --env-file .env.production \
   -f compose.prod.yaml \
-  run --rm app ./node_modules/.bin/prisma migrate status
+  run --rm app ./node_modules/.bin/prisma migrate deploy
 ```
 
 Start the application

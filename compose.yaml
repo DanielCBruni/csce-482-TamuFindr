@@ -26,7 +26,7 @@ services:
           path: package.json
 
   db:
-    image: postgres:17
+    image: postgres:18
     container_name: tamufindr-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?required}
@@ -35,7 +35,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     healthcheck:
       test:
         - CMD-SHELL
