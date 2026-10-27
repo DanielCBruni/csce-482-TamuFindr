@@ -5,7 +5,7 @@ import AccountMenu from '@/components/account/account-menu';
 import { usePathname } from 'next/navigation';
 import SettingsMenu from '@/components/settings/settings-menu';
 
-export default function Header({ signedIn }: { signedIn: boolean }) {
+export default function Header({ signedIn, isAdmin }: { signedIn: boolean; isAdmin: boolean }) {
   const pathname = usePathname();
   const linkClass = (path: string) => {
     const baseClass = 'text-[1.05rem] font-semibold no-underline transition-colors py-1';
@@ -33,18 +33,29 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
         className="col-span-2 row-start-2 mx-auto flex flex-wrap items-center justify-center gap-x-5.5 gap-y-2 md:col-span-1 md:col-start-2 md:row-start-1"
         aria-label="Main navigation"
       >
-        <Link href="/home" className={linkClass('/home')}>
-          Home
-        </Link>
-        <Link href="/report" className={linkClass('/report')}>
-          Report
-        </Link>
-        <Link href="/activity" className={linkClass('/activity')}>
-          Activity
-        </Link>
-        <Link href="/potential-matches" className={linkClass('/potential-matches')}>
-          Potential Matches
-        </Link>
+        {signedIn && (
+          <>
+            <Link href="/home" className={linkClass('/home')}>
+              Home
+            </Link>
+            <Link href="/report" className={linkClass('/report')}>
+              Report
+            </Link>
+            <Link href="/activity" className={linkClass('/activity')}>
+              Activity
+            </Link>
+          </>
+        )}
+        {signedIn && isAdmin && (
+          <>
+            <Link href="/potential-matches" className={linkClass('/potential-matches')}>
+              Potential Matches
+            </Link>
+            <Link href="/admin" className={linkClass('/admin')}>
+              Admin
+            </Link>
+          </>
+        )}
         <Link href="/help" className={linkClass('/help')}>
           Help
         </Link>
