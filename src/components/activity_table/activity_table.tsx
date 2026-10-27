@@ -8,6 +8,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import CancelTicketButton from './cancel_ticket_button';
+import Button from '@/components/ui/button';
 
 export interface ActivityItem {
   id: string;
@@ -105,23 +106,13 @@ export default function ActivityTable({
                   {resolveAction && ['OPEN', 'MATCHED'].includes(item.status) && (
                     <form action={resolveAction}>
                       <input type="hidden" name="itemId" value={item.id} />
-                      <button
-                        type="submit"
-                        className="activity-table-action rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] px-3 py-1.5 font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
-                      >
-                        Resolve
-                      </button>
+                      <Button type="submit">Resolve</Button>
                     </form>
                   )}
                   {reopenAction && item.status === 'RESOLVED' && (
                     <form action={reopenAction}>
                       <input type="hidden" name="itemId" value={item.id} />
-                      <button
-                        type="submit"
-                        className="activity-table-action rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] px-3 py-1.5 font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
-                      >
-                        Reopen
-                      </button>
+                      <Button type="submit">Reopen</Button>
                     </form>
                   )}
                   {cancelAction && ['OPEN', 'MATCHED'].includes(item.status) && (

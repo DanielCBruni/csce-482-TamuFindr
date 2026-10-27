@@ -11,27 +11,21 @@ export default function Button({
   buttonName,
   children,
   variant = 'default',
+  className = '',
   style,
   ...props
 }: ButtonProps) {
   return (
     <button
       {...props}
+      className={`${variant === 'default' ? 'ui-button rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] px-3 py-1.5 font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]' : ''} cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
       style={{
         ...(variant === 'default'
-          ? {
-              backgroundColor: 'var(--color-primary-muted)',
-              border: '1px solid var(--color-accent)',
-              borderRadius: '4px',
-              color: 'var(--color-secondary)',
-              cursor: 'pointer',
-              padding: '8px 16px',
-            }
+          ? {}
           : {
               backgroundColor: 'transparent',
               border: 0,
               color: 'inherit',
-              cursor: 'pointer',
               padding: variant === 'icon' ? '8px' : '8px 16px',
             }),
         ...style,

@@ -125,7 +125,7 @@
   border-color: transparent;
 }
 
-:root[data-theme='dark'] .activity-table-action {
+:root[data-theme='dark'] .ui-button {
   border-color: transparent;
   background-color: var(--surface-subtle);
 }
