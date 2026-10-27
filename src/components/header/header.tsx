@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import AccountMenu from '@/components/account-menu/account-menu';
 import { usePathname } from 'next/navigation';
 import { startTransition, useEffect, useState } from 'react';
 
@@ -41,7 +42,7 @@ function loadPreferences(): Preferences {
   }
 }
 
-export default function Header() {
+export default function Header({ signedIn }: { signedIn: boolean }) {
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES);
@@ -106,71 +107,74 @@ export default function Header() {
         </Link>
       </nav>
 
-      <div className="relative col-start-2 row-start-1 justify-self-end md:col-start-3">
-        <button
-          type="button"
-          className="flex h-11 w-11 items-center justify-center text-primary-muted transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          aria-label="Settings"
-          title="Settings"
-          aria-expanded={settingsOpen}
-          aria-controls="accessibility-settings"
-          onClick={() => setSettingsOpen((open) => !open)}
-        >
-          <svg aria-hidden="true" className="h-7 w-7 fill-current" viewBox="0 0 24 24">
-            <path
-              fillRule="evenodd"
-              d="M10.25 2.5a1 1 0 0 1 .98-.8h1.54a1 1 0 0 1 .98.8l.33 1.58c.56.16 1.08.38 1.56.65l1.4-.82a1 1 0 0 1 1.26.14l1.09 1.09a1 1 0 0 1 .14 1.26l-.82 1.4c.27.48.49 1 .65 1.56l1.58.33a1 1 0 0 1 .8.98v1.54a1 1 0 0 1-.8.98l-1.58.33c-.16.56-.38 1.08-.65 1.56l.82 1.4a1 1 0 0 1-.14 1.26l-1.09 1.09a1 1 0 0 1-1.26.14l-1.4-.82c-.48.27-1 .49-1.56.65l-.33 1.58a1 1 0 0 1-.98.8h-1.54a1 1 0 0 1-.98-.8l-.33-1.58c-.56-.16-1.08-.38-1.56-.65l-1.4.82a1 1 0 0 1-1.26-.14l-1.09-1.09a1 1 0 0 1-.14-1.26l.82-1.4c-.27-.48-.49-1-.65-1.56l-1.58-.33a1 1 0 0 1-.8-.98v-1.54a1 1 0 0 1 .8-.98l1.58-.33c.16-.56.38-1.08.65-1.56l-.82-1.4a1 1 0 0 1 .14-1.26l1.09-1.09a1 1 0 0 1 1.26-.14l1.4.82c.48-.27 1-.49 1.56-.65l.33-1.58zM12 8.75a3.25 3.25 0 1 0 0 6.5a3.25 3.25 0 0 0 0-6.5z"
-            />
-          </svg>
-        </button>
-        {settingsOpen && (
-          <section
-            id="accessibility-settings"
-            className="settings-panel absolute right-0 top-full mt-2 w-72 rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] p-4 text-[var(--text-primary)]"
-            aria-label="Display and accessibility settings"
+      <div className="relative col-start-2 row-start-1 flex items-center gap-2 justify-self-end md:col-start-3">
+        <div>
+          <button
+            type="button"
+            className="flex h-11 w-11 items-center justify-center text-primary-muted transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            aria-label="Settings"
+            title="Settings"
+            aria-expanded={settingsOpen}
+            aria-controls="accessibility-settings"
+            onClick={() => setSettingsOpen((open) => !open)}
           >
-            <div>
-              <p className="mb-2 text-sm font-semibold">Color theme</p>
-              <div className="grid grid-cols-2 gap-1" role="group" aria-label="Color theme">
-                {(['light', 'dark'] as const).map((theme) => (
-                  <button
-                    key={theme}
-                    type="button"
-                    className={`rounded border px-2 py-1.5 text-xs capitalize focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${preferences.theme === theme ? 'bg-primary text-white' : 'hover:bg-accent/10'}`}
-                    aria-pressed={preferences.theme === theme}
-                    onClick={() => updatePreferences({ theme })}
-                  >
-                    {theme}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="mt-4 flex items-center justify-between gap-3 text-sm font-semibold">
-              Text size
-              <select
-                className="rounded border border-[var(--surface-border)] bg-[var(--surface)] px-2 py-1.5 font-normal"
-                value={preferences.textSize}
-                onChange={(event) =>
-                  updatePreferences({ textSize: event.target.value as TextSize })
-                }
-              >
-                <option value="standard">Standard</option>
-                <option value="large">Large</option>
-                <option value="largest">Largest</option>
-              </select>
-            </label>
-
-            <label className="mt-3 flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={preferences.highContrast}
-                onChange={(event) => updatePreferences({ highContrast: event.target.checked })}
+            <svg aria-hidden="true" className="h-7 w-7 fill-current" viewBox="0 0 24 24">
+              <path
+                fillRule="evenodd"
+                d="M10.25 2.5a1 1 0 0 1 .98-.8h1.54a1 1 0 0 1 .98.8l.33 1.58c.56.16 1.08.38 1.56.65l1.4-.82a1 1 0 0 1 1.26.14l1.09 1.09a1 1 0 0 1 .14 1.26l-.82 1.4c.27.48.49 1 .65 1.56l1.58.33a1 1 0 0 1 .8.98v1.54a1 1 0 0 1-.8.98l-1.58.33c-.16.56-.38 1.08-.65 1.56l.82 1.4a1 1 0 0 1-.14 1.26l-1.09 1.09a1 1 0 0 1-1.26.14l-1.4-.82c-.48.27-1 .49-1.56.65l-.33 1.58a1 1 0 0 1-.98.8h-1.54a1 1 0 0 1-.98-.8l-.33-1.58c-.56-.16-1.08-.38-1.56-.65l-1.4.82a1 1 0 0 1-1.26-.14l-1.09-1.09a1 1 0 0 1-.14-1.26l.82-1.4c-.27-.48-.49-1-.65-1.56l-1.58-.33a1 1 0 0 1-.8-.98v-1.54a1 1 0 0 1 .8-.98l1.58-.33c.16-.56.38-1.08.65-1.56l-.82-1.4a1 1 0 0 1 .14-1.26l1.09-1.09a1 1 0 0 1 1.26-.14l1.4.82c.48-.27 1-.49 1.56-.65l.33-1.58zM12 8.75a3.25 3.25 0 1 0 0 6.5a3.25 3.25 0 0 0 0-6.5z"
               />
-              High contrast
-            </label>
-          </section>
-        )}
+            </svg>
+          </button>
+          {settingsOpen && (
+            <section
+              id="accessibility-settings"
+              className="settings-panel absolute right-0 top-full mt-2 w-72 rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] p-4 text-[var(--text-primary)]"
+              aria-label="Display and accessibility settings"
+            >
+              <div>
+                <p className="mb-2 text-sm font-semibold">Color theme</p>
+                <div className="grid grid-cols-2 gap-1" role="group" aria-label="Color theme">
+                  {(['light', 'dark'] as const).map((theme) => (
+                    <button
+                      key={theme}
+                      type="button"
+                      className={`rounded border px-2 py-1.5 text-xs capitalize focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${preferences.theme === theme ? 'bg-primary text-white' : 'hover:bg-accent/10'}`}
+                      aria-pressed={preferences.theme === theme}
+                      onClick={() => updatePreferences({ theme })}
+                    >
+                      {theme}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <label className="mt-4 flex items-center justify-between gap-3 text-sm font-semibold">
+                Text size
+                <select
+                  className="rounded border border-[var(--surface-border)] bg-[var(--surface)] px-2 py-1.5 font-normal"
+                  value={preferences.textSize}
+                  onChange={(event) =>
+                    updatePreferences({ textSize: event.target.value as TextSize })
+                  }
+                >
+                  <option value="standard">Standard</option>
+                  <option value="large">Large</option>
+                  <option value="largest">Largest</option>
+                </select>
+              </label>
+
+              <label className="mt-3 flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={preferences.highContrast}
+                  onChange={(event) => updatePreferences({ highContrast: event.target.checked })}
+                />
+                High contrast
+              </label>
+            </section>
+          )}
+        </div>
+        <AccountMenu signedIn={signedIn} />
       </div>
     </header>
   );

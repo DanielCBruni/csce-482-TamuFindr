@@ -1,4 +1,5 @@
 import { betterAuth } from 'better-auth';
+import { nextCookies } from 'better-auth/next-js';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { prisma } from './prisma';
 import { sso } from '@better-auth/sso';
@@ -45,5 +46,6 @@ export const auth = betterAuth({
         allowIdpInitiated: false,
       },
     }),
+    nextCookies(),
   ],
 });

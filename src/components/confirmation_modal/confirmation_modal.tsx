@@ -1,7 +1,7 @@
 // @/components/confirmation_modal/confirmation_modal.tsx
 'use client';
 
-import Button from '@/components/button/button';
+import Button from '@/components/ui/button';
 
 type ConfirmationModalProps = {
   open: boolean;

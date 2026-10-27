@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/header/header';
+import { getCurrentUser } from '@/lib/auth/current-user';
 import Footer from '@/components/footer/footer';
 
 const geistSans = Geist({
@@ -22,11 +23,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default async function RootLayout({ children }: LayoutProps<'/'>) {
+  const user = await getCurrentUser();
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <Header />
+        <Header signedIn={Boolean(user)} />
         <div style={{ flex: 1 }}>{children}</div>
         <Footer />
       </body>

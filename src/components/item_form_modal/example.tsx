@@ -2,7 +2,7 @@
 
 // import { useState } from 'react';
 // import ItemFormModal from '@/components/item_form_modal/item_form_modal';
-// import Button from '@/components/button/button';
+// import Button from '@/components/ui/button';
 // import type { ItemFormData } from '@/types/item';
 // import type { Category } from '@/types/category';
 // import type { Location } from '@/types/location';

@@ -1,7 +1,7 @@
 // 'use client';
 
 // import { useState } from 'react';
-// import Button from '@/components/button/button';
+// import Button from '@/components/ui/button';
 // import { createItemReport } from '../../actions/report-action';
 // import type { Category, Location } from '../../generated/prisma/browser';
 
@@ -376,7 +376,7 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@/components/button/button';
+import Button from '@/components/ui/button';
 import { createItemReport } from '../../actions/report-action';
 import type { Category, Location } from '../../generated/prisma/browser';
 import type { PrimaryColor, ItemCondition } from '../../generated/prisma/browser';
