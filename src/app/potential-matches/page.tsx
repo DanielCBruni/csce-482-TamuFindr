@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { requireCurrentUserId } from '@/lib/auth/current-user';
+import { AuthorizationError, requireAdmin } from '@/lib/auth/guard';
 import PotentialMatchesClientView from './potential-matches-client-view';
 
 export const dynamic = 'force-dynamic';
@@ -13,9 +13,20 @@ const formatDate = (date: Date) =>
   });
 
 export default async function PotentialMatchesPage() {
-  const userId = await requireCurrentUserId();
+  try {
+    await requireAdmin();
+  } catch (error) {
+    if (!(error instanceof AuthorizationError)) throw error;
+    return (
+      <section className="mx-auto mt-16 max-w-6xl px-6 text-primary-dark">
+        <h1 className="text-3xl font-bold text-primary">Access denied</h1>
+        <p className="mt-3">Administrator access is required to view this page.</p>
+      </section>
+    );
+  }
+
   const reports = await prisma.item.findMany({
-    where: { userId, type: 'LOST', status: 'OPEN' },
+    where: { type: 'LOST', status: 'OPEN' },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
     select: {
       id: true,

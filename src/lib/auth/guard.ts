@@ -13,7 +13,7 @@ export class AuthorizationError extends Error {
 
 export async function requireUser() {
   const user = await getCurrentUser();
-  if (!user) redirect('/auth/login');
+  if (!user) redirect('/login');
   return user;
 }
 

@@ -58,10 +58,9 @@ The database will continue running in Docker while the Next.js application runs 
 
 ### Local authentication and roles
 
-Set `DEV_USER_EMAIL` in `.env` to select a seeded development account:
-
-- `testuser@tamu.edu` has the `USER` role.
-- `testadmin@tamu.edu` has the `ADMIN` role.
+Sign in at `/login` using Google OAuth, including during local development. Configure
+`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env` before signing in.
+Application permissions come from the authenticated user's database role (`USER` or `ADMIN`).
 
 ### Future TAMU SAML handoff
 
