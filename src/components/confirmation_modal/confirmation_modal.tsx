@@ -1,7 +1,7 @@
 // @/components/confirmation_modal/confirmation_modal.tsx
 'use client';
 
-import Button from '@/components/button/button';
+import Button from '@/components/ui/button';
 
 type ConfirmationModalProps = {
   open: boolean;
@@ -63,8 +63,8 @@ export default function ConfirmationModal({
           <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50 p-4 text-left text-xs text-slate-500">
             <p className="font-medium text-slate-700">What happens next?</p>
             <p>
-              We’ll cross-reference your submission against items turned into campus facilities. You
-              will be notified if a potential match is found.
+              We&apos;ll cross-reference your submission against items turned into campus
+              facilities. You will be notified if a potential match is found.
             </p>
           </div>
         )}

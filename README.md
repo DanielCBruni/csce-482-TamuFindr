@@ -4,50 +4,105 @@ TAMUfindr is a centralized lost-and-found web application for Texas A&M Universi
 
 ## Local Development
 
-TAMUfindr runs the PostgreSQL database in Docker while the Next.js application runs locally.
+TAMUfindr runs PostgreSQL in Docker and the Next.js application locally.
 
 ### Prerequisites
 
-Install:
+Install the following:
 
+- [Node.js](https://nodejs.org/)
 - [pnpm](https://pnpm.io/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
+Ensure Docker Desktop is running before starting the database.
+
 ### Setup
 
-Clone the repository and install dependencies:
+#### 1. Clone the Repository
 
-```bash
+```sh
 git clone https://github.com/DanielCBruni/csce-482-TamuFindr.git
 cd csce-482-TamuFindr
 
 pnpm install
+```
+
+#### 2. Configure Environment Variables
+
+Copy the example environment file:
+
+```sh
 cp .env.example .env
 ```
 
-Start the PostgreSQL database:
+Update `.env` with the following:
 
-```bash
+| Variable               | Configuration                                                |
+| ---------------------- | ------------------------------------------------------------ |
+| `POSTGRES_PASSWORD`    | Generate a random password.                                  |
+| `DATABASE_URL`         | Replace the password with the generated `POSTGRES_PASSWORD`. |
+| `BETTER_AUTH_SECRET`   | Generate a separate random secret.                           |
+| `BETTER_AUTH_URL`      | Set to `http://localhost:3000`.                              |
+| `GOOGLE_CLIENT_ID`     | Provided.                                                    |
+| `GOOGLE_CLIENT_SECRET` | Provided.                                                    |
+
+Generate each secret using:
+
+```sh
+openssl rand -hex 32
+```
+
+or
+
+```sh
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+```
+
+#### 3. Start the Database
+
+Start PostgreSQL in Docker:
+
+```sh
 pnpm docker:db
 ```
 
-Set up the database and Prisma client:
+Apply database migrations, generate the Prisma client, and seed the database:
 
-```bash
+```sh
 pnpm db:migrate
 pnpm db:generate
 pnpm db:seed
 ```
 
-Start the Next.js development server:
+#### 4. Start the Application
 
-```bash
+```sh
 pnpm dev
 ```
 
-The database will continue running in Docker while the Next.js application runs locally.
+Open [http://localhost:3000](http://localhost:3000) and sign in with Google.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow and [docs/database.md](docs/database.md) for database development instructions.
+The database runs in Docker while the Next.js application runs locally.
+
+#### 5. Grant Local Admin Access
+
+New accounts receive the `USER` role by default. To enable admin features locally:
+
+1. Sign in with Google at least once to create your user record.
+2. Open Prisma Studio:
+
+   ```sh
+   pnpm exec prisma studio
+   ```
+
+3. Open the `user` table and locate your account by email.
+4. Change the `role` field from `USER` to `ADMIN`.
+5. Save the change and refresh the application. Sign in again if necessary.
+
+## Development Resources
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Contribution workflow
+- [docs/database.md](docs/database.md) — Database development instructions
 
 ## Contributors
 

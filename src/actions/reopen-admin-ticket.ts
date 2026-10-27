@@ -2,8 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
+import { requireAdmin } from '@/lib/auth/guard';
 
 export async function reopenAdminTicket(formData: FormData): Promise<void> {
+  await requireAdmin();
   const itemId = formData.get('itemId');
   if (typeof itemId !== 'string' || !itemId.trim()) {
     return;

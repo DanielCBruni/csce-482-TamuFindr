@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { requireCurrentUserId } from '@/lib/auth/current-user';
+import { requireUser } from '@/lib/auth/guard';
 import type { ItemStatus } from '@/generated/prisma/enums';
 import type { ItemModalData } from '@/components/item_modal/item_modal';
 import ActivityClientView from './activity-client-view';
@@ -16,7 +16,7 @@ const statusDisplay: Record<ItemStatus, { status: ItemModalData['status']; statu
   };
 
 export default async function ActivityPage() {
-  const userId = await requireCurrentUserId();
+  const { id: userId } = await requireUser();
   const items = await prisma.item.findMany({
     where: { userId },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
@@ -30,7 +30,7 @@ export default async function ActivityPage() {
       locationExtra: true,
       category: { select: { name: true } },
       location: { select: { name: true } },
-      submitter: { select: { firstName: true, lastName: true } },
+      submitter: { select: { name: true } },
     },
   });
 
@@ -46,7 +46,7 @@ export default async function ActivityPage() {
       year: 'numeric',
       timeZone: 'America/Chicago',
     })}`,
-    reportedBy: `${item.submitter.firstName} ${item.submitter.lastName}`.trim(),
+    reportedBy: item.submitter.name,
     location: [item.location.name, item.locationExtra].filter(Boolean).join(' · '),
     itemType: item.category.name,
   }));

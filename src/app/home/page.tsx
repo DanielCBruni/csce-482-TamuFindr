@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { cancelItem } from '@/actions/cancel-item';
 import ActivityTable, { type ActivityItem } from '@/components/activity_table/activity_table';
-import { requireCurrentUserId } from '@/lib/auth/current-user';
+import { requireUser } from '@/lib/auth/guard';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const userId = await requireCurrentUserId();
+  const { id: userId, name: userName } = await requireUser();
   const items = await prisma.item.findMany({
     where: { userId, status: { in: ['OPEN', 'MATCHED'] } },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
@@ -31,7 +31,6 @@ export default async function HomePage() {
     item: item.title,
     itemType: item.category.name,
   }));
-  const userName = '$username$';
 
   return (
     <main className="min-h-screen bg-[var(--surface)] px-6 py-12 text-[var(--text-primary)] sm:px-10">

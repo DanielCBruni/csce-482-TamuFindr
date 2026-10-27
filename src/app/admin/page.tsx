@@ -5,6 +5,7 @@ import { reopenAdminTicket } from '@/actions/reopen-admin-ticket';
 import ActivityTable, { type ActivityItem } from '@/components/activity_table/activity_table';
 import AdminFunctions, { type AdminExportItem } from './admin-functions';
 import { prisma } from '@/lib/prisma';
+import { AuthorizationError, requireAdmin } from '@/lib/auth/guard';
 
 const statuses: ItemStatus[] = ['OPEN', 'MATCHED', 'RESOLVED', 'CANCELLED'];
 const types: ItemType[] = ['LOST', 'FOUND'];
@@ -14,6 +15,18 @@ type AdminPageProps = {
 };
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
+  try {
+    await requireAdmin();
+  } catch (error) {
+    if (!(error instanceof AuthorizationError)) throw error;
+    return (
+      <section className="mx-auto mt-16 max-w-6xl px-6 text-primary-dark">
+        <h1 className="text-3xl font-bold text-primary">Access denied</h1>
+        <p className="mt-3">Administrator access is required to view this page.</p>
+      </section>
+    );
+  }
+
   const filters = await searchParams;
   const selectedStatus = statuses.find((status) => status === filters.status);
   const selectedType = types.find((type) => type === filters.type);
@@ -77,6 +90,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       </div>
 
       <AdminFunctions categories={categories} locations={locations} items={exportItems} />
+      <Link href="/admin/users" className="mb-6 inline-block font-semibold text-primary underline">
+        Manage users
+      </Link>
 
       <form
         action="/admin"

@@ -1,10 +1,12 @@
 export const dynamic = 'force-dynamic';
 
 import { prisma } from '@/lib/prisma';
+import { requireUser } from '@/lib/auth/guard';
 import ReportClientView from './report-client-view';
 import { PrimaryColor, ItemCondition } from '@/generated/prisma/enums';
 
 export default async function ReportPage() {
+  await requireUser();
   const [categories, locations] = await Promise.all([
     prisma.category.findMany({ orderBy: { name: 'asc' } }),
     prisma.location.findMany({ orderBy: { name: 'asc' } }),

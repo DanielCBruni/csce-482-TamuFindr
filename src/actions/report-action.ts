@@ -2,8 +2,8 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { requireCurrentUserId } from '@/lib/auth/current-user';
-import { ItemCondition, PrimaryColor, type ItemType } from '../generated/prisma/enums';
+import { AuthorizationError, requireAdmin, requireUser } from '@/lib/auth/guard';
+import { ItemCondition, PrimaryColor, ItemType } from '../generated/prisma/enums';
 
 export type CreateReportInput = {
   type: ItemType;
@@ -20,6 +20,19 @@ export type CreateReportInput = {
 };
 
 export async function createItemReport(data: CreateReportInput) {
+  const user = await requireUser();
+  if (!Object.values(ItemType).includes(data.type)) {
+    return { success: false, error: 'Select a valid item type.' };
+  }
+  if (data.type === ItemType.FOUND) {
+    try {
+      await requireAdmin();
+    } catch (error) {
+      if (!(error instanceof AuthorizationError)) throw error;
+      return { success: false, error: 'Only administrators can submit found items.' };
+    }
+  }
+
   if (!data.title || data.title.trim().length < 3) {
     return { success: false, error: 'Title must be at least 3 characters long.' };
   }
@@ -41,11 +54,9 @@ export async function createItemReport(data: CreateReportInput) {
   }
 
   try {
-    const userId = await requireCurrentUserId();
-
     const newItem = await prisma.item.create({
       data: {
-        userId,
+        userId: user.id,
         type: data.type,
         title: data.title.trim(),
         description: data.description.trim(),

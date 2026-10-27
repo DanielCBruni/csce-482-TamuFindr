@@ -1,14 +1,14 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { requireCurrentUserId } from '@/lib/auth/current-user';
+import { requireUser } from '@/lib/auth/guard';
 import { prisma } from '@/lib/prisma';
 
 export async function claimItem(itemId: string) {
   if (typeof itemId !== 'string' || !itemId.trim()) {
     return { success: false, error: 'A report ID is required.' };
   }
-  const userId = await requireCurrentUserId();
+  const { id: userId } = await requireUser();
 
   try {
     const result = await prisma.item.updateMany({

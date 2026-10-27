@@ -9,16 +9,16 @@ Prisma for database access, and PostgreSQL for persistent storage.
 
 ## Technology Stack
 
-| Technology | Purpose |
-| --- | --- |
-| Next.js 16 | Full-stack application framework and routing |
-| React 19 | User interface |
-| TypeScript | Type safety |
-| Tailwind CSS 4 | Styling |
-| Prisma 7 | Database access and schema management |
-| PostgreSQL | Persistent application data |
-| Docker | Local PostgreSQL development environment |
-| pnpm | Package management and development scripts |
+| Technology     | Purpose                                      |
+| -------------- | -------------------------------------------- |
+| Next.js 16     | Full-stack application framework and routing |
+| React 19       | User interface                               |
+| TypeScript     | Type safety                                  |
+| Tailwind CSS 4 | Styling                                      |
+| Prisma 7       | Database access and schema management        |
+| PostgreSQL     | Persistent application data                  |
+| Docker         | Local PostgreSQL development environment     |
+| pnpm           | Package management and development scripts   |
 
 ## System Architecture
 
@@ -51,11 +51,11 @@ the server through Server Actions.
 ## Project Structure
 
 src/
-├── app/          Routes and page composition
-├── actions/      Server-side mutations
-├── components/   Reusable user interface components
-├── lib/          Shared server and application utilities
-└── generated/    Generated Prisma client
+├── app/ Routes and page composition
+├── actions/ Server-side mutations
+├── components/ Reusable user interface components
+├── lib/ Shared server and application utilities
+└── generated/ Generated Prisma client
 
 prisma/
 ├── schema.prisma

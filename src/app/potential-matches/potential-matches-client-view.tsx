@@ -16,13 +16,15 @@ export default function PotentialMatchesClientView({
     <main className="mx-auto min-h-[70vh] max-w-5xl px-6 py-10 text-[var(--text-primary)]">
       <h1 className="font-serif text-4xl font-bold">Potential Matches</h1>
       <p className="mt-3 mb-8 text-[var(--text-muted)]">
-        Explore up to five suggested found items for each of your open lost reports. A similarity
-        score is not proof of ownership.
+        Explore up to five suggested found items for each open lost report. A similarity score is
+        not proof of ownership.
       </p>
       {reports.length === 0 ? (
         <section className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface-raised)] p-8">
           <h2 className="text-xl font-semibold">No open lost reports</h2>
-          <p className="mt-2 mb-4">Report a lost item to start looking for potential matches.</p>
+          <p className="mt-2 mb-4">
+            Potential matches will appear when open lost reports are available.
+          </p>
           <Link href="/report" className="font-semibold underline">
             Report a lost item
           </Link>
