@@ -90,6 +90,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       </div>
 
       <AdminFunctions categories={categories} locations={locations} items={exportItems} />
+      <Link href="/admin/users" className="mb-6 inline-block font-semibold text-primary underline">
+        Manage users
+      </Link>
 
       <form
         action="/admin"
