@@ -116,12 +116,12 @@
   border-color: var(--surface-border);
 }
 
-:root[data-theme='dark'] .activity-table {
+:root[data-theme='dark'] .ui-table {
   border-color: transparent;
   box-shadow: none;
 }
 
-:root[data-theme='dark'] .activity-table tbody > tr:not(:last-child) {
+:root[data-theme='dark'] .ui-table tbody > tr:not(:last-child) {
   border-color: transparent;
 }
 
@@ -170,14 +170,14 @@
 }
 
 :root[data-contrast='high'] .activity-panel,
-:root[data-contrast='high'] .activity-table,
+:root[data-contrast='high'] .ui-table,
 :root[data-contrast='high'] .how-it-works-card,
 :root[data-contrast='high'] .report-action {
   border: 1px solid var(--surface-border) !important;
 }
 
 :root[data-contrast='high'] .activity-panel > button:not(:last-child),
-:root[data-contrast='high'] .activity-table tbody > tr:not(:last-child) {
+:root[data-contrast='high'] .ui-table tbody > tr:not(:last-child) {
   border-bottom: 1px solid var(--surface-border) !important;
 }
 
