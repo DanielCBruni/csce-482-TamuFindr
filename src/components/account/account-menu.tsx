@@ -9,7 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
-import { CircleUserRound } from 'lucide-react'; 
+import { CircleUserRound } from 'lucide-react';
 
 export default function AccountMenu({ signedIn }: { signedIn: boolean }) {
   const [pending, startTransition] = useTransition();
@@ -37,7 +37,7 @@ export default function AccountMenu({ signedIn }: { signedIn: boolean }) {
             title="Profile"
             className="flex h-11 w-11 items-center justify-center rounded-full hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            <CircleUserRound className="h-7 w-7"/>
+            <CircleUserRound className="h-7 w-7" />
           </DropdownMenuTrigger>
           <DropdownMenuContent label="Account">
             <DropdownMenuItem disabled={pending} onClick={() => runAction(logout)}>
