@@ -39,7 +39,9 @@ class ItemType(str, enum.Enum):
 
 class ItemStatus(str, enum.Enum):
     OPEN = "OPEN"
+    MATCHED = "MATCHED"
     RESOLVED = "RESOLVED"
+    CANCELLED = "CANCELLED"
 
 class MatchStatus(str, enum.Enum):
     PENDING = "PENDING"
@@ -61,15 +63,15 @@ class Item(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True)
     userId: Mapped[str] = mapped_column(String)
     categoryId: Mapped[str] = mapped_column(String)
-    type: Mapped[ItemType] = mapped_column(Enum(ItemType))
-    status: Mapped[ItemStatus] = mapped_column(Enum(ItemStatus), default=ItemStatus.OPEN)
+    type: Mapped[ItemType] = mapped_column(Enum(ItemType, name="ItemType"))
+    status: Mapped[ItemStatus] = mapped_column(Enum(ItemStatus, name="ItemStatus"), default=ItemStatus.OPEN)
     title: Mapped[str] = mapped_column(String)
     description: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     
-    primaryColor: Mapped[PrimaryColor] = mapped_column(Enum(PrimaryColor))
-    secondaryColor: Mapped[Optional[PrimaryColor]] = mapped_column(Enum(PrimaryColor), nullable=True)
+    primaryColor: Mapped[PrimaryColor] = mapped_column(Enum(PrimaryColor, name="PrimaryColor"))
+    secondaryColor: Mapped[Optional[PrimaryColor]] = mapped_column(Enum(PrimaryColor, name="PrimaryColor"), nullable=True)
     brand: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    condition: Mapped[ItemCondition] = mapped_column(Enum(ItemCondition))
+    condition: Mapped[ItemCondition] = mapped_column(Enum(ItemCondition, name="ItemCondition"))
 
     locationId: Mapped[str] = mapped_column(String, ForeignKey("Location.id"))
     incidentDate: Mapped[datetime] = mapped_column(DateTime)
@@ -85,7 +87,7 @@ class ItemMatch(Base):
     potentialMatchId: Mapped[str] = mapped_column(String, ForeignKey("Item.id"))
     score: Mapped[float] = mapped_column(Float)
     scoreDetails: Mapped[Optional[dict[str, Any]]] = mapped_column(JSON, nullable=True)
-    status: Mapped[MatchStatus] = mapped_column(Enum(MatchStatus), default=MatchStatus.PENDING)
+    status: Mapped[MatchStatus] = mapped_column(Enum(MatchStatus, name="MatchStatus"), default=MatchStatus.PENDING)
     createdAt: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updatedAt: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())
 

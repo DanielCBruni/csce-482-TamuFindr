@@ -4,47 +4,51 @@ Current production deployment is manual.
 
 Build, download, and transfer the docker image to the server.
 
-```bash
+```sh
 docker build -t tamufindr:prod .
 docker save tamufindr:prod | gzip > tamufindr-prod.tar.gz
-scp -i ~/.ssh/LightsailDefaultKey-us-east-2.pem tamufindr-prod.tar.gz compose.prod.yaml Caddyfile ubuntu@77.113.130.242:~/
+
+scp -i ~/.ssh/LightsailDefaultKey-us-east-2.pem \
+  tamufindr-prod.tar.gz Caddyfile .env.production \
+  ubuntu@77.113.130.242:~/tamufindr/
+
+scp -i ~/.ssh/LightsailDefaultKey-us-east-2.pem \
+  compose.prod.yaml \
+  ubuntu@77.113.130.242:~/tamufindr/compose.yaml
 ```
 
 On the server, load the image.
 
-```bash
+```sh
+cd ~/tamufindr
 sudo docker load -i tamufindr-prod.tar.gz
 ```
 
-Create `.env.production` and restrict its permissions
+Start the db, apply the migrations, and start the application
 
-```bash
-chmod 600 .env.production
+```sh
+sudo docker compose --env-file .env.production up -d db
+sudo docker compose --env-file .env.production run --rm app ./node_modules/.bin/prisma migrate deploy
+sudo docker compose --env-file .env.production run --rm app ./node_modules/.bin/prisma db seed
+sudo docker compose --env-file .env.production up -d
 ```
 
-Start the production db
+Set user as Admin.
 
-```bash
-sudo docker compose \
-  --env-file .env.production \
-  -f compose.prod.yaml \
-  up -d db
+```sh
+sudo docker compose --env-file .env.production exec db sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
 ```
 
-Apply the migrations
-
-```bash
-sudo docker compose \
-  --env-file .env.production \
-  -f compose.prod.yaml \
-  run --rm app ./node_modules/.bin/prisma migrate deploy
+```sql
+UPDATE "user"
+SET role = 'ADMIN'
+WHERE email = 'your-netid@tamu.edu'
+RETURNING id, email, role;
+\q
 ```
 
-Start the application
+**Useful**: stop everything
 
-```bash
-sudo docker compose \
-  --env-file .env.production \
-  -f compose.prod.yaml \
-  up -d
+```sh
+sudo docker compose --env-file .env.production down -v
 ```

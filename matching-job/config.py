@@ -1,15 +1,25 @@
 import os
 from dotenv import load_dotenv
+from sqlalchemy.engine import URL
 
 load_dotenv()
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL"
-)
+# Compose passes only database settings, rather than the web app's auth secrets.
+# URL.create safely handles passwords containing reserved URL characters.
+if os.getenv("POSTGRES_HOST"):
+    DATABASE_URL = URL.create(
+        "postgresql+psycopg",
+        username=os.environ["POSTGRES_USER"],
+        password=os.environ["POSTGRES_PASSWORD"],
+        host=os.environ["POSTGRES_HOST"],
+        port=int(os.getenv("POSTGRES_PORT", "5432")),
+        database=os.environ["POSTGRES_DB"],
+    )
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL is None:
-    print("DATABASE_URL environment variable is not set. Exiting...")
-    exit(1)
+    raise SystemExit("Set DATABASE_URL, or POSTGRES_HOST with the PostgreSQL credentials.")
 
 # Scoring Weights (Must sum to 1.0)
 WEIGHTS = {

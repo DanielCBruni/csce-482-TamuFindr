@@ -240,14 +240,14 @@ async function main() {
 
   // Development USER
   await prisma.user.upsert({
-    where: { email: 'testuser@tamu.edu' },
+    where: { email: 'missrev@tamu.edu' },
     update: {
       name: 'Miss Rev',
       role: 'USER',
     },
     create: {
       id: randomUUID(),
-      email: 'testuser@tamu.edu',
+      email: 'missrev@tamu.edu',
       name: 'Miss Rev',
       emailVerified: false,
       role: 'USER',
@@ -256,14 +256,14 @@ async function main() {
 
   // Development ADMIN
   await prisma.user.upsert({
-    where: { email: 'testadmin@tamu.edu' },
+    where: { email: 'lebronjames@tamu.edu' },
     update: {
       name: 'LeBron James',
       role: 'ADMIN',
     },
     create: {
       id: randomUUID(),
-      email: 'testadmin@tamu.edu',
+      email: 'lebronjames@tamu.edu',
       name: 'LeBron James',
       emailVerified: false,
       role: 'ADMIN',
