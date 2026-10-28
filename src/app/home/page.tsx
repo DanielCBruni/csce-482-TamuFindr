@@ -7,7 +7,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Home | TAMUfindr',
-  description: 'Report lost or found items and review your open tickets at Texas A&M with TAMUfindr.',
+  description:
+    'Report lost or found items and review your open tickets at Texas A&M with TAMUfindr.',
 };
 
 export const dynamic = 'force-dynamic';

@@ -48,9 +48,7 @@ export default async function UsersPage({ searchParams }: Props) {
       <div className="mb-8 mt-4 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="pb-6 text-4xl font-bold text-primary md:text-5xl">User Management</h1>
-          <p className="text-[var(--text-muted)]">
-            Manage account roles and administrator access.
-          </p>
+          <p className="text-[var(--text-muted)]">Manage account roles and administrator access.</p>
         </div>
         <p className="text-sm font-semibold">
           {users.length} {users.length === 1 ? 'account' : 'accounts'}

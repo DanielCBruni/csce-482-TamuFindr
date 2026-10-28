@@ -8,7 +8,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Report | TAMUfindr',
-  description: 'Submit details about a lost item so TAMUfindr can match it with found items across Texas A&M.',
+  description:
+    'Submit details about a lost item so TAMUfindr can match it with found items across Texas A&M.',
 };
 
 export default async function ReportPage() {
