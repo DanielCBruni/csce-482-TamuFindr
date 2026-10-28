@@ -4,6 +4,7 @@ import Link from 'next/link';
 import AccountMenu from '@/components/account/account-menu';
 import { usePathname } from 'next/navigation';
 import SettingsMenu from '@/components/settings/settings-menu';
+import { CircleHelp } from 'lucide-react';
 
 export default function Header({ signedIn, isAdmin }: { signedIn: boolean; isAdmin: boolean }) {
   const pathname = usePathname();
@@ -56,12 +57,18 @@ export default function Header({ signedIn, isAdmin }: { signedIn: boolean; isAdm
             </Link>
           </>
         )}
-        <Link href="/help" className={linkClass('/help')}>
-          Help
-        </Link>
       </nav>
 
       <div className="relative col-start-2 row-start-1 flex items-center gap-2 justify-self-end md:col-start-3">
+        <Link
+          href="/help"
+          className={`flex h-11 w-11 items-center justify-center transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${pathname === '/help' ? 'text-accent' : 'text-primary-muted'}`}
+          aria-label="Help"
+          title="Help"
+          aria-current={pathname === '/help' ? 'page' : undefined}
+        >
+          <CircleHelp className="h-7 w-7" aria-hidden="true" />
+        </Link>
         <SettingsMenu />
         <AccountMenu signedIn={signedIn} />
       </div>
