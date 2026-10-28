@@ -1,9 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AuthorizationError, requireAdmin } from '@/lib/auth/guard';
 import { prisma } from '@/lib/prisma';
 import { UserRole } from '@/generated/prisma/enums';
 import UserFilters from './user-filters';
 import UsersTable from './users-table';
+
+export const metadata: Metadata = {
+  title: 'User Management | TAMUfindr',
+  description: 'Search TAMUfindr users and manage account roles and administrator access.',
+};
 
 type Props = { searchParams: Promise<{ q?: string | string[]; role?: string | string[] }> };
 
@@ -35,14 +41,14 @@ export default async function UsersPage({ searchParams }: Props) {
   });
 
   return (
-    <section className="mx-auto mt-16 w-full max-w-6xl px-6 pb-16 text-left text-[var(--text-primary)]">
+    <main className="mx-auto w-full max-w-5xl px-4 py-12 text-left text-[var(--text-primary)] md:px-6 md:py-16">
       <Link href="/admin" className="text-sm underline">
         Back to admin panel
       </Link>
-      <div className="mb-6 mt-4 flex flex-wrap items-end justify-between gap-4">
+      <div className="mb-8 mt-4 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-primary">User Management</h1>
-          <p className="mt-1 text-sm text-primary-muted">
+          <h1 className="pb-6 text-4xl font-bold text-primary md:text-5xl">User Management</h1>
+          <p className="text-[var(--text-muted)]">
             Manage account roles and administrator access.
           </p>
         </div>
@@ -52,6 +58,6 @@ export default async function UsersPage({ searchParams }: Props) {
       </div>
       <UserFilters query={query} role={role} />
       <UsersTable users={users} />
-    </section>
+    </main>
   );
 }

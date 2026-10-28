@@ -1,6 +1,13 @@
+import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import { AuthorizationError, requireAdmin } from '@/lib/auth/guard';
 import PotentialMatchesClientView from './potential-matches-client-view';
+
+export const metadata: Metadata = {
+  title: 'Potential Matches | TAMUfindr',
+  description:
+    'Review algorithm-generated matches between lost and found item reports on TAMUfindr.',
+};
 
 export const dynamic = 'force-dynamic';
 

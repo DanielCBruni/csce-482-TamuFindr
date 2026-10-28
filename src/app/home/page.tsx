@@ -3,6 +3,12 @@ import { cancelItem } from '@/actions/cancel-item';
 import ActivityTable, { type ActivityItem } from '@/components/activity_table/activity_table';
 import { requireUser } from '@/lib/auth/guard';
 import { prisma } from '@/lib/prisma';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Home | TAMUfindr',
+  description: 'Report lost or found items and review your open tickets at Texas A&M with TAMUfindr.',
+};
 
 export const dynamic = 'force-dynamic';
 

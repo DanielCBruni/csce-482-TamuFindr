@@ -1,3 +1,11 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'TAMUfindr | Lost & Found at Texas A&M',
+  description:
+    'Search lost-and-found reports across Texas A&M campus locations and learn how TAMUfindr helps reunite items with their owners.',
+};
+
 export default function Landing() {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
@@ -43,7 +51,7 @@ export default function Landing() {
             },
           ].map((step, index) => (
             <div key={step.number} className="flex items-center gap-3">
-              <div className="flex h-52 w-52 flex-col rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm">
+              <div className="how-it-works-card flex h-52 w-52 flex-col rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm">
                 <div className="mx-auto mt-3 flex h-12 w-12 items-center justify-center rounded-full border border-secondary bg-secondary/60 text-m font-bold text-primary">
                   {step.number}
                 </div>

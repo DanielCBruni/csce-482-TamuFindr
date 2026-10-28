@@ -4,6 +4,12 @@ import { prisma } from '@/lib/prisma';
 import { requireUser } from '@/lib/auth/guard';
 import ReportClientView from './report-client-view';
 import { PrimaryColor, ItemCondition } from '@/generated/prisma/enums';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Report | TAMUfindr',
+  description: 'Submit details about a lost item so TAMUfindr can match it with found items across Texas A&M.',
+};
 
 export default async function ReportPage() {
   await requireUser();

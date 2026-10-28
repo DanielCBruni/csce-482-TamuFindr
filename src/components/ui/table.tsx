@@ -16,7 +16,7 @@ export function TableHeader({ className = '', ...props }: ComponentProps<'thead'
   return (
     <thead
       {...props}
-      className={`bg-[var(--surface-subtle)] text-xs uppercase tracking-wider text-[var(--text-muted)] ${className}`}
+      className={`bg-[var(--table-header)] text-xs uppercase tracking-wider text-[var(--text-muted)] ${className}`}
     />
   );
 }
@@ -25,7 +25,7 @@ export function TableBody({ className = '', ...props }: ComponentProps<'tbody'>)
   return (
     <tbody
       {...props}
-      className={`divide-y divide-[var(--surface-border)] text-sm text-[var(--text-primary)] [&>tr]:transition [&>tr:hover]:bg-[var(--surface-hover)] ${className}`}
+      className={`divide-y divide-[var(--surface-border)] text-sm text-[var(--text-primary)] [&>tr]:transition [&>tr:hover]:bg-[var(--table-hover)] ${className}`}
     />
   );
 }

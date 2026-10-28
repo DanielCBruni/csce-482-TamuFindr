@@ -13,9 +13,11 @@ export default function PotentialMatchesClientView({
 }) {
   const [selectedReport, setSelectedReport] = useState<PotentialMatchReport | null>(null);
   return (
-    <main className="mx-auto min-h-[70vh] max-w-5xl px-6 py-10 text-[var(--text-primary)]">
-      <h1 className="font-serif text-4xl font-bold">Potential Matches</h1>
-      <p className="mt-3 mb-8 text-[var(--text-muted)]">
+    <main className="mx-auto min-h-[70vh] w-full max-w-5xl px-4 py-12 text-[var(--text-primary)] md:px-6 md:py-16">
+      <div className="mb-6 w-full text-left">
+        <h1 className="text-4xl font-bold text-primary md:text-5xl">Potential Matches</h1>
+      </div>
+      <p className="mb-8 text-[var(--text-muted)]">
         Explore up to five suggested found items for each open lost report. A similarity score is
         not proof of ownership.
       </p>

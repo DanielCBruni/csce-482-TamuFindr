@@ -1,6 +1,6 @@
 'use client';
 
-import { startTransition, useEffect, useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 import { Settings } from 'lucide-react';
 
 type Theme = 'light' | 'dark';
@@ -43,6 +43,19 @@ function loadPreferences(): Preferences {
 export default function SettingsMenu() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES);
+  const root = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!settingsOpen) return;
+
+    const dismiss = (event: PointerEvent) => {
+      if (!root.current?.contains(event.target as Node)) setSettingsOpen(false);
+    };
+
+    document.addEventListener('pointerdown', dismiss);
+    return () => document.removeEventListener('pointerdown', dismiss);
+  }, [settingsOpen]);
 
   useEffect(() => {
     startTransition(() => setPreferences(loadPreferences()));
@@ -62,8 +75,18 @@ export default function SettingsMenu() {
   };
 
   return (
-    <div>
+    <div
+      ref={root}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && settingsOpen) {
+          event.preventDefault();
+          setSettingsOpen(false);
+          trigger.current?.focus();
+        }
+      }}
+    >
       <button
+        ref={trigger}
         type="button"
         className="flex h-11 w-11 items-center justify-center text-primary-muted transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         aria-label="Settings"

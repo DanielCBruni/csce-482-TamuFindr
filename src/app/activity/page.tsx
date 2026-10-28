@@ -3,6 +3,12 @@ import { requireUser } from '@/lib/auth/guard';
 import type { ItemStatus } from '@/generated/prisma/enums';
 import type { ItemModalData } from '@/components/item_modal/item_modal';
 import ActivityClientView from './activity-client-view';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Activity | TAMUfindr',
+  description: 'View and manage your lost-item reports and found-item matches on TAMUfindr.',
+};
 
 // Read current reports on each request instead of prerendering database data.
 export const dynamic = 'force-dynamic';

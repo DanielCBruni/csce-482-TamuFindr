@@ -246,24 +246,25 @@ export default function AdminFunctions({
 
   return (
     <>
-      <section className="mb-6 rounded-lg border border-primary-muted/20 bg-white p-4 shadow-sm">
-        <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-primary-muted">
-          Functions
-        </h2>
-        <div className="flex flex-wrap gap-3">
+      <section className="border-b border-primary-muted/15 py-5">
+        <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
             onClick={() => setIsLogItemOpen(true)}
-            className="rounded-md border border-primary bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-11 items-center rounded-xl border border-primary bg-primary px-5 py-2.5 font-semibold text-white shadow-sm transition-all hover:-translate-y-px hover:bg-accent hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
+            <span aria-hidden="true" className="mr-2 text-xl leading-none">
+              +
+            </span>
             Log Item
           </button>
+          <span aria-hidden="true" className="mx-1 hidden h-8 w-px bg-primary-muted/20 sm:block" />
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={isImporting}
             title="CSV columns: title, category, description, location, incidentDate, primaryColor, condition; locationAdditional is optional"
-            className="rounded-md border border-primary-muted/30 px-4 py-2 font-semibold text-primary-dark transition-colors hover:bg-[#f3f4f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-60"
+            className="inline-flex min-h-11 items-center rounded-xl border border-primary-muted/30 bg-[var(--surface-raised)] px-4 py-2.5 font-semibold text-primary-dark shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--surface-hover)] hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-60"
           >
             {isImporting ? 'Importing…' : 'Import'}
           </button>
@@ -278,9 +279,16 @@ export default function AdminFunctions({
           <button
             type="button"
             onClick={handleExport}
-            className="rounded-md border border-primary-muted/30 px-4 py-2 font-semibold text-primary-dark transition-colors hover:bg-[#f3f4f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-11 items-center rounded-xl border border-primary-muted/30 bg-[var(--surface-raised)] px-4 py-2.5 font-semibold text-primary-dark shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--surface-hover)] hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Export
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push('/admin/users')}
+            className="inline-flex min-h-11 items-center rounded-xl border border-primary-muted/30 bg-[var(--surface-raised)] px-4 py-2.5 font-semibold text-primary-dark shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--surface-hover)] hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            Manage Users
           </button>
         </div>
         {importMessage && (

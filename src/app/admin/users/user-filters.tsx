@@ -30,7 +30,12 @@ export default function UserFilters({ query, role }: { query: string; role?: Use
           <option value="USER">User</option>
         </Select>
       </label>
-      <Button type="submit">Apply filters</Button>
+      <Button
+        type="submit"
+        className="inline-flex items-center rounded-xl border border-primary bg-primary px-4 py-2 font-semibold text-sm text-white shadow-sm transition-all hover:-translate-y-px hover:bg-accent hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        Apply filters
+      </Button>
       {(query || role) && (
         <Link href="/admin/users" className="px-3 py-2 underline">
           Clear filters
