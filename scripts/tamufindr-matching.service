@@ -1,0 +1,10 @@
+[Unit]
+Description=TAMUfindr matching batch
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/tamufindr
+ExecStart=/usr/bin/docker compose --env-file .env.production run --rm -T matching
+TimeoutStartSec=infinity

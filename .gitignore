@@ -51,4 +51,4 @@ package-lock.json
 .venv/
 __pycache__/
 
-tamufindr-prod.tar.gz
+*.tar.gz

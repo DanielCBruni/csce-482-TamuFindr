@@ -16,8 +16,7 @@ export const items = [
     id: 'seed-found-black-water-bottle',
     type: 'FOUND',
     title: 'Black Water Bottle',
-    description:
-      '32 oz black Hydro Flask with a dent near the bottom, found near the study tables.',
+    description: 'black Hydro Flask with a dent near the bottom, found near the study tables.',
     primaryColor: 'BLACK',
     brand: 'hydro flask',
     condition: 'GOOD',
@@ -26,7 +25,6 @@ export const items = [
     locationName: 'Zachry Engineering Education Complex',
     incidentDate: new Date('2026-10-22T12:10:00-05:00'),
   },
-  // Likely match: same backpack and distinguishing keychain, found nearby later.
   {
     id: 'seed-lost-blue-backpack',
     type: 'LOST',
@@ -55,7 +53,6 @@ export const items = [
     locationName: 'Annex Library',
     incidentDate: new Date('2026-10-23T15:20:00-05:00'),
   },
-  // Likely match: same keys and lanyard at the same building.
   {
     id: 'seed-lost-keys',
     type: 'LOST',
@@ -82,7 +79,6 @@ export const items = [
     locationName: 'Memorial Student Center',
     incidentDate: new Date('2026-10-24T12:15:00-05:00'),
   },
-  // Unmatched lost items: no corresponding wallet or headphones in this seed.
   {
     id: 'seed-lost-brown-wallet',
     type: 'LOST',
@@ -109,7 +105,6 @@ export const items = [
     locationName: 'Wehner Building (Mays Business School)',
     incidentDate: new Date('2026-10-25T10:00:00-05:00'),
   },
-  // Unmatched found items: different categories from the unmatched lost items.
   {
     id: 'seed-found-green-hoodie',
     type: 'FOUND',
