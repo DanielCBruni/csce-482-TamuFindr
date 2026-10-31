@@ -1,4 +1,17 @@
 services:
+  matching:
+    image: tamufindr-matching:prod
+    profiles: ['jobs']
+    restart: 'no'
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: ${POSTGRES_USER:?required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?required}
+      POSTGRES_DB: ${POSTGRES_DB:?required}
+    depends_on:
+      db:
+        condition: service_healthy
+
   app:
     image: tamufindr:prod
     restart: unless-stopped

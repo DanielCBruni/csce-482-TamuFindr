@@ -13,6 +13,18 @@ CONDITION_RANKS = {
     ItemCondition.DAMAGED: 0,
 }
 
+def has_valid_coordinates(location) -> bool:
+    return (
+        location is not None
+        and location.latitude is not None
+        and location.longitude is not None
+        and math.isfinite(location.latitude)
+        and math.isfinite(location.longitude)
+        and -90 <= location.latitude <= 90
+        and -180 <= location.longitude <= 180
+    )
+
+
 def calculate_match_score(lost: Item, found: Item) -> tuple[float, dict]:
     scores = {}
 
@@ -43,12 +55,9 @@ def calculate_match_score(lost: Item, found: Item) -> tuple[float, dict]:
         # Only one item has a description: minor penalty
         scores["description"] = 0.2
 
-    # 4. Geodesic Distance Score (Half-life distance decay = 0.2 km (~1/8 mile))
+    # 4. Geodesic Distance Score (0.8 km exponential decay scale)
     lost_loc, found_loc = lost.location, found.location
-    if (
-        lost_loc and found_loc and 
-        lost_loc.latitude is not None and found_loc.latitude is not None
-    ):
+    if has_valid_coordinates(lost_loc) and has_valid_coordinates(found_loc):
         dist_km = geodesic(
             (lost_loc.latitude, lost_loc.longitude),
             (found_loc.latitude, found_loc.longitude)
@@ -58,7 +67,7 @@ def calculate_match_score(lost: Item, found: Item) -> tuple[float, dict]:
         scores["distance"] = 0.5  # Neutral default when location coordinates are missing
 
     # 5. Incident Date Proximity Score (7-day exponential decay)
-    days_diff = abs((lost.incidentDate - found.incidentDate).days)
+    days_diff = abs((lost.incidentDate - found.incidentDate).total_seconds()) / 86400
     scores["date_proximity"] = max(0.0, math.exp(-days_diff / 7.0))
 
     # 6. Condition Scale Distance Score (This is just for UNKNOWN)

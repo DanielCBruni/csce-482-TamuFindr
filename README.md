@@ -99,6 +99,26 @@ New accounts receive the `USER` role by default. To enable admin features locall
 4. Change the `role` field from `USER` to `ADMIN`.
 5. Save the change and refresh the application. Sign in again if necessary.
 
+### Matching Script
+
+Run the matching script locally
+
+#### Setup python virtual environment
+
+Python is a requirement. Commands for linux/mac.
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r matching-job/requirements.txt
+```
+
+#### Run the matching job
+
+```sh
+python matching-job/main.py
+```
+
 ## Development Resources
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) — Contribution workflow

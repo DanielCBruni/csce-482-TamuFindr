@@ -18,7 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'TAMUFindr | Report and Recover Lost Items',
-  description: 'A Texas A&M lost-and-found platform for reporting, searching, and matching lost items.',
+  description:
+    'A Texas A&M lost-and-found platform for reporting, searching, and matching lost items.',
   icons: {
     icon: '/favicon.ico',
   },
