@@ -6,6 +6,11 @@ import { sso } from '@better-auth/sso';
 
 const baseURL = process.env.BETTER_AUTH_URL;
 
+const idpMetadata = process.env.TAMU_IDP_METADATA_XML;
+if (!idpMetadata?.trim()) {
+  throw new Error('TAMU_IDP_METADATA_XML is required');
+}
+
 export const auth = betterAuth({
   baseURL,
 
@@ -13,15 +18,9 @@ export const auth = betterAuth({
     provider: 'postgresql',
   }),
 
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    },
-  },
-
   plugins: [
     sso({
+      providersLimit: 0,
       defaultSSO: [
         {
           providerId: 'tamu-entra',
@@ -33,9 +32,15 @@ export const auth = betterAuth({
             entryPoint: process.env.TAMU_IDP_SSO_URL!,
 
             idpMetadata: {
-              metadata: process.env.TAMU_IDP_METADATA_XML!,
+              metadata: idpMetadata,
             },
 
+            mapping: {
+              email: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',
+              firstName: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname',
+              lastName: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname',
+              name: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name',
+            },
             wantAssertionsSigned: true,
           },
         },

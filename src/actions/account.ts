@@ -7,15 +7,19 @@ import { auth } from '@/lib/auth';
 export async function login() {
   let url: string | undefined;
   try {
-    const result = await auth.api.signInSocial({
+    const result = await auth.api.signInSSO({
       headers: await headers(),
-      body: { provider: 'google', callbackURL: '/home', disableRedirect: true },
+      body: { providerId: 'tamu-entra', providerType: 'saml', callbackURL: '/home' },
     });
     url = result.url;
-  } catch {
-    return { error: 'Unable to start Google sign-in. Please try again.' };
+  } catch (error) {
+    console.error('Unable to start TAMU sign-in:', error);
+    return { error: 'Unable to start TAMU sign-in. Please try again.' };
   }
-  if (!url) return { error: 'Unable to start Google sign-in. Please try again.' };
+  if (!url) {
+    console.error('Unable to start TAMU sign-in: SSO returned no redirect URL');
+    return { error: 'Unable to start TAMU sign-in. Please try again.' };
+  }
   redirect(url);
 }
 

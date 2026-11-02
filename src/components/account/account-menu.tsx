@@ -51,7 +51,7 @@ export default function AccountMenu({ signedIn }: { signedIn: boolean }) {
           onClick={() => runAction(login)}
           className="whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-wait disabled:opacity-60"
         >
-          {pending ? 'Signing in…' : 'Login'}
+          {pending ? 'Signing in…' : 'Sign in with TAMU'}
         </Button>
       )}
       {error && (

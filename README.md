@@ -37,14 +37,14 @@ cp .env.example .env
 
 Update `.env` with the following:
 
-| Variable               | Configuration                                                |
-| ---------------------- | ------------------------------------------------------------ |
-| `POSTGRES_PASSWORD`    | Generate a random password.                                  |
-| `DATABASE_URL`         | Replace the password with the generated `POSTGRES_PASSWORD`. |
-| `BETTER_AUTH_SECRET`   | Generate a separate random secret.                           |
-| `BETTER_AUTH_URL`      | Set to `http://localhost:3000`.                              |
-| `GOOGLE_CLIENT_ID`     | Provided.                                                    |
-| `GOOGLE_CLIENT_SECRET` | Provided.                                                    |
+| Variable                | Configuration                                                |
+| ----------------------- | ------------------------------------------------------------ |
+| `POSTGRES_PASSWORD`     | Generate a random password.                                  |
+| `DATABASE_URL`          | Replace the password with the generated `POSTGRES_PASSWORD`. |
+| `BETTER_AUTH_SECRET`    | Generate a separate random secret.                           |
+| `BETTER_AUTH_URL`       | Set to `http://localhost:3000`.                              |
+| `TAMU_IDP_SSO_URL`      | TAMU Entra SAML sign-in URL.                                 |
+| `TAMU_IDP_METADATA_XML` | IdP metadata XML wrapped in single quotes.                   |
 
 Generate each secret using:
 
@@ -80,7 +80,7 @@ pnpm db:seed
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and sign in with Google.
+Open [http://localhost:3000](http://localhost:3000) and sign in with TAMU.
 
 The database runs in Docker while the Next.js application runs locally.
 
@@ -88,7 +88,7 @@ The database runs in Docker while the Next.js application runs locally.
 
 New accounts receive the `USER` role by default. To enable admin features locally:
 
-1. Sign in with Google at least once to create your user record.
+1. Sign in with TAMU at least once to create your user record.
 2. Open Prisma Studio:
 
    ```sh
@@ -127,3 +127,17 @@ python matching-job/main.py
 ## Contributors
 
 Daniel Bruni, Hallie Pailes, Kevinn Tran, Jacob Kelly, and Giovan Ramirez-Rodarte
+
+## TAMU SAML setup
+
+Production uses `BETTER_AUTH_URL=https://tamufindr.site`. TAMU has registered:
+
+- Entity ID: `https://tamufindr.site/api/auth/sso/saml2/sp/metadata`
+- Metadata URL: `https://tamufindr.site/api/auth/sso/saml2/sp/metadata?providerId=tamu-entra`
+- Reply URL (ACS): `https://tamufindr.site/api/auth/sso/saml2/sp/acs/tamu-entra`
+
+Configure standard Entra emailaddress, givenname, surname, and name claim URIs. Assertions must be signed. Sign-in starts from the application; unsolicited IdP sign-in is disabled. Local sign-in requires separately registered localhost endpoints or an approved development hostname.
+
+IdP metadata is read directly from `TAMU_IDP_METADATA_XML`; no metadata URL is fetched at runtime. Wrap the entire XML in single quotes so both Next.js and Docker Compose preserve namespace URLs containing `#`. Encode apostrophes in XML text as `&apos;` before quoting; do not use backticks, which Docker Compose preserves literally. Use the same XML for every application instance. After certificate rotation, replace the XML in the deployment environment and restart all instances. Logout clears the application session only.
+
+To reset local development data, run `pnpm exec prisma migrate reset --force`, then `pnpm db:generate` and `pnpm db:seed`. This deletes local users and reports and restores sample data. Do not run this against production. Existing Google accounts are not migrated.

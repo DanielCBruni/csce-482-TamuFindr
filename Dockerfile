@@ -19,6 +19,9 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Generate Prisma Client and build Next.js
+ARG TAMU_IDP_METADATA_XML
+
+# Generate Prisma Client and build Next.js
 RUN pnpm exec prisma generate
 RUN pnpm build
 
