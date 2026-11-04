@@ -15,6 +15,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   const { id: userId, name: userName } = await requireUser();
+  const firstName = userName.trim().split(/\s+/)[0];
   const items = await prisma.item.findMany({
     where: { userId, type: 'LOST', status: { in: ['OPEN', 'MATCHED'] } },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
@@ -45,7 +46,7 @@ export default async function HomePage() {
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-accent">
           TamuFindr
         </p>
-        <h1 className="text-5xl font-bold text-primary sm:text-7xl">Howdy, {userName}!</h1>
+        <h1 className="text-5xl font-bold text-primary sm:text-7xl">Howdy, {firstName}!</h1>
         <p className="mt-6 max-w-xl text-lg text-[var(--text-muted)] sm:text-xl">
           Let&apos;s get your lost and found items back where they belong.
         </p>
