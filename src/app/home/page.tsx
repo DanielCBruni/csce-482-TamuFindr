@@ -16,7 +16,7 @@ export const dynamic = 'force-dynamic';
 export default async function HomePage() {
   const { id: userId, name: userName } = await requireUser();
   const items = await prisma.item.findMany({
-    where: { userId, status: { in: ['OPEN', 'MATCHED'] } },
+    where: { userId, type: 'LOST', status: { in: ['OPEN', 'MATCHED'] } },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
     select: {
       id: true,

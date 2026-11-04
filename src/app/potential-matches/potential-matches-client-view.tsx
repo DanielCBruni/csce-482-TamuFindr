@@ -15,7 +15,7 @@ export default function PotentialMatchesClientView({
   return (
     <main className="mx-auto min-h-[70vh] w-full max-w-5xl px-4 py-12 text-[var(--text-primary)] md:px-6 md:py-16">
       <div className="mb-6 w-full text-left">
-        <h1 className="text-4xl font-bold text-primary md:text-5xl">Potential Matches</h1>
+        <h1 className="text-4xl font-bold text-primary md:text-5xl">Matches</h1>
       </div>
       <p className="mb-8 text-[var(--text-muted)]">
         Explore up to five suggested found items for each open lost report. A similarity score is
@@ -24,9 +24,7 @@ export default function PotentialMatchesClientView({
       {reports.length === 0 ? (
         <section className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface-raised)] p-8">
           <h2 className="text-xl font-semibold">No open lost reports</h2>
-          <p className="mt-2 mb-4">
-            Potential matches will appear when open lost reports are available.
-          </p>
+          <p className="mt-2 mb-4">Matches will appear when open lost reports are available.</p>
           <Link href="/report" className="font-semibold underline">
             Report a lost item
           </Link>
@@ -45,8 +43,8 @@ export default function PotentialMatchesClientView({
                 </p>
                 <p className="mt-2 text-sm">
                   {report.matches.length
-                    ? `${report.matches.length} potential ${report.matches.length === 1 ? 'match' : 'matches'} available`
-                    : 'No potential matches yet'}
+                    ? `${report.matches.length} ${report.matches.length === 1 ? 'match' : 'matches'} available`
+                    : 'No matches yet'}
                 </p>
               </div>
               <button

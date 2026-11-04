@@ -67,7 +67,7 @@ export default function PotentialMatchesModal({
         <button
           autoFocus
           type="button"
-          aria-label="Close potential matches"
+          aria-label="Close matches"
           className="rounded border px-3 py-2 focus-visible:outline-2"
           onClick={onClose}
         >
@@ -75,7 +75,7 @@ export default function PotentialMatchesModal({
         </button>
       </header>
       {report.matches.length === 0 ? (
-        <p>No potential matches yet. Check back after new reports are compared.</p>
+        <p>No matches yet. Check back after new reports are compared.</p>
       ) : (
         <ol className="space-y-4">
           {report.matches.map((match, index) => (

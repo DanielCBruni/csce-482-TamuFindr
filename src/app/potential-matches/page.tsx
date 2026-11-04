@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
-import { AuthorizationError, requireAdmin } from '@/lib/auth/guard';
+import { requireUser } from '@/lib/auth/guard';
 import PotentialMatchesClientView from './potential-matches-client-view';
 
 export const metadata: Metadata = {
-  title: 'Potential Matches | TAMUfindr',
+  title: 'Matches | TAMUfindr',
   description:
     'Review algorithm-generated matches between lost and found item reports on TAMUfindr.',
 };
@@ -20,17 +20,7 @@ const formatDate = (date: Date) =>
   });
 
 export default async function PotentialMatchesPage() {
-  try {
-    await requireAdmin();
-  } catch (error) {
-    if (!(error instanceof AuthorizationError)) throw error;
-    return (
-      <section className="mx-auto mt-16 max-w-6xl px-6 text-primary-dark">
-        <h1 className="text-3xl font-bold text-primary">Access denied</h1>
-        <p className="mt-3">Administrator access is required to view this page.</p>
-      </section>
-    );
-  }
+  await requireUser();
 
   const reports = await prisma.item.findMany({
     where: { type: 'LOST', status: 'OPEN' },

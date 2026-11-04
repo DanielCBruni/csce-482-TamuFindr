@@ -16,8 +16,12 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
   const [selectedItem, setSelectedItem] = useState<ItemModalData | null>(null);
 
   const alertItem = activityItems.find((item) => item.status === 'possible-match');
-  const lostItems = activityItems.filter((item) => item.category === 'Lost item');
-  const foundItems = activityItems.filter((item) => item.category === 'Found item');
+  const activeItems = activityItems.filter(
+    (item) => item.status === 'open' || item.status === 'possible-match',
+  );
+  const inactiveItems = activityItems.filter(
+    (item) => item.status === 'resolved' || item.status === 'cancelled',
+  );
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
@@ -51,18 +55,20 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
         )}
 
         <section className="mb-7">
-          <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Lost Reports</p>
+          <p className="mb-2 font-semibold uppercase tracking-wider text-accent">
+            Active Lost Reports
+          </p>
           <div className="activity-panel overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            {lostItems.length === 0 && (
-              <p className="p-5 text-sm text-slate-600">No lost reports yet.</p>
+            {activeItems.length === 0 && (
+              <p className="p-5 text-sm text-slate-600">No active lost reports.</p>
             )}
-            {lostItems.map((item, index) => (
+            {activeItems.map((item, index) => (
               <button
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
                 className={`activity-row flex w-full items-center justify-between gap-4 bg-[var(--surface-raised)] px-5 py-5 text-left transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
-                  index < lostItems.length - 1 ? 'border-b border-slate-200' : ''
+                  index < activeItems.length - 1 ? 'border-b border-slate-200' : ''
                 }`}
               >
                 <div>
@@ -82,18 +88,20 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
         </section>
 
         <section className="mb-7">
-          <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Found Reports</p>
+          <p className="mb-2 font-semibold uppercase tracking-wider text-accent">
+            Inactive Lost Reports
+          </p>
           <div className="activity-panel overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            {foundItems.length === 0 && (
-              <p className="p-5 text-sm text-slate-600">No found reports yet.</p>
+            {inactiveItems.length === 0 && (
+              <p className="p-5 text-sm text-slate-600">No inactive lost reports.</p>
             )}
-            {foundItems.map((item, index) => (
+            {inactiveItems.map((item, index) => (
               <button
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
                 className={`activity-row flex w-full items-center justify-between gap-4 bg-[var(--surface-raised)] px-5 py-5 text-left transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
-                  index < foundItems.length - 1 ? 'border-b border-slate-200' : ''
+                  index < inactiveItems.length - 1 ? 'border-b border-slate-200' : ''
                 }`}
               >
                 <div>

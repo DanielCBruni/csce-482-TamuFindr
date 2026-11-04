@@ -24,7 +24,7 @@ const statusDisplay: Record<ItemStatus, { status: ItemModalData['status']; statu
 export default async function ActivityPage() {
   const { id: userId } = await requireUser();
   const items = await prisma.item.findMany({
-    where: { userId },
+    where: { userId, type: 'LOST' },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
     select: {
       id: true,
@@ -43,7 +43,7 @@ export default async function ActivityPage() {
   const activityItems: ItemModalData[] = items.map((item) => ({
     itemId: item.id,
     title: item.title,
-    category: item.type === 'LOST' ? 'Lost item' : 'Found item',
+    category: 'Lost item',
     ...statusDisplay[item.status],
     description: item.description,
     reportedDate: `Reported ${item.createdAt.toLocaleDateString('en-US', {

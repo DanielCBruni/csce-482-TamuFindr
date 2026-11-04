@@ -47,11 +47,13 @@ export default function Header({ signedIn, isAdmin }: { signedIn: boolean; isAdm
             </Link>
           </>
         )}
+        {signedIn && (
+          <Link href="/potential-matches" className={linkClass('/potential-matches')}>
+            Matches
+          </Link>
+        )}
         {signedIn && isAdmin && (
           <>
-            <Link href="/potential-matches" className={linkClass('/potential-matches')}>
-              Potential Matches
-            </Link>
             <Link href="/admin" className={linkClass('/admin')}>
               Admin
             </Link>
