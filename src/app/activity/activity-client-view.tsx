@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import ItemModal, { type ItemModalData } from '@/components/item_modal/item_modal';
+import Button from '@/components/ui/button';
 
 const statusPillClasses: Record<ItemModalData['status'], string> = {
   open: 'border-slate-200 bg-white text-slate-700',
@@ -44,13 +45,14 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 </p>
               </div>
             </div>
-            <button
+            <Button
+              variant="unstyled"
               type="button"
               onClick={() => setSelectedItem(alertItem)}
               className="min-w-35 rounded-xl border border-[#2d7ff9] bg-[#2d7ff9] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#246de0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Review Item
-            </button>
+            </Button>
           </aside>
         )}
 
@@ -63,7 +65,8 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
               <p className="p-5 text-sm text-slate-600">No active lost reports.</p>
             )}
             {activeItems.map((item, index) => (
-              <button
+              <Button
+                variant="unstyled"
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
@@ -82,7 +85,7 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 >
                   {item.statusLabel}
                 </span>
-              </button>
+              </Button>
             ))}
           </div>
         </section>
@@ -96,7 +99,8 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
               <p className="p-5 text-sm text-slate-600">No inactive lost reports.</p>
             )}
             {inactiveItems.map((item, index) => (
-              <button
+              <Button
+                variant="unstyled"
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
@@ -115,7 +119,7 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 >
                   {item.statusLabel}
                 </span>
-              </button>
+              </Button>
             ))}
           </div>
         </section>

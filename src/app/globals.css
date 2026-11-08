@@ -13,11 +13,14 @@
 
 :root {
   color-scheme: light;
+  --button-primary: #500000;
+  --button-primary-hover: #732f2f;
+  --button-primary-text: #ffffff;
   --surface: #fdfdfd;
   --surface-raised: #ffffff;
   --surface-subtle: #f3f4f6;
   --surface-hover: #f8f1f1;
-  --table-hover: #fafafa;
+  --table-hover: #f7f4f4;
   --table-header: #ecebeb;
   --surface-header: #ffffff;
   --surface-footer: #500000;
@@ -43,6 +46,9 @@
   --color-accent: #efc5c5;
   --color-primary-dark: #ffffff;
   --color-primary-muted: #f0dede;
+  --button-primary: #732f2f;
+  --button-primary-hover: #9b5050;
+  --button-primary-text: #ffffff;
   --surface: #210202;
   --surface-raised: #351416;
   --surface-subtle: #421a1d;
@@ -70,7 +76,7 @@
   background: var(--table-hover);
 }
 
-:root[data-theme='light'] footer {
+:root[data-theme='light'] .site-footer {
   --text-primary: #ffffff;
   --text-muted: #f0dede;
 }
@@ -124,6 +130,10 @@
   border-color: var(--surface-border);
 }
 
+:root[data-theme='dark'] .border-slate-300 {
+  border-color: var(--surface-border);
+}
+
 :root[data-theme='dark'] .ui-table {
   border-color: transparent;
   box-shadow: none;
@@ -131,11 +141,6 @@
 
 :root[data-theme='dark'] .ui-table tbody > tr:not(:last-child) {
   border-color: transparent;
-}
-
-:root[data-theme='dark'] .ui-button {
-  border-color: transparent;
-  background-color: var(--surface-subtle);
 }
 
 :root[data-theme='dark'] .activity-table-cancel {
@@ -172,7 +177,7 @@
   --text-muted: #ffffff;
 }
 
-:root[data-contrast='high'] footer {
+:root[data-contrast='high'] .site-footer {
   --text-primary: #ffffff;
   --text-muted: #ffffff;
 }
@@ -197,4 +202,12 @@
 :root[data-contrast='high'] :is(a, button, input, select, summary):focus-visible {
   outline: 3px solid currentColor;
   outline-offset: 3px;
+}
+
+:root[data-contrast='high'] :is(input:not([type='hidden']), select, textarea) {
+  border: 1px solid var(--surface-border) !important;
+}
+
+:root[data-contrast='high'] :is(input:not([type='hidden']), select, textarea):focus-visible {
+  outline-color: var(--surface-border);
 }

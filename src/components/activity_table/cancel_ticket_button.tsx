@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
+import Button from '@/components/ui/button';
 
 export default function CancelTicketButton({
   itemId,
@@ -28,13 +29,14 @@ export default function CancelTicketButton({
 
   return (
     <>
-      <button
+      <Button
+        variant="unstyled"
         type="button"
         onClick={() => setIsConfirming(true)}
         className="activity-table-cancel rounded-md border border-[var(--danger-border)] bg-[var(--danger-surface)] px-3 py-1.5 font-semibold text-[var(--danger-text)] transition-colors hover:bg-[var(--danger-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
       >
         Cancel
-      </button>
+      </Button>
       <dialog
         ref={dialogRef}
         aria-labelledby={promptId}
@@ -49,21 +51,23 @@ export default function CancelTicketButton({
         </h2>
         <p className="mt-1 break-words text-sm text-[var(--text-muted)]">{itemName}</p>
         <div className="mt-4 flex justify-center gap-3">
-          <button
+          <Button
+            variant="unstyled"
             type="button"
             onClick={() => setIsConfirming(false)}
             className="rounded-md border border-[var(--surface-border)] bg-[var(--surface-raised)] px-3 py-1.5 text-base font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
           >
             No
-          </button>
+          </Button>
           <form action={action}>
             <input type="hidden" name="itemId" value={itemId} />
-            <button
+            <Button
+              variant="unstyled"
               type="submit"
               className="rounded-md border border-red-700 bg-red-700 px-3 py-1.5 text-base font-semibold text-white transition-colors hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
             >
               Yes
-            </button>
+            </Button>
           </form>
         </div>
       </dialog>

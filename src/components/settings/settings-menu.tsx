@@ -2,6 +2,7 @@
 
 import { startTransition, useEffect, useRef, useState } from 'react';
 import { Settings } from 'lucide-react';
+import Button from '@/components/ui/button';
 
 type Theme = 'light' | 'dark';
 type TextSize = 'standard' | 'large' | 'largest';
@@ -85,10 +86,11 @@ export default function SettingsMenu() {
         }
       }}
     >
-      <button
+      <Button
+        variant="icon"
         ref={trigger}
         type="button"
-        className="flex h-11 w-11 items-center justify-center text-primary-muted transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="flex h-11 w-11 items-center justify-center !text-primary-muted transition-colors hover:!text-primary aria-expanded:!text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         aria-label="Settings"
         title="Settings"
         aria-expanded={settingsOpen}
@@ -96,7 +98,7 @@ export default function SettingsMenu() {
         onClick={() => setSettingsOpen((open) => !open)}
       >
         <Settings className="h-7 w-7" />
-      </button>
+      </Button>
       {settingsOpen && (
         <section
           id="accessibility-settings"
@@ -107,7 +109,8 @@ export default function SettingsMenu() {
             <p className="mb-2 text-sm font-semibold">Color theme</p>
             <div className="grid grid-cols-2 gap-1" role="group" aria-label="Color theme">
               {(['light', 'dark'] as const).map((theme) => (
-                <button
+                <Button
+                  variant="unstyled"
                   key={theme}
                   type="button"
                   className={`rounded border px-2 py-1.5 text-xs capitalize focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${preferences.theme === theme ? 'bg-primary text-white' : 'hover:bg-accent/10'}`}
@@ -115,7 +118,7 @@ export default function SettingsMenu() {
                   onClick={() => updatePreferences({ theme })}
                 >
                   {theme}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

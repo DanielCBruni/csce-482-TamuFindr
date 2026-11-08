@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef } from 'react';
 import { ItemModalTrigger, type ItemModalData } from '../item_modal/item_modal';
+import Button from '@/components/ui/button';
 
 export interface PotentialMatchReport {
   id: string;
@@ -64,7 +65,8 @@ export default function PotentialMatchesModal({
             ownership.
           </p>
         </div>
-        <button
+        <Button
+          variant="unstyled"
           autoFocus
           type="button"
           aria-label="Close matches"
@@ -72,7 +74,7 @@ export default function PotentialMatchesModal({
           onClick={onClose}
         >
           ×
-        </button>
+        </Button>
       </header>
       {report.matches.length === 0 ? (
         <p>No matches yet. Check back after new reports are compared.</p>

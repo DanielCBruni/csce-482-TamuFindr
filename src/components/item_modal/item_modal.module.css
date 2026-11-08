@@ -32,7 +32,7 @@
 }
 .eyebrow {
   margin: 0;
-  color: #727989;
+  color: var(--color-accent);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -76,7 +76,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #727989;
+  color: var(--color-accent);
   gap: 12px;
 }
 .placeholder span {
@@ -124,7 +124,7 @@
 }
 .meta {
   margin: 0;
-  color: #727989;
+  color: var(--color-accent);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -135,7 +135,7 @@
 }
 .description {
   margin: 0;
-  color: #525d6d;
+  color: var(--color-accent);
   font-size: 15px;
   line-height: 1.7;
   white-space: pre-wrap;
@@ -149,7 +149,7 @@
   border-top: 1px solid #eef0f3;
 }
 .info dt {
-  color: #727989;
+  color: var(--color-accent);
   font-size: 12px;
   margin-bottom: 6px;
 }
@@ -168,7 +168,7 @@
 }
 .notice p {
   margin: 6px 0 0;
-  color: #727989;
+  color: var(--color-accent);
   line-height: 1.6;
 }
 .reviewNotice {

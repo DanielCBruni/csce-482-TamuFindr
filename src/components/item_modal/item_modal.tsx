@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import Button from '@/components/ui/button';
 import styles from './item_modal.module.css';
 
 export type ItemModalMode = 'home' | 'activity';
@@ -102,7 +103,8 @@ export default function ItemModal({
           <p className={styles.eyebrow}>{mode === 'activity' ? 'My activity' : 'Browse items'}</p>
           <h2>Item Details</h2>
         </div>
-        <button
+        <Button
+          variant="unstyled"
           autoFocus
           type="button"
           className={styles.close}
@@ -110,7 +112,7 @@ export default function ItemModal({
           onClick={onClose}
         >
           ×
-        </button>
+        </Button>
       </header>
       <div className={styles.body}>
         <div className={styles.imageCard}>
@@ -176,21 +178,23 @@ export default function ItemModal({
       {(mode === 'home' || onSecondaryAction || onPrimaryAction) && (
         <footer className={styles.actions}>
           {mode === 'home' && (
-            <button type="button" className={styles.secondary} onClick={onClose}>
+            <Button variant="unstyled" type="button" className={styles.secondary} onClick={onClose}>
               Keep browsing
-            </button>
+            </Button>
           )}
           {onSecondaryAction && (
-            <button
+            <Button
+              variant="unstyled"
               type="button"
               className={styles.secondary}
               onClick={() => onSecondaryAction(item)}
             >
               {item.secondaryActionLabel ?? 'Not a match'}
-            </button>
+            </Button>
           )}
           {onPrimaryAction && (
-            <button
+            <Button
+              variant="unstyled"
               type="button"
               className={styles.primary}
               disabled={isPending}
@@ -201,7 +205,7 @@ export default function ItemModal({
                 ? 'Saving…'
                 : (item.primaryActionLabel ??
                   (item.status === 'possible-match' ? 'Review Item' : 'View report'))}
-            </button>
+            </Button>
           )}
         </footer>
       )}
@@ -235,14 +239,15 @@ export function ItemModalTrigger({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <button
+      <Button
+        variant="unstyled"
         type="button"
         className={className ?? styles.secondary}
         aria-haspopup="dialog"
         onClick={() => setIsOpen(true)}
       >
         {children ?? 'View details'}
-      </button>
+      </Button>
       <ItemModal
         isOpen={isOpen}
         item={item}

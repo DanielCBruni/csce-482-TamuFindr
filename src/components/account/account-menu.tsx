@@ -35,7 +35,7 @@ export default function AccountMenu({ signedIn }: { signedIn: boolean }) {
             variant="icon"
             aria-label="Profile"
             title="Profile"
-            className="flex h-11 w-11 items-center justify-center rounded-full hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="flex h-11 w-11 items-center justify-center rounded-full !text-primary-muted transition-colors hover:!text-primary aria-expanded:!text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <CircleUserRound className="h-7 w-7" />
           </DropdownMenuTrigger>

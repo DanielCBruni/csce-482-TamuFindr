@@ -162,31 +162,32 @@ export default function ItemFormModal({
       onClick={handleDismiss}
     >
       <div
-        className="w-full max-w-[860px] max-h-[calc(100vh-32px)] overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(16,24,40,0.28)]"
+        className="w-full max-w-[860px] max-h-[calc(100vh-32px)] overflow-hidden rounded-[20px] border border-[var(--surface-border)] bg-[var(--surface-raised)] text-[var(--text-primary)] shadow-[0_24px_80px_rgba(16,24,40,0.28)]"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
       >
-        <header className="flex items-center justify-between gap-5 border-b border-slate-200 px-6 py-4">
+        <header className="flex items-center justify-between gap-5 border-b border-[var(--surface-border)] px-6 py-4">
           <div>
-            <p className="m-0 text-[12px] font-bold uppercase tracking-[0.1em] text-slate-500">
+            <p className="m-0 text-[12px] font-bold uppercase tracking-[0.1em] text-accent">
               {isLost ? 'Report lost item' : 'Report found item'}
             </p>
             <h2
-              className="mt-0 text-[30px] font-bold text-[#101828]"
+              className="mt-0 text-[30px] font-bold text-[var(--text-primary)]"
               style={{ fontFamily: 'Georgia, serif' }}
             >
               Item Details
             </h2>
           </div>
-          <button
+          <Button
+            variant="unstyled"
             type="button"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-[26px] text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-blue-600"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--surface-border)] bg-[var(--surface-subtle)] text-[26px] text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--focus-ring)]"
             aria-label="Close report form"
             onClick={handleDismiss}
           >
             x
-          </button>
+          </Button>
         </header>
 
         <form
@@ -195,7 +196,7 @@ export default function ItemFormModal({
         >
           <div className="grid gap-5 p-5 md:grid-cols-[0.7fr_1.3fr]">
             <div className="flex flex-col items-center justify-center">
-              <div className="w-full max-w-[260px] overflow-hidden rounded-[14px] border border-slate-200 bg-slate-100">
+              <div className="w-full max-w-[260px] overflow-hidden rounded-[14px] border border-slate-200 bg-[var(--surface-subtle)]">
                 {photoPreview ? (
                   <Image
                     src={photoPreview}
@@ -206,7 +207,7 @@ export default function ItemFormModal({
                     className="aspect-[3/4] w-full object-cover"
                   />
                 ) : (
-                  <div className="flex aspect-[3/4] w-full flex-col items-center justify-center gap-3 text-slate-500">
+                  <div className="flex aspect-[3/4] w-full flex-col items-center justify-center gap-3 text-[var(--text-primary)]">
                     <span aria-hidden="true" className="text-[40px]">
                       ▧
                     </span>
@@ -224,20 +225,23 @@ export default function ItemFormModal({
                   type="file"
                   accept="image/*"
                   onChange={handlePhotoChange}
-                  className="block w-full cursor-pointer rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-slate-200 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-slate-700 hover:file:bg-slate-300 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                  className="block w-full cursor-pointer rounded-xl border border-slate-300 bg-[var(--surface-subtle)] px-3 py-2.5 text-sm text-primary-muted file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:brightness-110 focus:outline-none focus:ring-4 focus:ring-blue-100"
                 />
               </div>
             </div>
 
             <section className="flex min-w-0 flex-col gap-3">
               {error && (
-                <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm text-red-700">
+                <div className="rounded-xl border border-[var(--danger-border)] bg-[var(--danger-surface)] px-3 py-3 text-sm text-[var(--danger-text)]">
                   {error}
                 </div>
               )}
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="item-title" className="text-sm font-bold text-[#101828]">
+                <label
+                  htmlFor="item-title"
+                  className="text-sm font-bold text-[var(--text-primary)]"
+                >
                   Item title
                 </label>
                 <input
@@ -246,28 +250,29 @@ export default function ItemFormModal({
                   placeholder="Blue Owala Water Bottle"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted placeholder:text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                 />
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="item-category" className="text-sm font-bold text-[#101828]">
+                  <label
+                    htmlFor="item-category"
+                    className="text-sm font-bold text-[var(--text-primary)]"
+                  >
                     Category
                   </label>
                   <select
                     id="item-category"
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                      categoryId ? 'text-slate-900' : 'text-slate-400'
-                    }`}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                   >
-                    <option value="" className="text-slate-400">
+                    <option value="" className="text-primary-muted">
                       Select category
                     </option>
                     {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id} className="text-slate-900">
+                      <option key={cat.id} value={cat.id} className="text-primary-muted">
                         {cat.name}
                       </option>
                     ))}
@@ -275,7 +280,10 @@ export default function ItemFormModal({
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="item-date" className="text-sm font-bold text-[#101828]">
+                  <label
+                    htmlFor="item-date"
+                    className="text-sm font-bold text-[var(--text-primary)]"
+                  >
                     Date {isLost ? 'lost' : 'found'}
                   </label>
                   <input
@@ -283,9 +291,7 @@ export default function ItemFormModal({
                     type="date"
                     value={incidentDate}
                     onChange={(e) => setIncidentDate(e.target.value)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                      incidentDate ? 'text-slate-900' : 'text-slate-400'
-                    }`}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
               </div>
@@ -293,7 +299,10 @@ export default function ItemFormModal({
               {/* Brand & Item Condition */}
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="item-brand" className="text-sm font-bold text-[#101828]">
+                  <label
+                    htmlFor="item-brand"
+                    className="text-sm font-bold text-[var(--text-primary)]"
+                  >
                     Brand
                   </label>
                   <input
@@ -302,27 +311,28 @@ export default function ItemFormModal({
                     placeholder="Apple, Nike, Owala..."
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
-                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted placeholder:text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="item-condition" className="text-sm font-bold text-[#101828]">
+                  <label
+                    htmlFor="item-condition"
+                    className="text-sm font-bold text-[var(--text-primary)]"
+                  >
                     Condition
                   </label>
                   <select
                     id="item-condition"
                     value={condition}
                     onChange={(e) => setCondition(e.target.value as ItemCondition)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                      condition ? 'text-slate-900' : 'text-slate-400'
-                    }`}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                   >
-                    <option value="" className="text-slate-400">
+                    <option value="" className="text-primary-muted">
                       Select condition
                     </option>
                     {conditions.map((cond) => (
-                      <option key={cond} value={cond} className="text-slate-900">
+                      <option key={cond} value={cond} className="text-primary-muted">
                         {cond}
                       </option>
                     ))}
@@ -333,22 +343,23 @@ export default function ItemFormModal({
               {/* Primary & Secondary Color */}
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="primary-color" className="text-sm font-bold text-[#101828]">
+                  <label
+                    htmlFor="primary-color"
+                    className="text-sm font-bold text-[var(--text-primary)]"
+                  >
                     Primary Color
                   </label>
                   <select
                     id="primary-color"
                     value={primaryColor}
                     onChange={(e) => setPrimaryColor(e.target.value as PrimaryColor)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                      primaryColor ? 'text-slate-900' : 'text-slate-400'
-                    }`}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                   >
-                    <option value="" className="text-slate-400">
+                    <option value="" className="text-primary-muted">
                       Select primary color
                     </option>
                     {colors.map((color) => (
-                      <option key={color} value={color} className="text-slate-900">
+                      <option key={color} value={color} className="text-primary-muted">
                         {color}
                       </option>
                     ))}
@@ -356,22 +367,23 @@ export default function ItemFormModal({
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="secondary-color" className="text-sm font-bold text-[#101828]">
+                  <label
+                    htmlFor="secondary-color"
+                    className="text-sm font-bold text-[var(--text-primary)]"
+                  >
                     Secondary Color
                   </label>
                   <select
                     id="secondary-color"
                     value={secondaryColor}
                     onChange={(e) => setSecondaryColor(e.target.value as PrimaryColor)}
-                    className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                      secondaryColor ? 'text-slate-900' : 'text-slate-400'
-                    }`}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                   >
-                    <option value="" className="text-slate-400">
+                    <option value="" className="text-primary-muted">
                       Select secondary color
                     </option>
                     {colors.map((color) => (
-                      <option key={color} value={color} className="text-slate-900">
+                      <option key={color} value={color} className="text-primary-muted">
                         {color}
                       </option>
                     ))}
@@ -380,7 +392,10 @@ export default function ItemFormModal({
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="item-description" className="text-sm font-bold text-[#101828]">
+                <label
+                  htmlFor="item-description"
+                  className="text-sm font-bold text-[var(--text-primary)]"
+                >
                   Description
                 </label>
                 <textarea
@@ -388,27 +403,28 @@ export default function ItemFormModal({
                   placeholder="Any other identifying details"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-[90px] w-full resize-y rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                  className="min-h-[90px] w-full resize-y rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted placeholder:text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="item-location" className="text-sm font-bold text-[#101828]">
+                <label
+                  htmlFor="item-location"
+                  className="text-sm font-bold text-[var(--text-primary)]"
+                >
                   {isLost ? 'Last seen location' : 'Found location'}
                 </label>
                 <select
                   id="item-location"
                   value={locationId}
                   onChange={(e) => setLocationId(e.target.value)}
-                  className={`w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                    locationId ? 'text-slate-900' : 'text-slate-400'
-                  }`}
+                  className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                 >
-                  <option value="" className="text-slate-400">
+                  <option value="" className="text-primary-muted">
                     Select a location
                   </option>
                   {locations.map((loc) => (
-                    <option key={loc.id} value={loc.id} className="text-slate-900">
+                    <option key={loc.id} value={loc.id} className="text-primary-muted">
                       {loc.name}
                     </option>
                   ))}
@@ -416,7 +432,10 @@ export default function ItemFormModal({
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="location-additional" className="text-sm font-bold text-[#101828]">
+                <label
+                  htmlFor="location-additional"
+                  className="text-sm font-bold text-[var(--text-primary)]"
+                >
                   Additional location details
                 </label>
                 <input
@@ -425,60 +444,20 @@ export default function ItemFormModal({
                   placeholder="Room 350, men's bathroom, etc."
                   value={locationAdditional}
                   onChange={(e) => setLocationAdditional(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted placeholder:text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                 />
               </div>
             </section>
           </div>
 
           <footer className="flex flex-wrap justify-end gap-3 border-t border-slate-200 px-6 pb-5 pt-4">
-            <Button
-              type="button"
-              onClick={handleDismiss}
-              buttonName="Cancel"
-              style={{
-                backgroundColor: 'white',
-                border: '1px solid #d6d9df',
-                borderRadius: '10px',
-                color: '#475467',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-                lineHeight: 1.2,
-                padding: '10px 15px',
-                minHeight: '42px',
-                transition: 'background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease',
-              }}
-              onMouseEnter={(event) => {
-                event.currentTarget.style.backgroundColor = '#f3f4f6';
-              }}
-              onMouseLeave={(event) => {
-                event.currentTarget.style.backgroundColor = 'white';
-              }}
-            />
+            <Button variant="secondary" type="button" onClick={handleDismiss} buttonName="Cancel" />
             <Button
               type="submit"
               disabled={isSubmitting}
               buttonName={
                 isSubmitting ? 'Submitting...' : `Report ${isLost ? 'Lost' : 'Found'} Item`
               }
-              style={{
-                backgroundColor: 'var(--color-primary)',
-                border: '1px solid var(--color-primary)',
-                borderRadius: '10px',
-                color: 'white',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-                lineHeight: 1.2,
-                padding: '10px 15px',
-                minHeight: '42px',
-                transition: 'background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease',
-              }}
-              onMouseEnter={(event) => {
-                event.currentTarget.style.backgroundColor = 'var(--color-accent)';
-              }}
-              onMouseLeave={(event) => {
-                event.currentTarget.style.backgroundColor = 'var(--color-primary)';
-              }}
             />
           </footer>
         </form>

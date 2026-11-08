@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import ItemFormModal from '@/components/item_form_modal/item_form_modal';
 import ConfirmationModal from '@/components/confirmation_modal/confirmation_modal';
+import Button from '@/components/ui/button';
 import type {
   Category,
   ItemCondition,
@@ -61,7 +62,8 @@ export default function ReportClientView({ categories, locations, colors, condit
 
       <div className="flex w-full max-w-3xl justify-center">
         {/* Report Lost Item CTA */}
-        <button
+        <Button
+          variant="unstyled"
           type="button"
           onClick={handleOpenForm}
           className="report-action group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all duration-200 text-center"
@@ -82,7 +84,7 @@ export default function ReportClientView({ categories, locations, colors, condit
           <p className="mt-2 text-sm text-[var(--text-muted)]">
             Submit details about something you misplaced so we can help match it when found.
           </p>
-        </button>
+        </Button>
       </div>
 
       {/* 1. INPUT FORM MODAL */}

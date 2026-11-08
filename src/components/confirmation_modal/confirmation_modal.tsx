@@ -53,15 +53,15 @@ export default function ConfirmationModal({
         </h3>
 
         {/* Dynamic Message Content */}
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-accent">
           Your report for{' '}
-          <span className="font-semibold text-slate-800">&quot;{itemTitle}&quot;</span> has been
-          successfully created.
+          <span className="font-semibold text-[var(--text-primary)]">&quot;{itemTitle}&quot;</span>{' '}
+          has been successfully created.
         </p>
 
         {isLost && (
-          <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50 p-4 text-left text-xs text-slate-500">
-            <p className="font-medium text-slate-700">What happens next?</p>
+          <div className="mt-4 rounded-lg border border-[var(--surface-border)] bg-[var(--surface-subtle)] p-4 text-left text-xs text-accent">
+            <p className="font-medium text-[var(--text-primary)]">What happens next?</p>
             <p>
               We&apos;ll cross-reference your submission against items turned into campus
               facilities. You will be notified if a match is found.

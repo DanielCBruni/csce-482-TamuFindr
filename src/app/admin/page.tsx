@@ -4,6 +4,7 @@ import type { ItemStatus, ItemType } from '@/generated/prisma/enums';
 import { resolveAdminTicket } from '@/actions/resolve-admin-ticket';
 import { reopenAdminTicket } from '@/actions/reopen-admin-ticket';
 import ActivityTable, { type ActivityItem } from '@/components/activity_table/activity_table';
+import Button from '@/components/ui/button';
 import AdminFunctions, { type AdminExportItem } from './admin-functions';
 import { prisma } from '@/lib/prisma';
 import { AuthorizationError, requireAdmin } from '@/lib/auth/guard';
@@ -149,12 +150,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 <option value="CANCELLED">Cancelled</option>
               </select>
             </label>
-            <button
-              type="submit"
-              className="inline-flex items-center rounded-xl border border-primary bg-primary px-4 py-2 font-semibold text-sm text-white shadow-sm transition-all hover:-translate-y-px hover:bg-accent hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            >
-              Apply filters
-            </button>
+            <Button type="submit">Apply filters</Button>
             {(selectedStatus || selectedType) && (
               <Link
                 href="/admin"

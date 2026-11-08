@@ -5,6 +5,7 @@ import Link from 'next/link';
 import PotentialMatchesModal, {
   type PotentialMatchReport,
 } from '@/components/potential_matches_modal/potential_matches_modal';
+import Button from '@/components/ui/button';
 
 export default function PotentialMatchesClientView({
   reports,
@@ -47,7 +48,8 @@ export default function PotentialMatchesClientView({
                     : 'No matches yet'}
                 </p>
               </div>
-              <button
+              <Button
+                variant="unstyled"
                 type="button"
                 aria-haspopup="dialog"
                 disabled={!report.matches.length}
@@ -55,7 +57,7 @@ export default function PotentialMatchesClientView({
                 className="rounded-xl bg-primary px-5 py-3 font-semibold text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 View Matches
-              </button>
+              </Button>
             </li>
           ))}
         </ul>
