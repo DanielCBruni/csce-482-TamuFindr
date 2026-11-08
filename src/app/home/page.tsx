@@ -41,17 +41,19 @@ export default async function HomePage() {
   }));
 
   return (
-    <main className="min-h-screen bg-[var(--surface)] px-6 py-12 text-[var(--text-primary)] sm:px-10">
+    <main className="min-h-screen bg-[var(--surface)] px-4 py-8 text-[var(--text-primary)] sm:px-10 sm:py-12">
       <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-accent">
           TamuFindr
         </p>
-        <h1 className="text-5xl font-bold text-primary sm:text-7xl">Howdy, {firstName}!</h1>
+        <h1 className="break-words text-4xl font-bold text-primary sm:text-7xl">
+          Howdy, {firstName}!
+        </h1>
         <p className="mt-6 max-w-xl text-lg text-[var(--text-muted)] sm:text-xl">
           Let&apos;s get your lost and found items back where they belong.
         </p>
 
-        <div className="mt-12 grid w-full max-w-2xl grid-cols-1 gap-12 sm:grid-cols-2">
+        <div className="mt-8 grid w-full max-w-2xl grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-6">
           <Link
             href="/report"
             className="home-action rounded-xl transition-transform duration-200 hover:-translate-y-1 focus-visible:outline-[var(--focus-ring)]"
@@ -62,8 +64,8 @@ export default async function HomePage() {
               borderRadius: '12px',
               backgroundColor: 'var(--surface-raised)',
               color: 'var(--text-primary)',
-              padding: '30px 22px',
-              fontSize: '1.4rem',
+              padding: 'clamp(20px, 6vw, 30px) 22px',
+              fontSize: 'clamp(1.15rem, 4vw, 1.4rem)',
               fontWeight: 700,
               letterSpacing: '-0.03em',
               lineHeight: 1.2,
@@ -81,8 +83,8 @@ export default async function HomePage() {
               borderRadius: '12px',
               backgroundColor: 'var(--surface-raised)',
               color: 'var(--text-primary)',
-              padding: '30px 22px',
-              fontSize: '1.4rem',
+              padding: 'clamp(20px, 6vw, 30px) 22px',
+              fontSize: 'clamp(1.15rem, 4vw, 1.4rem)',
               fontWeight: 700,
               letterSpacing: '-0.03em',
               lineHeight: 1.2,
@@ -92,7 +94,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <section className="mt-16 w-full text-left">
+        <section className="mt-12 w-full text-left sm:mt-16">
           <h2 className="mb-4 text-2xl font-bold">Your Activity</h2>
           <ActivityTable
             items={activityItems}

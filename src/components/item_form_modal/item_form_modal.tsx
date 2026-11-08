@@ -158,22 +158,22 @@ export default function ItemFormModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#10182880] p-4 backdrop-blur-[3px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#10182880] p-2 backdrop-blur-[3px] sm:p-4"
       onClick={handleDismiss}
     >
       <div
-        className="w-full max-w-[860px] max-h-[calc(100vh-32px)] overflow-hidden rounded-[20px] border border-[var(--surface-border)] bg-[var(--surface-raised)] text-[var(--text-primary)] shadow-[0_24px_80px_rgba(16,24,40,0.28)]"
+        className="max-h-[calc(100dvh-16px)] w-full max-w-[860px] overflow-hidden rounded-[20px] border border-[var(--surface-border)] bg-[var(--surface-raised)] text-[var(--text-primary)] shadow-[0_24px_80px_rgba(16,24,40,0.28)] sm:max-h-[calc(100dvh-32px)]"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
       >
-        <header className="flex items-center justify-between gap-5 border-b border-[var(--surface-border)] px-6 py-4">
+        <header className="flex items-center justify-between gap-3 border-b border-[var(--surface-border)] px-4 py-3 sm:gap-5 sm:px-6 sm:py-4">
           <div>
             <p className="m-0 text-[12px] font-bold uppercase tracking-[0.1em] text-accent">
               {isLost ? 'Report lost item' : 'Report found item'}
             </p>
             <h2
-              className="mt-0 text-[30px] font-bold text-[var(--text-primary)]"
+              className="mt-0 text-2xl font-bold text-[var(--text-primary)] sm:text-[30px]"
               style={{ fontFamily: 'Georgia, serif' }}
             >
               Item Details
@@ -192,9 +192,9 @@ export default function ItemFormModal({
 
         <form
           onSubmit={handleSubmit}
-          className="flex max-h-[calc(100vh-120px)] flex-col overflow-y-auto"
+          className="flex max-h-[calc(100dvh-88px)] flex-col overflow-y-auto sm:max-h-[calc(100dvh-120px)]"
         >
-          <div className="grid gap-5 p-5 md:grid-cols-[0.7fr_1.3fr]">
+          <div className="grid gap-4 p-4 sm:gap-5 sm:p-5 md:grid-cols-[0.7fr_1.3fr]">
             <div className="flex flex-col items-center justify-center">
               <div className="w-full max-w-[260px] overflow-hidden rounded-[14px] border border-slate-200 bg-[var(--surface-subtle)]">
                 {photoPreview ? (
@@ -450,7 +450,7 @@ export default function ItemFormModal({
             </section>
           </div>
 
-          <footer className="flex flex-wrap justify-end gap-3 border-t border-slate-200 px-6 pb-5 pt-4">
+          <footer className="flex flex-col gap-3 border-t border-slate-200 px-4 pb-4 pt-3 sm:flex-row sm:justify-end sm:px-6 sm:pb-5 sm:pt-4">
             <Button variant="secondary" type="button" onClick={handleDismiss} buttonName="Cancel" />
             <Button
               type="submit"

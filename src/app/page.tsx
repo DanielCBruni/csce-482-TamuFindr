@@ -11,7 +11,7 @@ export default function Landing() {
     <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
       <div className="w-full text-left mb-8">
         <p className="mb-2 font-semibold uppercase tracking-wider text-accent">Welcome</p>
-        <h1 className="text-5xl font-bold text-primary md:text-6xl pb-4">Howdy!</h1>
+        <h1 className="pb-4 text-4xl font-bold text-primary sm:text-5xl md:text-6xl">Howdy!</h1>
         <h2 className="text-2xl font-bold text-primary md:text-3xl pt-3">
           Lost something on campus?
         </h2>
@@ -50,8 +50,8 @@ export default function Landing() {
               description: 'Review the match and verify it before connecting.',
             },
           ].map((step, index) => (
-            <div key={step.number} className="flex items-center gap-3">
-              <div className="how-it-works-card flex h-52 w-52 flex-col rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm">
+            <div key={step.number} className="flex w-full justify-center gap-3 md:w-auto">
+              <div className="how-it-works-card flex min-h-48 w-full max-w-80 flex-col rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm sm:min-h-52 md:w-52">
                 <div className="mx-auto mt-3 flex h-12 w-12 items-center justify-center rounded-full border border-secondary bg-secondary/60 text-m font-bold text-primary">
                   {step.number}
                 </div>
@@ -61,7 +61,9 @@ export default function Landing() {
                 </div>
               </div>
 
-              {index < 3 && <div className="hidden text-xl font-bold text-primary md:block">→</div>}
+              {index < 3 && (
+                <div className="hidden items-center text-xl font-bold text-primary md:flex">→</div>
+              )}
             </div>
           ))}
         </div>

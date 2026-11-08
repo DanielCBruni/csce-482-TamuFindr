@@ -15,7 +15,7 @@ export default function Header({ signedIn, isAdmin }: { signedIn: boolean; isAdm
   };
 
   return (
-    <header className="sticky top-0 z-50 grid min-h-16.25 w-full grid-cols-[1fr_auto] items-center gap-x-4 gap-y-3 border-b border-[var(--surface-border)] bg-[var(--surface-header)] px-4 py-3 shadow-sm box-border md:grid-cols-[1fr_auto_1fr] md:px-7 md:py-4.5">
+    <header className="sticky top-0 z-50 grid min-h-16.25 w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-2 border-b border-[var(--surface-border)] bg-[var(--surface-header)] px-3 py-2 shadow-sm box-border sm:px-4 md:grid-cols-[1fr_auto_1fr] md:gap-x-4 md:px-7 md:py-4.5">
       {/* Left side - branding */}
       <Link
         href="/"
@@ -31,7 +31,7 @@ export default function Header({ signedIn, isAdmin }: { signedIn: boolean; isAdm
 
       {/* Middle - navbar */}
       <nav
-        className="col-span-2 row-start-2 mx-auto flex flex-wrap items-center justify-center gap-x-5.5 gap-y-2 md:col-span-1 md:col-start-2 md:row-start-1"
+        className="col-span-2 row-start-2 mx-auto flex max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-1 md:col-span-1 md:col-start-2 md:row-start-1 md:gap-x-5.5 md:gap-y-2"
         aria-label="Main navigation"
       >
         {signedIn && (

@@ -25,13 +25,13 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
   );
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-4 py-12 md:px-6 md:py-16">
+    <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12 md:py-16">
       <div className="mb-8 w-full text-left">
         <h1 className="pb-6 text-4xl font-bold text-primary md:text-5xl">My Activity</h1>
 
         {alertItem && (
-          <aside className="mb-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-sky-200 bg-sky-50 p-5 md:flex-row md:items-center">
-            <div className="flex flex-1 items-center gap-3">
+          <aside className="mb-8 flex flex-col justify-between gap-4 rounded-2xl border border-sky-200 bg-sky-50 p-4 sm:p-5 md:flex-row md:items-center">
+            <div className="flex min-w-0 flex-1 items-start gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-base font-bold text-[#2f67c7]">
                 ◔
               </div>
@@ -49,7 +49,7 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
               variant="unstyled"
               type="button"
               onClick={() => setSelectedItem(alertItem)}
-              className="min-w-35 rounded-xl border border-[#2d7ff9] bg-[#2d7ff9] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#246de0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="w-full min-w-35 rounded-xl border border-[#2d7ff9] bg-[#2d7ff9] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#246de0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:w-auto"
             >
               Review Item
             </Button>
@@ -70,18 +70,18 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`activity-row flex w-full items-center justify-between gap-4 bg-[var(--surface-raised)] px-5 py-5 text-left transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                className={`activity-row flex w-full flex-col items-start justify-between gap-3 bg-[var(--surface-raised)] px-4 py-4 text-left transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:flex-row sm:items-center sm:gap-4 sm:px-5 sm:py-5 ${
                   index < activeItems.length - 1 ? 'border-b border-slate-200' : ''
                 }`}
               >
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>
                   <p className="mt-2 text-sm leading-5 text-slate-600">
                     {item.reportedDate} · {item.itemId}
                   </p>
                 </div>
                 <span
-                  className={`inline-flex min-w-32.5 items-center justify-center rounded-full border px-3 py-2 text-xs font-bold ${statusPillClasses[item.status]}`}
+                  className={`inline-flex max-w-full items-center justify-center rounded-full border px-3 py-2 text-xs font-bold sm:min-w-32.5 ${statusPillClasses[item.status]}`}
                 >
                   {item.statusLabel}
                 </span>
@@ -104,18 +104,18 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
                 key={item.itemId}
                 type="button"
                 onClick={() => setSelectedItem(item)}
-                className={`activity-row flex w-full items-center justify-between gap-4 bg-[var(--surface-raised)] px-5 py-5 text-left transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                className={`activity-row flex w-full flex-col items-start justify-between gap-3 bg-[var(--surface-raised)] px-4 py-4 text-left transition-colors hover:bg-[var(--surface-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:flex-row sm:items-center sm:gap-4 sm:px-5 sm:py-5 ${
                   index < inactiveItems.length - 1 ? 'border-b border-slate-200' : ''
                 }`}
               >
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-lg font-bold text-primary">{item.title}</h3>
                   <p className="mt-2 text-sm leading-5 text-slate-600">
                     {item.reportedDate} · {item.itemId}
                   </p>
                 </div>
                 <span
-                  className={`inline-flex min-w-32.5 items-center justify-center rounded-full border px-3 py-2 text-xs font-bold ${statusPillClasses[item.status]}`}
+                  className={`inline-flex max-w-full items-center justify-center rounded-full border px-3 py-2 text-xs font-bold sm:min-w-32.5 ${statusPillClasses[item.status]}`}
                 >
                   {item.statusLabel}
                 </span>

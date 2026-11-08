@@ -49,8 +49,8 @@ export default function ReportClientView({ categories, locations, colors, condit
   }
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center bg-[var(--surface)] p-6">
-      <div className="max-w-3xl w-full text-center space-y-3 mb-10 mt-20">
+    <main className="flex flex-1 flex-col items-center justify-center bg-[var(--surface)] p-4 sm:p-6">
+      <div className="mb-8 mt-8 w-full max-w-3xl space-y-3 text-center sm:mb-10 sm:mt-20">
         <h1 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
           Report a lost item
         </h1>
@@ -66,7 +66,7 @@ export default function ReportClientView({ categories, locations, colors, condit
           variant="unstyled"
           type="button"
           onClick={handleOpenForm}
-          className="report-action group relative flex flex-col items-center justify-center p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all duration-200 text-center"
+          className="report-action group relative flex w-full max-w-xl flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm transition-all duration-200 hover:border-amber-500/50 hover:shadow-md sm:p-8"
         >
           <div className="h-16 w-16 rounded-full bg-amber-50 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-105 transition-transform duration-200">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
