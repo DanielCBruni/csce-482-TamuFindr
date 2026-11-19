@@ -20,10 +20,10 @@ const formatDate = (date: Date) =>
   });
 
 export default async function PotentialMatchesPage() {
-  await requireUser();
+  const { id: userId } = await requireUser();
 
   const reports = await prisma.item.findMany({
-    where: { type: 'LOST', status: 'OPEN' },
+    where: { userId, type: 'LOST', status: 'OPEN', softDeletedAt: null },
     orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
     select: {
       id: true,
@@ -34,7 +34,7 @@ export default async function PotentialMatchesPage() {
         where: {
           status: 'PENDING',
           score: { gte: 0.4 },
-          potentialMatch: { type: 'FOUND', status: 'OPEN' },
+          potentialMatch: { type: 'FOUND', status: 'OPEN', softDeletedAt: null },
         },
         orderBy: [{ score: 'desc' }, { potentialMatchId: 'asc' }],
         take: 5,

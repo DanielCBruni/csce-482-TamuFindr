@@ -75,6 +75,7 @@ class Item(Base):
 
     locationId: Mapped[str] = mapped_column(String, ForeignKey("Location.id"))
     incidentDate: Mapped[datetime] = mapped_column(DateTime)
+    softDeletedAt: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
     # Relationships
     location: Mapped["Location"] = relationship("Location")

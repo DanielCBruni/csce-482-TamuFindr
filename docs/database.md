@@ -24,6 +24,13 @@ pnpm db:generate
 pnpm db:seed
 ```
 
+Resolved tickets remain available to administrators for 30 days. The periodic matching job
+permanently deletes tickets after that retention period; run it locally to perform cleanup:
+
+```bash
+python matching-job/main.py
+```
+
 Start the application normally:
 
 ```bash

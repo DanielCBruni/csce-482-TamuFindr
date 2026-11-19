@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from time import monotonic
 
-from sqlalchemy import create_engine, or_, select, text, update
+from sqlalchemy import create_engine, delete, or_, select, text, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, joinedload
@@ -27,6 +27,7 @@ def run_matching_batch(batch_engine=None):
     started = monotonic()
     upserted = 0
     expired = 0
+    purged = 0
     candidates_scored = 0
     # Prisma uses timestamp without time zone, with UTC values.
     now = datetime.now(timezone.utc).replace(tzinfo=None)
@@ -41,6 +42,16 @@ def run_matching_batch(batch_engine=None):
         if not acquired:
             logger.info("Matching skipped: another batch is already running.")
             return
+
+        purge_result = session.execute(
+            delete(Item)
+            .where(
+                Item.softDeletedAt.is_not(None),
+                Item.softDeletedAt <= now - timedelta(days=30),
+            )
+            .execution_options(synchronize_session=False)
+        )
+        purged = purge_result.rowcount
 
         lost_items = session.scalars(
             select(Item)
@@ -135,8 +146,8 @@ def run_matching_batch(batch_engine=None):
                 upserted += len(session.scalars(upsert_stmt).all())
 
     logger.info(
-        "Matching completed: lost=%d candidates=%d upserted=%d expired=%d elapsed=%.2fs",
-        len(lost_items), candidates_scored, upserted, expired, monotonic() - started,
+        "Matching completed: lost=%d candidates=%d upserted=%d expired=%d purged=%d elapsed=%.2fs",
+        len(lost_items), candidates_scored, upserted, expired, purged, monotonic() - started,
     )
 
 

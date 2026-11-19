@@ -11,9 +11,15 @@ export async function resolveAdminTicket(formData: FormData): Promise<void> {
     return;
   }
 
+  const resolvedAt = new Date();
   await prisma.item.updateMany({
     where: { id: itemId, status: { in: ['OPEN', 'MATCHED'] } },
-    data: { status: 'RESOLVED', resolvedDate: new Date(), servicedById: userId },
+    data: {
+      status: 'RESOLVED',
+      resolvedDate: resolvedAt,
+      softDeletedAt: resolvedAt,
+      servicedById: userId,
+    },
   });
 
   revalidatePath('/admin');

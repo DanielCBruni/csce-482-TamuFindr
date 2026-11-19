@@ -51,7 +51,8 @@ RETURNING id, email, role;
 
 The matching job runs in a separate Python container on this instance.
 A systemd timer runs it every five minutes and catches up once after downtime. It connects
-to the existing production database over the private Compose network.
+to the existing production database over the private Compose network. It also permanently
+deletes resolved tickets after their 30-day retention period, so keep the timer enabled.
 
 Build and transfer the matching image and timer files from your local machine
 

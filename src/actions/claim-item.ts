@@ -11,9 +11,14 @@ export async function claimItem(itemId: string) {
   const { id: userId } = await requireUser();
 
   try {
+    const resolvedAt = new Date();
     const result = await prisma.item.updateMany({
       where: { id: itemId, userId, status: { in: ['OPEN', 'MATCHED'] } },
-      data: { status: 'RESOLVED', resolvedDate: new Date() },
+      data: {
+        status: 'RESOLVED',
+        resolvedDate: resolvedAt,
+        softDeletedAt: resolvedAt,
+      },
     });
     if (result.count === 0) {
       return { success: false, error: 'This report is no longer available to claim.' };
@@ -23,5 +28,7 @@ export async function claimItem(itemId: string) {
   }
 
   revalidatePath('/activity');
+  revalidatePath('/home');
+  revalidatePath('/potential-matches');
   return { success: true };
 }
