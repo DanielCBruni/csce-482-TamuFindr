@@ -4,12 +4,13 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/ui/button';
 import { createItemReport } from '../../actions/report-action';
-import type { Category, Location } from '../../generated/prisma/browser';
+import type { Category, Location, ItemKind } from '../../generated/prisma/browser';
 import type { PrimaryColor, ItemCondition } from '../../generated/prisma/browser';
 
 type ItemFormModalProps = {
   mode: 'lost' | 'found';
   categories: Category[];
+  itemKinds: ItemKind[];
   locations: Location[];
   colors: PrimaryColor[];
   conditions: ItemCondition[];
@@ -21,6 +22,7 @@ type ItemFormModalProps = {
 export default function ItemFormModal({
   mode,
   categories,
+  itemKinds,
   locations,
   colors,
   conditions,
@@ -30,6 +32,7 @@ export default function ItemFormModal({
 }: ItemFormModalProps) {
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const [itemKindId, setItemKindId] = useState('');
   const [description, setDescription] = useState('');
   const [primaryColor, setPrimaryColor] = useState<PrimaryColor | ''>('');
   const [secondaryColor, setSecondaryColor] = useState<PrimaryColor | ''>('');
@@ -49,6 +52,7 @@ export default function ItemFormModal({
   function resetForm() {
     setTitle('');
     setCategoryId('');
+    setItemKindId('');
     setDescription('');
     setPrimaryColor('');
     setSecondaryColor('');
@@ -131,6 +135,7 @@ export default function ItemFormModal({
       type: mode === 'lost' ? 'LOST' : 'FOUND',
       title,
       categoryId,
+      itemKindId: itemKindId || null,
       description,
       primaryColor: primaryColor as PrimaryColor,
       secondaryColor: secondaryColor || null,
@@ -155,6 +160,9 @@ export default function ItemFormModal({
   }
 
   const isLost = mode === 'lost';
+  const availableItemKinds = itemKinds.filter(
+  (itemKind) => itemKind.categoryId === categoryId,
+  );
 
   return (
     <div
@@ -247,7 +255,7 @@ export default function ItemFormModal({
                 <input
                   id="item-title"
                   type="text"
-                  placeholder="Blue Owala Water Bottle"
+                  placeholder="Water Bottle"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted placeholder:text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
@@ -265,7 +273,10 @@ export default function ItemFormModal({
                   <select
                     id="item-category"
                     value={categoryId}
-                    onChange={(e) => setCategoryId(e.target.value)}
+                    onChange={(e) => {
+                      setCategoryId(e.target.value);
+                      setItemKindId('');
+                    }}
                     className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                   >
                     <option value="" className="text-primary-muted">
@@ -277,6 +288,41 @@ export default function ItemFormModal({
                       </option>
                     ))}
                   </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="item-kind"
+                    className="text-sm font-bold text-[var(--text-primary)]"
+                  >
+                    Item type
+                  </label>
+
+                  <select
+                    id="item-kind"
+                    value={itemKindId}
+                    disabled={!categoryId}
+                    onChange={(e) => setItemKindId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+                  >
+                    <option value="" className="text-primary-muted">
+                      {categoryId ? 'Not sure / Select item type' : 'Select a category first'}
+                    </option>
+
+                    {availableItemKinds.map((itemKind) => (
+                      <option
+                        key={itemKind.id}
+                        value={itemKind.id}
+                        className="text-primary-muted"
+                      >
+                        {itemKind.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  <p className="text-xs text-[var(--text-muted)]">
+                    Optional, but helps us find better matches.
+                  </p>
                 </div>
 
                 <div className="flex flex-col gap-2">

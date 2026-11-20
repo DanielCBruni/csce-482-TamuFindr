@@ -9,6 +9,7 @@ export type CreateReportInput = {
   type: ItemType;
   title: string;
   categoryId: string;
+  itemKindId: string | null;
   description: string;
   locationId: string;
   locationAdditional?: string;
@@ -53,6 +54,25 @@ export async function createItemReport(data: CreateReportInput) {
     return { success: false, error: 'Invalid incident date provided.' };
   }
 
+  if (data.itemKindId) {
+  const itemKind = await prisma.itemKind.findFirst({
+    where: {
+      id: data.itemKindId,
+      categoryId: data.categoryId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!itemKind) {
+    return {
+      success: false,
+      error: 'Selected item type does not belong to the selected category.',
+    };
+  }
+  }
+
   try {
     const newItem = await prisma.item.create({
       data: {
@@ -61,6 +81,7 @@ export async function createItemReport(data: CreateReportInput) {
         title: data.title.trim(),
         description: data.description.trim(),
         categoryId: data.categoryId,
+        itemKindId: data.itemKindId,
         locationId: data.locationId,
         locationExtra: data.locationAdditional || null,
         incidentDate: parsedDate,
