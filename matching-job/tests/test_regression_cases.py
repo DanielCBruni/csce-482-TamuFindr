@@ -97,8 +97,10 @@ def test_high_quality_matches_remain_eligible(
 
 def test_blue_bottle_and_black_bottle_are_not_as_good_as_same_color_bottles():
     """
-    Color disagreement need not make a pair impossible, but it should rank
-    below an otherwise-equivalent same-color candidate.
+    An exact color match should qualify.
+
+    A known color conflict without distinctive corroborating evidence should
+    not qualify as an automatic suggestion.
     """
     lost = make_item(
         title="hydro flask bottle",
@@ -128,7 +130,11 @@ def test_blue_bottle_and_black_bottle_are_not_as_good_as_same_color_bottles():
     )
 
     assert same_details["eligible"] is True
-    assert different_details["eligible"] is True
+
+    assert different_details["eligible"] is False
+    assert different_details["eligibilityReason"] == "unresolved_color_conflict"
+    assert different_details["knownColorConflict"] is True
+
     assert same_score > different_score
     assert different_details["contradictionPenalty"] > 0
 

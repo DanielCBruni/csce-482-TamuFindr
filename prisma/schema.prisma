@@ -58,11 +58,10 @@ enum MatchStatus {
   EXPIRED
 }
 
-
 model Category {
-  id    String @id @default(cuid())
-  name  String @unique
-  items Item[]
+  id        String     @id @default(cuid())
+  name      String     @unique
+  items     Item[]
   itemKinds ItemKind[]
 }
 
@@ -80,16 +79,16 @@ model Location {
 }
 
 model ItemKind {
-  id          String    @id @default(cuid())
-  categoryId  String
-  name        String
-  slug        String    @unique
-  parentId    String?
+  id         String  @id @default(cuid())
+  categoryId String
+  name       String
+  slug       String  @unique
+  parentId   String?
 
-  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  parent      ItemKind? @relation("ItemKindHierarchy", fields: [parentId], references: [id])
-  children    ItemKind[] @relation("ItemKindHierarchy")
-  items       Item[]
+  category Category   @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  parent   ItemKind?  @relation("ItemKindHierarchy", fields: [parentId], references: [id])
+  children ItemKind[] @relation("ItemKindHierarchy")
+  items    Item[]
 
   @@unique([categoryId, name])
   @@index([categoryId])
@@ -111,7 +110,7 @@ model Item {
   brand          String? // Normalized lowercase string
   condition      ItemCondition
 
-  itemKindId            String?
+  itemKindId String?
 
   // Location & Spatial Data
   // LocationId = where it was found
@@ -134,7 +133,7 @@ model Item {
   location        Location    @relation("ItemLocation", fields: [locationId], references: [id], onDelete: Restrict)
   storageLocation Location?   @relation("StorageLocation", fields: [storageLocationId], references: [id], onDelete: SetNull)
   servicedBy      User?       @relation("ItemServicer", fields: [servicedById], references: [id], onDelete: SetNull)
-  itemKind ItemKind? @relation(fields: [itemKindId], references: [id], onDelete: SetNull)
+  itemKind        ItemKind?   @relation(fields: [itemKindId], references: [id], onDelete: SetNull)
   images          ItemImage[]
 
   // Matches
