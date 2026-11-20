@@ -63,21 +63,35 @@ class Item(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True)
     userId: Mapped[str] = mapped_column(String)
     categoryId: Mapped[str] = mapped_column(String)
+
+    itemKindId: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
     type: Mapped[ItemType] = mapped_column(Enum(ItemType, name="ItemType"))
-    status: Mapped[ItemStatus] = mapped_column(Enum(ItemStatus, name="ItemStatus"), default=ItemStatus.OPEN)
+    status: Mapped[ItemStatus] = mapped_column(
+        Enum(ItemStatus, name="ItemStatus"),
+        default=ItemStatus.OPEN,
+    )
+
     title: Mapped[str] = mapped_column(String)
     description: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    
-    primaryColor: Mapped[PrimaryColor] = mapped_column(Enum(PrimaryColor, name="PrimaryColor"))
-    secondaryColor: Mapped[Optional[PrimaryColor]] = mapped_column(Enum(PrimaryColor, name="PrimaryColor"), nullable=True)
+
+    primaryColor: Mapped[PrimaryColor] = mapped_column(
+        Enum(PrimaryColor, name="PrimaryColor")
+    )
+    secondaryColor: Mapped[Optional[PrimaryColor]] = mapped_column(
+        Enum(PrimaryColor, name="PrimaryColor"),
+        nullable=True,
+    )
+
     brand: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    condition: Mapped[ItemCondition] = mapped_column(Enum(ItemCondition, name="ItemCondition"))
+    condition: Mapped[ItemCondition] = mapped_column(
+        Enum(ItemCondition, name="ItemCondition")
+    )
 
     locationId: Mapped[str] = mapped_column(String, ForeignKey("Location.id"))
     incidentDate: Mapped[datetime] = mapped_column(DateTime)
     softDeletedAt: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
-    # Relationships
     location: Mapped["Location"] = relationship("Location")
 
 class ItemMatch(Base):

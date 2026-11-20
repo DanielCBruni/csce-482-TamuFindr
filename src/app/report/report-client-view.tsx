@@ -8,18 +8,20 @@ import Button from '@/components/ui/button';
 import type {
   Category,
   ItemCondition,
+  ItemKind,
   Location,
   PrimaryColor,
 } from '../../generated/prisma/browser';
 
 type Props = {
   categories: Category[];
+  itemKinds: ItemKind[];
   locations: Location[];
   conditions: ItemCondition[];
   colors: PrimaryColor[];
 };
 
-export default function ReportClientView({ categories, locations, colors, conditions }: Props) {
+export default function ReportClientView({ categories, itemKinds, locations, colors, conditions }: Props) {
   // 1. Controls opening/closing ItemFormModal
   const [formModalMode, setFormModalMode] = useState<'lost' | null>(null);
 
@@ -91,6 +93,7 @@ export default function ReportClientView({ categories, locations, colors, condit
       <ItemFormModal
         mode={formModalMode ?? 'lost'}
         categories={categories}
+        itemKinds={itemKinds}
         locations={locations}
         colors={colors}
         conditions={conditions}

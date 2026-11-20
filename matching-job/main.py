@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session, joinedload
 
 from config import DATABASE_URL, MAX_INCIDENT_DAYS_DIFF, SCORE_THRESHOLD
 from models import Item, ItemType, ItemStatus, ItemMatch, MatchStatus
-from scoring import calculate_match_score
+from scoring import calculate_match_score, qualifies_for_persistence
 
 logger = logging.getLogger(__name__)
 # A fixed, application-specific transaction lock also covers manual invocations.
@@ -101,7 +101,7 @@ def run_matching_batch(batch_engine=None):
             candidates_scored += len(candidates)
             for found in candidates:
                 final_score, details = calculate_match_score(lost, found)
-                if final_score >= SCORE_THRESHOLD:
+                if qualifies_for_persistence(final_score, details):
                     qualifying_ids.append(found.id)
                     matches_to_upsert.append({
                         "id": f"cuid_{uuid.uuid4().hex[:20]}",
@@ -113,6 +113,19 @@ def run_matching_batch(batch_engine=None):
                         "createdAt": now,
                         "updatedAt": now,
                     })
+                # if final_score >= SCORE_THRESHOLD:
+                # if details["eligible"] and final_score >= SCORE_THRESHOLD:
+                #     qualifying_ids.append(found.id)
+                #     matches_to_upsert.append({
+                #         "id": f"cuid_{uuid.uuid4().hex[:20]}",
+                #         "lostItemId": lost.id,
+                #         "potentialMatchId": found.id,
+                #         "score": final_score,
+                #         "scoreDetails": details,
+                #         "status": MatchStatus.PENDING,
+                #         "createdAt": now,
+                #         "updatedAt": now,
+                #     })
 
             # This covers score drops and changes to category/date filters.
             result = session.execute(

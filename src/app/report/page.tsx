@@ -14,8 +14,9 @@ export const metadata: Metadata = {
 
 export default async function ReportPage() {
   await requireUser();
-  const [categories, locations] = await Promise.all([
+  const [categories, itemKinds, locations] = await Promise.all([
     prisma.category.findMany({ orderBy: { name: 'asc' } }),
+    prisma.itemKind.findMany({ orderBy: { name: 'asc' } }),
     prisma.location.findMany({ orderBy: { name: 'asc' } }),
   ]);
 
@@ -25,6 +26,7 @@ export default async function ReportPage() {
   return (
     <ReportClientView
       categories={categories}
+      itemKinds={itemKinds}
       locations={locations}
       colors={colors}
       conditions={conditions}

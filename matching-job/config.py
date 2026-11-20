@@ -21,16 +21,27 @@ else:
 if DATABASE_URL is None:
     raise SystemExit("Set DATABASE_URL, or POSTGRES_HOST with the PostgreSQL credentials.")
 
-# Scoring Weights (Must sum to 1.0)
+# Missing features are excluded and the remaining weights are normalized.
 WEIGHTS = {
-    "color": 0.15,
-    "title": 0.25,
-    "description": 0.20,
-    "distance": 0.25,
-    "date_proximity": 0.10,
-    "condition": 0.05,
+    "item_kind": 0.28,
+    "title": 0.26,
+    "description": 0.12,
+    "brand": 0.16,
+    "color": 0.08,
+    "distance": 0.06,
+    "date_proximity": 0.03,
+    "condition": 0.01,
 }
 
-# Candidate Pre-filtering Rules
-MAX_INCIDENT_DAYS_DIFF = 30  # Ignore pairs more than 30 days apart
-SCORE_THRESHOLD = 0.40       # Minimum overall score to persist an ItemMatch
+MAX_INCIDENT_DAYS_DIFF = 30
+
+# Persist only relatively high-confidence suggestions.
+SCORE_THRESHOLD = 0.68
+
+# Strong enough similarity after removing colors, stop words, and generic terms.
+MIN_TITLE_SIMILARITY = 0.60
+MIN_DESCRIPTION_SIMILARITY = 0.60
+
+# A known mismatch should lower the result. Missing information should not.
+COLOR_CONTRADICTION_PENALTY = 0.18
+BRAND_CONTRADICTION_PENALTY = 0.25
