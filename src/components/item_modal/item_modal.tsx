@@ -171,7 +171,7 @@ export default function ItemModal({
         )}
       </div>
       {actionError && (
-        <p role="alert" style={{ padding: '0 28px', color: '#b91c1c' }}>
+        <p role="alert" style={{ padding: '0 28px', color: 'var(--danger-text)' }}>
           {actionError}
         </p>
       )}
