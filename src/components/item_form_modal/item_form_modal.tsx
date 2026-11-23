@@ -164,6 +164,12 @@ export default function ItemFormModal({
   (itemKind) => itemKind.categoryId === categoryId,
   );
 
+  const formatEnumLabel = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#10182880] p-2 backdrop-blur-[3px] sm:p-4"
@@ -379,7 +385,7 @@ export default function ItemFormModal({
                     </option>
                     {conditions.map((cond) => (
                       <option key={cond} value={cond} className="text-primary-muted">
-                        {cond}
+                        {formatEnumLabel(cond)}
                       </option>
                     ))}
                   </select>
@@ -406,7 +412,7 @@ export default function ItemFormModal({
                     </option>
                     {colors.map((color) => (
                       <option key={color} value={color} className="text-primary-muted">
-                        {color}
+                        {formatEnumLabel(color)}
                       </option>
                     ))}
                   </select>
@@ -430,7 +436,7 @@ export default function ItemFormModal({
                     </option>
                     {colors.map((color) => (
                       <option key={color} value={color} className="text-primary-muted">
-                        {color}
+                        {formatEnumLabel(color)}
                       </option>
                     ))}
                   </select>
