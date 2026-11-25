@@ -19,6 +19,15 @@ type ItemFormModalProps = {
   onSuccess: (submittedTitle: string) => void;
 };
 
+// Component for indicating required fields in the form (in the form of a red asterisk)
+function RequiredIndicator() {
+  return (
+    <span aria-hidden="true" className="font-bold text-[var(--danger-text)]">
+      *
+    </span>
+  );
+}
+
 export default function ItemFormModal({
   mode,
   categories,
@@ -160,15 +169,13 @@ export default function ItemFormModal({
   }
 
   const isLost = mode === 'lost';
-  const availableItemKinds = itemKinds.filter(
-  (itemKind) => itemKind.categoryId === categoryId,
-  );
+  const availableItemKinds = itemKinds.filter((itemKind) => itemKind.categoryId === categoryId);
 
   const formatEnumLabel = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    value
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (letter) => letter.toUpperCase());
 
   return (
     <div
@@ -245,6 +252,9 @@ export default function ItemFormModal({
             </div>
 
             <section className="flex min-w-0 flex-col gap-3">
+              <p className="text-sm text-[var(--text-muted)]">
+                Fields marked <RequiredIndicator /> are required. All other fields are optional.
+              </p>
               {error && (
                 <div className="rounded-xl border border-[var(--danger-border)] bg-[var(--danger-surface)] px-3 py-3 text-sm text-[var(--danger-text)]">
                   {error}
@@ -256,10 +266,11 @@ export default function ItemFormModal({
                   htmlFor="item-title"
                   className="text-sm font-bold text-[var(--text-primary)]"
                 >
-                  Item title
+                  Item title <RequiredIndicator />
                 </label>
                 <input
                   id="item-title"
+                  aria-required="true"
                   type="text"
                   placeholder="Water Bottle"
                   value={title}
@@ -274,10 +285,11 @@ export default function ItemFormModal({
                     htmlFor="item-category"
                     className="text-sm font-bold text-[var(--text-primary)]"
                   >
-                    Category
+                    Category <RequiredIndicator />
                   </label>
                   <select
                     id="item-category"
+                    aria-required="true"
                     value={categoryId}
                     onChange={(e) => {
                       setCategoryId(e.target.value);
@@ -316,11 +328,7 @@ export default function ItemFormModal({
                     </option>
 
                     {availableItemKinds.map((itemKind) => (
-                      <option
-                        key={itemKind.id}
-                        value={itemKind.id}
-                        className="text-primary-muted"
-                      >
+                      <option key={itemKind.id} value={itemKind.id} className="text-primary-muted">
                         {itemKind.name}
                       </option>
                     ))}
@@ -336,10 +344,11 @@ export default function ItemFormModal({
                     htmlFor="item-date"
                     className="text-sm font-bold text-[var(--text-primary)]"
                   >
-                    Date {isLost ? 'lost' : 'found'}
+                    Date {isLost ? 'lost' : 'found'} <RequiredIndicator />
                   </label>
                   <input
                     id="item-date"
+                    aria-required="true"
                     type="date"
                     value={incidentDate}
                     onChange={(e) => setIncidentDate(e.target.value)}
@@ -372,10 +381,11 @@ export default function ItemFormModal({
                     htmlFor="item-condition"
                     className="text-sm font-bold text-[var(--text-primary)]"
                   >
-                    Condition
+                    Condition <RequiredIndicator />
                   </label>
                   <select
                     id="item-condition"
+                    aria-required="true"
                     value={condition}
                     onChange={(e) => setCondition(e.target.value as ItemCondition)}
                     className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
@@ -399,10 +409,11 @@ export default function ItemFormModal({
                     htmlFor="primary-color"
                     className="text-sm font-bold text-[var(--text-primary)]"
                   >
-                    Primary Color
+                    Primary Color <RequiredIndicator />
                   </label>
                   <select
                     id="primary-color"
+                    aria-required="true"
                     value={primaryColor}
                     onChange={(e) => setPrimaryColor(e.target.value as PrimaryColor)}
                     className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
@@ -464,10 +475,11 @@ export default function ItemFormModal({
                   htmlFor="item-location"
                   className="text-sm font-bold text-[var(--text-primary)]"
                 >
-                  {isLost ? 'Last seen location' : 'Found location'}
+                  {isLost ? 'Last seen location' : 'Found location'} <RequiredIndicator />
                 </label>
                 <select
                   id="item-location"
+                  aria-required="true"
                   value={locationId}
                   onChange={(e) => setLocationId(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-primary-muted focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
