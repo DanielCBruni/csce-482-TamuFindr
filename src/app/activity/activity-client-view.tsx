@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import ItemModal, { type ItemModalData } from '@/components/item_modal/item_modal';
 import Button from '@/components/ui/button';
+import EditDescription from '@/components/edit_description/edit_description';
 
 const statusPillClasses: Record<ItemModalData['status'], string> = {
   open: 'border-slate-200 bg-white text-slate-700',
@@ -130,6 +131,16 @@ export default function ActivityClientView({ activityItems }: { activityItems: I
           isOpen={true}
           item={selectedItem}
           mode="activity"
+          descriptionContent={
+            <EditDescription
+              key={selectedItem.itemId}
+              itemId={selectedItem.itemId}
+              description={selectedItem.description}
+              onSaved={(description) =>
+                setSelectedItem((item) => (item ? { ...item, description } : null))
+              }
+            />
+          }
           onClose={() => setSelectedItem(null)}
         />
       )}

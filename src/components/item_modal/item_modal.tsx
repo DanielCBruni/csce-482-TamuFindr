@@ -28,6 +28,7 @@ export interface ItemModalProps {
   item: ItemModalData;
   mode?: ItemModalMode;
   onClose: () => void;
+  descriptionContent?: ReactNode;
   isPending?: boolean;
   actionError?: string | null;
   onPrimaryAction?: (item: ItemModalData) => void;
@@ -56,6 +57,7 @@ export default function ItemModal({
   onClose,
   onPrimaryAction,
   onSecondaryAction,
+  descriptionContent,
   isPending = false,
   actionError,
 }: ItemModalProps) {
@@ -131,7 +133,7 @@ export default function ItemModal({
           </div>
           <div>
             <h4>Description</h4>
-            <p className={styles.description}>{item.description}</p>
+            {descriptionContent ?? <p className={styles.description}>{item.description}</p>}
           </div>
           <dl className={styles.info}>
             <div>
